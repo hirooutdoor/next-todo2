@@ -15,10 +15,10 @@ export default function Home() {
         <h1 className={styles.title}>
           NEXT TODO
         </h1>
-        {/* <div className={styles.card}>
+        <div className={styles.card}>
           <input className={styles.input} type="text" placeholder="Input TODO"/>
-          <button className={styles.button}>Add</button>
-        </div> */}
+          <button className={styles.add_button}>Add</button>
+        </div>
 
         <div className={styles.card}>
           <ul>
