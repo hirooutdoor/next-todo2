@@ -55,29 +55,6 @@
   text-align: center;
 }
 
-.description {
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-}
-
-.grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-  margin-top: 3rem;
-}
-
 .card {
   margin: 1rem;
   padding: 1.5rem;
@@ -87,7 +64,7 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
-  width: 45%;
+  width: 150%;
 }
 
 .card:hover,
@@ -102,12 +79,6 @@
   font-size: 1.5rem;
 }
 
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
-}
-
 .logo {
   height: 1em;
   margin-left: 0.5rem;
@@ -118,4 +89,54 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.add_button {
+  margin-left: 10px;
+  border-radius: 16px;
+  padding: 6px 10px;
+  border: none;
+}
+
+.input {
+  background-color: rgb(243, 243, 243);
+  border-radius: 16px;
+  border: none;
+  padding: 6px 16px;
+  outline: none;
+}
+
+.edit_button {
+  margin-left: 10px;
+  border-radius: 16px;
+  padding: 6px 10px;
+  border: none;
+}
+
+.edit_button:hover {
+  color: #0070f3;
+  background-color: #fafafa;
+  border: none;
+}
+
+.list_row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  border-bottom: 2px #eaeaea solid  ;
+
+}
+
+.todo_title {
+  font-size: 20px;
+}
+
+.todo_state {
+  margin-left: 10px;
+  padding: 1px 5px;
+  font-size: 15px;
+  border: 2px #eaeaea solid  ;
+  border-radius: 16px;
+  line-height: 1.5;
 }
