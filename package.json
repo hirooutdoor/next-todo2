@@ -30,11 +30,11 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-        "<rootDir>/.next/",
-        "<rootDir>/node_modules/"
+      "<rootDir>/.next/",
+      "<rootDir>/node_modules/"
     ],
     "moduleNameMapper": {
-        "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
+      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
     }
-}
+  }
 }

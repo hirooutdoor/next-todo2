@@ -1,3 +1,4 @@
+import { TodoState } from 'components/TodoState'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from 'styles/Home.module.css'
@@ -16,8 +17,13 @@ export default function Home() {
           NEXT TODO
         </h1>
         <div className={styles.card}>
-          <input className={styles.input} type="text" placeholder="Input TODO"/>
-          <button className={styles.add_button}>Add</button>
+          <div className={styles.input_area}>
+            <input className={styles.input} type="text" placeholder="Input what to do here"/>
+            <div className={styles.pull_down}>
+              <TodoState />
+            </div>
+            <button className={styles.add_button}>Add</button>
+          </div>
         </div>
 
         <div className={styles.card}>
