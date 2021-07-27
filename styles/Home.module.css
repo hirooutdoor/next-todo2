@@ -17,7 +17,6 @@
   align-items: center;
 }
 
-
 .card {
   margin: 1rem;
   padding: 1.5rem;
@@ -33,7 +32,6 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
   border-color: #0070f3;
 }
 
@@ -146,6 +144,27 @@
   border-radius: 16px;
   line-height: 1.5;
 }
+
+
+/* Status Sort */
+.sort_area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sort_area p {
+  color: gray;
+  margin: 0 10px;
+  font-size: 20px;
+}
+
+.sort_area p:hover {
+  color: #0070f3;
+  cursor: pointer;
+  border-bottom: #eaeaea 2px solid;
+}
+
 
 /* Edit Form */
 
