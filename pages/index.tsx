@@ -30,6 +30,16 @@ export default function Home() {
 
         {/* Todo List */}
         <div className={styles.card}>
+
+          {/* Status Sort */}
+            <div className={styles.sort_area}>
+              <p>All</p>
+              <p>Not Yet</p>
+              <p>In Progress</p>
+              <p>Done</p>
+            </div>
+          {/* State Sort */}
+
           <ul>
             <div className={styles.list_row}>
               <li className={styles.todo_title}>Task Title</li>
