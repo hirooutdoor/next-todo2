@@ -16,6 +16,8 @@ export default function Home() {
         <h1 className={styles.title}>
           NEXT TODO
         </h1>
+        
+        {/* Add Form */}
         <div className={styles.card}>
           <div className={styles.input_area}>
             <input className={styles.input} type="text" placeholder="Input what to do here"/>
@@ -26,6 +28,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Todo List */}
         <div className={styles.card}>
           <ul>
             <div className={styles.list_row}>
@@ -47,8 +50,16 @@ export default function Home() {
               <button className={styles.edit_button}>Delete</button>
             </div>
           </ul>
-          
         </div>
+
+      {/* Edit Form */}
+      <div className={styles.input_area}>
+        <input className={styles.input} type="text" placeholder="Edit what to do here"/>
+        <div className={styles.pull_down}>
+          <TodoState />
+        </div>
+        <button className={styles.add_button}>Save</button>
+      </div>
 
       </main>
 
