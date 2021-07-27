@@ -1,10 +1,10 @@
-.cp_ipselect {
+.select {
 	overflow: hidden;
 	width: 100%;
 	margin: 2em auto;
 	text-align: center;
 }
-.cp_ipselect select {
+.select select {
 	width: 100%;
 	padding-right: 1em;
 	cursor: pointer;
@@ -18,16 +18,16 @@
 	-webkit-appearance: none;
 	appearance: none;
 }
-.cp_ipselect select::-ms-expand {
+.select select::-ms-expand {
     display: none;
 }
-.cp_ipselect.cp_sl03 {
+.select.menu {
 	position: relative;
 	border-radius: 16px;
 	border: 1px solid #0070f3;
 	background: #ffffff;
 }
-.cp_ipselect.cp_sl03::before {
+.select.menu::before {
 	position: absolute;
 	top: 0.8em;
 	right: 0.8em;
@@ -40,7 +40,7 @@
 	border-top: 6px solid #0070f3;
 	pointer-events: none;
 }
-.cp_ipselect.cp_sl03 select {
+.select.menu select {
 	padding: 8px 38px 8px 8px;
 	color: #0070f3;
 }

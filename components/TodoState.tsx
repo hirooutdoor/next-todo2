@@ -3,7 +3,7 @@ import styles from "../styles/Pulldown.module.css"
 export const TodoState = () => {
   return (
     <>
-    <div className={`${styles.cp_ipselect} ${styles.cp_sl03}`}>
+    <div className={`${styles.select} ${styles.menu}`}>
         <select required>
           <option value="" hidden>Choose State</option>
           <option value={1}>Not Yet</option>
