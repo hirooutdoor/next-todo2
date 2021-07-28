@@ -1,3 +1,5 @@
+
+import { OrderSortButton } from 'components/OrderSort'
 import { TodoState } from 'components/TodoState'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -13,14 +15,16 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          NEXT TODO
-        </h1>
-        
+        <h1 className={styles.title}>NEXT TODO</h1>
+
         {/* Add Form */}
         <div className={styles.card}>
           <div className={styles.input_area}>
-            <input className={styles.input} type="text" placeholder="Input what to do here"/>
+            <input
+              className={styles.input}
+              type="text"
+              placeholder="Input what to do here"
+            />
             <div className={styles.pull_down}>
               <TodoState />
             </div>
@@ -30,16 +34,29 @@ export default function Home() {
 
         {/* Todo List */}
         <div className={styles.card}>
+          <div className={styles.list_head}>
 
-          {/* Status Sort */}
-            <div className={styles.sort_area}>
+            {/* Status Sort */}
+            <div className={styles.stateSort_area}>
               <p>All</p>
               <p>Not Yet</p>
               <p>In Progress</p>
               <p>Done</p>
             </div>
-          {/* State Sort */}
+            {/* State Sort */}
+            
+            {/* Order Sort Button*/}
+            <div className={styles.pulldown_orderSort}>
+              <OrderSortButton/>
+            </div>
+            {/* id & name Sort Button*/}
+          
+          </div>
+          
 
+
+
+          {/* List */}
           <ul>
             <div className={styles.list_row}>
               <li className={styles.todo_title}>Task Title</li>
@@ -61,17 +78,22 @@ export default function Home() {
             </div>
           </ul>
         </div>
+        {/* List */}
 
-      {/* Edit Form */}
-      <div className={styles.input_area}>
-        <input className={styles.input} type="text" placeholder="Edit what to do here"/>
-        <div className={styles.pull_down}>
-          <TodoState />
+        {/* Edit Form */}
+        <div className={styles.input_area}>
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="Edit what to do here"
+          />
+          <div className={styles.pull_down}>
+            <TodoState />
+          </div>
+          <button className={styles.add_button}>Save</button>
         </div>
-        <button className={styles.add_button}>Save</button>
-      </div>
-
       </main>
+        {/* Edit Form */}
 
       <footer className={styles.footer}>
         <a

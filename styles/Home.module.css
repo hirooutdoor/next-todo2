@@ -145,26 +145,36 @@
   line-height: 1.5;
 }
 
-
-/* Status Sort */
-.sort_area {
+.list_head {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.sort_area p {
+/* Status Sort */
+.stateSort_area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stateSort_area p {
   color: gray;
   margin: 0 10px;
   font-size: 20px;
 }
 
-.sort_area p:hover {
+.stateSort_area p:hover {
   color: #0070f3;
   cursor: pointer;
   border-bottom: #eaeaea 2px solid;
 }
 
+/* Oder Sort Button */
+.pulldown_orderSort {
+  position: relative;
+  margin-left: 20px;
+}
 
 /* Edit Form */
 

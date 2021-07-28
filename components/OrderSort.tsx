@@ -1,16 +1,16 @@
 import styles from '../styles/Pulldown.module.css'
 
-export const TodoState = () => {
+export const OrderSortButton = () => {
   return (
     <>
       <div className={`${styles.select} ${styles.menu}`}>
         <select required>
           <option value="" hidden>
-            Choose Status
+            Sort by
           </option>
-          <option value={1}>Not Yet</option>
-          <option value={2}>In Progress</option>
-          <option value={3}>Done</option>
+          <option value={1}>Newest</option>
+          <option value={2}>Oldest</option>
+          <option value={3}>Name</option>
         </select>
       </div>
     </>
