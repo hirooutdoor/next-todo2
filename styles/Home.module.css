@@ -9,6 +9,7 @@
 }
 
 .main {
+  margin-top: 100px;
   padding: 5rem 0;
   flex: 1;
   display: flex;
@@ -87,24 +88,15 @@
 
 
 /* Todo List Area*/
-.title a {
-  color: #0070f3;
-  text-decoration: none;
-}
 
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
-}
 
-.title {
-  margin: 0;
+.appTitle {
+  margin-top: 40;
   line-height: 1.15;
   font-size: 4rem;
 }
 
-.title,
+.appTitle,
 .description {
   text-align: center;
 }
@@ -137,6 +129,7 @@
 }
 
 .todo_state {
+  color: #0070f3;
   margin-left: 10px;
   padding: 1px 5px;
   font-size: 15px;
