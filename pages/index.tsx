@@ -69,7 +69,6 @@ export default function Home() {
             {/* id & name Sort Button*/}
           
           </div>
-          
 
           {/* List */}
           <ul>
