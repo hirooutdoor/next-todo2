@@ -1,4 +1,4 @@
-import styles from '../styles/Pulldown.module.css'
+import styles from 'styles/Pulldown.module.css'
 
 export const TodoState = () => {
   return (
