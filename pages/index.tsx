@@ -1,6 +1,7 @@
 
 import { OrderSortButton } from 'components/button/OrderSort'
 import { TodoState } from 'components/button/TodoState'
+import { AddForm } from 'components/form/AddForm'
 import { TodoList } from 'components/todo/TodoList'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -21,19 +22,7 @@ export default function Home() {
         <h1 className={styles.appTitle}>NEXT TODO</h1>
 
         {/* Add Form */}
-        <div className={styles.card}>
-          <div className={styles.input_area}>
-            <input
-              className={styles.input}
-              type="text"
-              placeholder="Input what to do here"
-            />
-            <div className={styles.pull_down}>
-              <TodoState />
-            </div>
-            <button className={styles.add_button}>Add</button>
-          </div>
-        </div>
+        <AddForm />
 
         {/* Todo List */}
         <div className={styles.card}>
