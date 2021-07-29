@@ -10,6 +10,15 @@ import styles from 'styles/Home.module.css'
 
 export default function Home() {
 
+  const [ inputTodo, setInputTodo ] = useState("");
+  const onChangeInputTodo = (e) => setInputTodo(e.value.target);
+  const onClickAdd = () => {
+    if (inputTodo === "") return;
+    const newTodos = [...todos, inputTodo];
+    setInputTodo(newTodo);
+    setInputTodo("");
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -22,7 +31,7 @@ export default function Home() {
         <h1 className={styles.appTitle}>NEXT TODO</h1>
 
         {/* Add Form */}
-        <AddForm />
+        <AddForm inputTodo={inputTodo} onChange={onChangeInputTodo} onClick={onClickAdd}/>
 
         {/* Todo List */}
         <div className={styles.card}>
