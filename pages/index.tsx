@@ -3,9 +3,26 @@ import { OrderSortButton } from 'components/OrderSort'
 import { TodoState } from 'components/TodoState'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useState } from 'react'
 import styles from 'styles/Home.module.css'
 
 export default function Home() {
+
+  const [todos, setTodos] = useState([
+    {
+      title: "test1",
+      status: "Not Yet"
+    },
+    {
+      title: "test2",
+      status: "In Progress"
+    },
+    {
+      title: "test3",
+      status: "Done"
+    }
+  ])
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,7 +32,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>NEXT TODO</h1>
+        <h1 className={styles.appTitle}>NEXT TODO</h1>
 
         {/* Add Form */}
         <div className={styles.card}>
@@ -54,28 +71,18 @@ export default function Home() {
           </div>
           
 
-
-
           {/* List */}
           <ul>
-            <div className={styles.list_row}>
-              <li className={styles.todo_title}>Task Title</li>
-              <p className={styles.todo_state}>Not Yet</p>
-              <button className={styles.edit_button}>Edit</button>
-              <button className={styles.edit_button}>Delete</button>
-            </div>
-            <div className={styles.list_row}>
-              <li className={styles.todo_title}>Task Title</li>
-              <p className={styles.todo_state}>In Progress</p>
-              <button className={styles.edit_button}>Edit</button>
-              <button className={styles.edit_button}>Delete</button>
-            </div>
-            <div className={styles.list_row}>
-              <li className={styles.todo_title}>Task Title</li>
-              <p className={styles.todo_state}>Done</p>
-              <button className={styles.edit_button}>Edit</button>
-              <button className={styles.edit_button}>Delete</button>
-            </div>
+            {todos.map((todo) => {
+              return (
+              <div key={todo.title} className={styles.list_row}>
+                <li className={styles.todo_title}>{todo.title}</li>
+                <p className={styles.todo_state}>{todo.status}</p>
+                <button className={styles.edit_button}>Edit</button>
+                <button className={styles.edit_button}>Delete</button>
+              </div>
+              )
+            })}
           </ul>
         </div>
         {/* List */}
@@ -110,3 +117,4 @@ export default function Home() {
     </div>
   )
 }
+
