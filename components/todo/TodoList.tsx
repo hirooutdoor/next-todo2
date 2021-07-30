@@ -1,8 +1,10 @@
 import styles from 'styles/Home.module.css'
 
 type Props = {
-  title: string,
-  status: string
+  todos: {
+    title: string,
+    status: string
+  }[]
 }
 
 export const TodoList: React.FC<Props> = (props) => {

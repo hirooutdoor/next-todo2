@@ -1,6 +1,11 @@
 import styles from 'styles/Pulldown.module.css'
 
-export const TodoState = (props) => {
+type Props = {
+  todoStatus: string,
+  onChangeTodoStatus: () => void;
+}
+
+export const TodoState: React.FC<Props> = (props) => {
   const { todoStatus, onChangeTodoStatus } = props
 
   return (
