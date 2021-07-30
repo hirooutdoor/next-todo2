@@ -3,7 +3,7 @@ import { TodoState } from "components/button/TodoState"
 
 export const AddForm = (props) => {
 
-  const {inputTodo, onChange, onClick} = props;
+  const {inputTodo, todoStatus, onChange, onChangeTodoStatus, onClick} = props;
   return(
       <>
         <div className={styles.card}>
@@ -16,7 +16,7 @@ export const AddForm = (props) => {
               onChange={onChange}
             />
             <div className={styles.pull_down}>
-              <TodoState />
+              <TodoState todoStatus={todoStatus} onChangeTodoStatus={onChangeTodoStatus}/>
             </div>
             <button className={styles.add_button} onClick={onClick}>Add</button>
           </div>

@@ -1,4 +1,3 @@
-
 import { OrderSortButton } from 'components/button/OrderSort'
 import { TodoState } from 'components/button/TodoState'
 import { AddForm } from 'components/form/AddForm'
@@ -8,15 +7,46 @@ import Image from 'next/image'
 import { useState } from 'react'
 import styles from 'styles/Home.module.css'
 
-export default function Home() {
+type TodoType = {
+  title: string
+  status: string
+}
 
-  const [ inputTodo, setInputTodo ] = useState("");
-  const onChangeInputTodo = (e) => setInputTodo(e.value.target);
+export default function Home() {
+  const [todos, setTodos] = useState<Array<TodoType>>([
+    {
+      title: 'test1',
+      status: 'Not Yet',
+    },
+    {
+      title: 'test2',
+      status: 'In Progress',
+    },
+    {
+      title: 'test3',
+      status: 'Done',
+    },
+  ])
+  const [inputTodo, setInputTodo] = useState('')
+  const [todoStatus, setTodoStatus] = useState('')
+
+  const newTodo = {
+    title: inputTodo,
+    status: todoStatus,
+  }
+
+  const onChangeInputTodo = (e) => setInputTodo(e.target.value)
+  const onChangeTodoStatus = (e) => setTodoStatus(e.target.value)
+
   const onClickAdd = () => {
-    if (inputTodo === "") return;
-    const newTodos = [...todos, inputTodo];
-    setInputTodo(newTodo);
-    setInputTodo("");
+    if (!inputTodo || todoStatus === '') return
+    // alert(inputTodo); //for verification
+    // alert(todoStatus); //for verification
+    // console.log(newTodo) //for verification
+    const newTodos = [...todos, newTodo]
+    setTodos(newTodos)
+    setInputTodo('') //clear input
+    setTodoStatus('')//clear status
   }
 
   return (
@@ -31,12 +61,17 @@ export default function Home() {
         <h1 className={styles.appTitle}>NEXT TODO</h1>
 
         {/* Add Form */}
-        <AddForm inputTodo={inputTodo} onChange={onChangeInputTodo} onClick={onClickAdd}/>
+        <AddForm
+          inputTodo={inputTodo}
+          todoStatus={todoStatus}
+          onChange={onChangeInputTodo}
+          onClick={onClickAdd}
+          onChangeTodoStatus={onChangeTodoStatus}
+        />
 
         {/* Todo List */}
         <div className={styles.card}>
           <div className={styles.list_head}>
-
             {/* Status Sort */}
             <div className={styles.stateSort_area}>
               <p>All</p>
@@ -45,19 +80,17 @@ export default function Home() {
               <p>Done</p>
             </div>
             {/* State Sort */}
-            
+
             {/* Order Sort Button*/}
             <div className={styles.pulldown_orderSort}>
-              <OrderSortButton/>
+              <OrderSortButton />
             </div>
             {/* id & name Sort Button*/}
-          
           </div>
 
           {/* List */}
-          <TodoList />
+          <TodoList todos={todos} />
           {/* List */}
-        
         </div>
 
         {/* Edit Form */}
@@ -73,7 +106,7 @@ export default function Home() {
           <button className={styles.add_button}>Save</button>
         </div>
       </main>
-        {/* Edit Form */}
+      {/* Edit Form */}
 
       <footer className={styles.footer}>
         <a
@@ -90,4 +123,3 @@ export default function Home() {
     </div>
   )
 }
-
