@@ -1,6 +1,11 @@
 import styles from 'styles/Home.module.css'
 
-export const TodoList = (props) => {
+type Props = {
+  title: string,
+  status: string
+}
+
+export const TodoList: React.FC<Props> = (props) => {
   const { todos } = props
   return (
     <>
