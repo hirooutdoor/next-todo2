@@ -1,7 +1,16 @@
 import styles from "styles/Home.module.css"
 import { TodoState } from "components/button/TodoState"
 
-export const AddForm = (props) => {
+type Props = {
+  inputTodo: string;
+  todoStatus: string;
+  onChange: () => void;
+  onChangeTodoStatus: () => void;
+  onClick: () => void;
+}
+
+
+export const AddForm: React.FC<Props> = (props) => {
 
   const {inputTodo, todoStatus, onChange, onChangeTodoStatus, onClick} = props;
   return(
