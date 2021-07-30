@@ -1,16 +1,18 @@
 import styles from 'styles/Pulldown.module.css'
 
-export const TodoState = () => {
+export const TodoState = (props) => {
+  const { todoStatus, onChangeTodoStatus } = props
+
   return (
     <>
       <div className={`${styles.select} ${styles.menu}`}>
-        <select required>
+        <select value={todoStatus} onChange={onChangeTodoStatus} required>
           <option value="" hidden>
             Choose Status
           </option>
-          <option value={1}>Not Yet</option>
-          <option value={2}>In Progress</option>
-          <option value={3}>Done</option>
+          <option value="Not Yet">Not Yet</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
         </select>
       </div>
     </>
