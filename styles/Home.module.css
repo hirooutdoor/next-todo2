@@ -101,6 +101,7 @@
   text-align: center;
 }
 
+/* Edit Button */
 .edit_button {
   margin-left: 10px;
   border-radius: 16px;
@@ -114,6 +115,23 @@
   background-color: #fafafa;
   border: none;
 }
+
+/* Delete Button */
+
+.delete_button {
+  margin-left: 10px;
+  border-radius: 16px;
+  padding: 6px 10px;
+  border: none;
+}
+
+.delete_button:hover {
+  cursor: pointer;
+  color: #f3005d;
+  background-color: #fafafa;
+  border: none;
+}
+
 
 .list_row {
   display: flex;

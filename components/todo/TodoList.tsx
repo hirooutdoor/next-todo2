@@ -18,7 +18,7 @@ export const TodoList: React.FC<Props> = (props) => {
               <li className={styles.todo_title}>{todo.title}</li>
               <p className={styles.todo_state}>{todo.status}</p>
               <button className={styles.edit_button}>Edit</button>
-              <button className={styles.edit_button}>Delete</button>
+              <button className={styles.delete_button}>Delete</button>
             </div>
           )
         })}
