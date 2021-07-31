@@ -49,6 +49,13 @@ export default function Home() {
     setTodoStatus('')//clear status
   }
 
+  const onClickDelete = (index:number) => {
+    //alert(index) //for verification
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -89,7 +96,7 @@ export default function Home() {
           </div>
 
           {/* List */}
-          <TodoList todos={todos} />
+          <TodoList todos={todos} onClickDelete={onClickDelete}/>
           {/* List */}
         </div>
 
