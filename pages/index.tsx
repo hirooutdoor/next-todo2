@@ -1,27 +1,53 @@
-
-import { OrderSortButton } from 'components/OrderSort'
-import { TodoState } from 'components/TodoState'
+import { OrderSortButton } from 'components/button/OrderSort'
+import { TodoState } from 'components/button/TodoState'
+import { AddForm } from 'components/form/AddForm'
+import { TodoList } from 'components/todo/TodoList'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
 import styles from 'styles/Home.module.css'
 
-export default function Home() {
+type TodoType = {
+  title: string
+  status: string
+}
 
-  const [todos, setTodos] = useState([
+export default function Home() {
+  const [todos, setTodos] = useState<Array<TodoType>>([
     {
-      title: "test1",
-      status: "Not Yet"
+      title: 'test1',
+      status: 'Not Yet',
     },
     {
-      title: "test2",
-      status: "In Progress"
+      title: 'test2',
+      status: 'In Progress',
     },
     {
-      title: "test3",
-      status: "Done"
-    }
+      title: 'test3',
+      status: 'Done',
+    },
   ])
+  const [inputTodo, setInputTodo] = useState('')
+  const [todoStatus, setTodoStatus] = useState('')
+
+  const newTodo = {
+    title: inputTodo,
+    status: todoStatus,
+  }
+
+  const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) => setInputTodo(e.target.value);
+  const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) => setTodoStatus(e.target.value);
+
+  const onClickAdd = () => {
+    if (!inputTodo || todoStatus === '') return
+    // alert(inputTodo); //for verification
+    // alert(todoStatus); //for verification
+    // console.log(newTodo) //for verification
+    const newTodos = [...todos, newTodo]
+    setTodos(newTodos)
+    setInputTodo('') //clear input
+    setTodoStatus('')//clear status
+  }
 
   return (
     <div className={styles.container}>
@@ -35,24 +61,17 @@ export default function Home() {
         <h1 className={styles.appTitle}>NEXT TODO</h1>
 
         {/* Add Form */}
-        <div className={styles.card}>
-          <div className={styles.input_area}>
-            <input
-              className={styles.input}
-              type="text"
-              placeholder="Input what to do here"
-            />
-            <div className={styles.pull_down}>
-              <TodoState />
-            </div>
-            <button className={styles.add_button}>Add</button>
-          </div>
-        </div>
+        <AddForm
+          inputTodo={inputTodo}
+          todoStatus={todoStatus}
+          onChange={onChangeInputTodo}
+          onClick={onClickAdd}
+          onChangeTodoStatus={onChangeTodoStatus}
+        />
 
         {/* Todo List */}
         <div className={styles.card}>
           <div className={styles.list_head}>
-
             {/* Status Sort */}
             <div className={styles.stateSort_area}>
               <p>All</p>
@@ -61,33 +80,21 @@ export default function Home() {
               <p>Done</p>
             </div>
             {/* State Sort */}
-            
+
             {/* Order Sort Button*/}
             <div className={styles.pulldown_orderSort}>
-              <OrderSortButton/>
+              <OrderSortButton />
             </div>
             {/* id & name Sort Button*/}
-          
           </div>
 
           {/* List */}
-          <ul>
-            {todos.map((todo) => {
-              return (
-              <div key={todo.title} className={styles.list_row}>
-                <li className={styles.todo_title}>{todo.title}</li>
-                <p className={styles.todo_state}>{todo.status}</p>
-                <button className={styles.edit_button}>Edit</button>
-                <button className={styles.edit_button}>Delete</button>
-              </div>
-              )
-            })}
-          </ul>
+          <TodoList todos={todos} />
+          {/* List */}
         </div>
-        {/* List */}
 
         {/* Edit Form */}
-        <div className={styles.input_area}>
+        {/* <div className={styles.input_area}>
           <input
             className={styles.input}
             type="text"
@@ -97,9 +104,9 @@ export default function Home() {
             <TodoState />
           </div>
           <button className={styles.add_button}>Save</button>
-        </div>
+        </div> */}
       </main>
-        {/* Edit Form */}
+      {/* Edit Form */}
 
       <footer className={styles.footer}>
         <a
@@ -116,4 +123,3 @@ export default function Home() {
     </div>
   )
 }
-
