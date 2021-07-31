@@ -49,8 +49,11 @@ export default function Home() {
     setTodoStatus('')//clear status
   }
 
-  const onClickDelete = () => {
-    alert("clicked!")
+  const onClickDelete = (index) => {
+    //alert(index) //for verification
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
   }
 
   return (
