@@ -2,7 +2,7 @@ import styles from 'styles/Pulldown.module.css'
 
 type Props = {
   todoStatus: string,
-  onChangeTodoStatus: () => void;
+  onChangeTodoStatus: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
 export const TodoState: React.FC<Props> = (props) => {

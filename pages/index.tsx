@@ -35,8 +35,8 @@ export default function Home() {
     status: todoStatus,
   }
 
-  const onChangeInputTodo = (e) => setInputTodo(e.target.value)
-  const onChangeTodoStatus = (e) => setTodoStatus(e.target.value)
+  const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) => setInputTodo(e.target.value);
+  const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) => setTodoStatus(e.target.value);
 
   const onClickAdd = () => {
     if (!inputTodo || todoStatus === '') return
@@ -94,7 +94,7 @@ export default function Home() {
         </div>
 
         {/* Edit Form */}
-        <div className={styles.input_area}>
+        {/* <div className={styles.input_area}>
           <input
             className={styles.input}
             type="text"
@@ -104,7 +104,7 @@ export default function Home() {
             <TodoState />
           </div>
           <button className={styles.add_button}>Save</button>
-        </div>
+        </div> */}
       </main>
       {/* Edit Form */}
 
