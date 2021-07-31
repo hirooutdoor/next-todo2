@@ -121,7 +121,12 @@
   justify-content: flex-start;
   padding: 10px;
   border-bottom: 2px #eaeaea solid  ;
+  opacity: 80%;
+}
 
+.list_row:hover {
+  border-bottom: 1px #0070f3 solid;
+  opacity: 100%;
 }
 
 .todo_title {
