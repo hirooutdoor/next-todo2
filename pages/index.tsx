@@ -49,7 +49,7 @@ export default function Home() {
     setTodoStatus('')//clear status
   }
 
-  const onClickDelete = (index) => {
+  const onClickDelete = (index:number) => {
     //alert(index) //for verification
     const newTodos = [...todos];
     newTodos.splice(index, 1);

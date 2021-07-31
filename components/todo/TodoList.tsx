@@ -5,7 +5,7 @@ type Props = {
     title: string,
     status: string
   }[],
-  onClickDelete: () => void;
+  onClickDelete: (index:number) => void;
 }
 
 export const TodoList: React.FC<Props> = (props) => {
