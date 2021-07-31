@@ -49,6 +49,10 @@ export default function Home() {
     setTodoStatus('')//clear status
   }
 
+  const onClickDelete = () => {
+    alert("clicked!")
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -89,7 +93,7 @@ export default function Home() {
           </div>
 
           {/* List */}
-          <TodoList todos={todos} />
+          <TodoList todos={todos} onClickDelete={onClickDelete}/>
           {/* List */}
         </div>
 
