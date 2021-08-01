@@ -30,16 +30,18 @@ export default function Home() {
   ])
   const [inputTodo, setInputTodo] = useState('')
   const [todoStatus, setTodoStatus] = useState('')
-
+  const [isEditing, setEditing] = useState<boolean>(false)
 
   const newTodo = {
     title: inputTodo,
-    status: todoStatus
+    status: todoStatus,
   }
 
-  const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) => setInputTodo(e.target.value);
+  const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setInputTodo(e.target.value)
 
-  const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) => setTodoStatus(e.target.value);
+  const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setTodoStatus(e.target.value)
 
   // Add Function //
   const onClickAdd = () => {
@@ -50,16 +52,28 @@ export default function Home() {
     const newTodos = [...todos, newTodo]
     setTodos(newTodos)
     setInputTodo('') //clear input
-    setTodoStatus('')//clear status
+    setTodoStatus('') //clear status
   }
 
   // Delete Function //
-  const onClickDelete = (index:number) => {
+  const onClickDelete = (index: number) => {
     //alert(index) //for verification
     //Ask Yes or No
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+    const newTodos = [...todos]
+    newTodos.splice(index, 1)
+    setTodos(newTodos)
+  }
+
+  // Edit Function //
+  const onClickEdit = (index: number) => {
+    alert(index) //for verification
+    setEditing(true)
+  }
+
+  // Cancel Function //
+  const onClickCancel = (index: number) => {
+    alert(index) //for verification
+    setEditing(false);
   }
 
   return (
@@ -102,10 +116,15 @@ export default function Home() {
           </div>
 
           {/* List */}
-          <TodoList todos={todos} onClickDelete={onClickDelete} />
+          <TodoList
+            todos={todos}
+            onClickDelete={onClickDelete}
+            onClickEdit={onClickEdit}
+            onClickCancel={onClickCancel}
+            isEditing={isEditing}
+          />
           {/* List */}
         </div>
-
       </main>
 
       <footer className={styles.footer}>

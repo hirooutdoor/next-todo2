@@ -8,10 +8,9 @@ type Props = {
     status: string
   }[];
   onClickDelete: (index:number) => void;
-}
-
-const onCancel = (index:number) => {
-
+  onClickEdit: (index:number) => void;
+  onClickCancel:(index:number) => void;
+  isEditing: boolean;
 }
 
 const onSubmit = (index:number) => {
@@ -19,19 +18,15 @@ const onSubmit = (index:number) => {
 }
 
 export const TodoList: React.FC<Props> = (props) => {
-  const { todos, onClickDelete } = props
-  const [isEditing, setEditing] = useState<boolean>(false);
+  const { todos, isEditing, onClickDelete, onClickEdit, onClickCancel } = props
+
   
   const onChangeTodoTitle = (e:React.ChangeEvent<HTMLInputElement>) => {e.currentTarget.value}
   ;
 
-  const onClickEdit = () => {
-    setEditing(true);
-  }
-
-  const onCancel = () => {
-    setEditing(false);
-  }
+  // const onClickEdit = () => {
+  //   setEditing(true);
+  // }
 
   return (
     <>
@@ -42,7 +37,7 @@ export const TodoList: React.FC<Props> = (props) => {
             <li key={index} className={styles.list_row}>
               {isEditing ? (
                 <EditForm 
-                onCancel={() => onCancel} onSubmit={() => onSubmit(index)} onChangeTodoTitle={onChangeTodoTitle}
+                onClickCancel={()=> onClickCancel(index)} onSubmit={() => onSubmit(index)} onChangeTodoTitle={onChangeTodoTitle}
                 />
               ) : (
                 <>
