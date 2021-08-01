@@ -1,6 +1,7 @@
 import { OrderSortButton } from 'components/button/OrderSort'
 import { TodoState } from 'components/button/TodoState'
 import { AddForm } from 'components/form/AddForm'
+import { EditForm } from 'components/form/EditForm'
 import { TodoList } from 'components/todo/TodoList'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -30,14 +31,17 @@ export default function Home() {
   const [inputTodo, setInputTodo] = useState('')
   const [todoStatus, setTodoStatus] = useState('')
 
+
   const newTodo = {
     title: inputTodo,
-    status: todoStatus,
+    status: todoStatus
   }
 
   const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) => setInputTodo(e.target.value);
+
   const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) => setTodoStatus(e.target.value);
 
+  // Add Function //
   const onClickAdd = () => {
     if (!inputTodo || todoStatus === '') return
     // alert(inputTodo); //for verification
@@ -49,8 +53,10 @@ export default function Home() {
     setTodoStatus('')//clear status
   }
 
+  // Delete Function //
   const onClickDelete = (index:number) => {
     //alert(index) //for verification
+    //Ask Yes or No
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
@@ -96,24 +102,11 @@ export default function Home() {
           </div>
 
           {/* List */}
-          <TodoList todos={todos} onClickDelete={onClickDelete}/>
+          <TodoList todos={todos} onClickDelete={onClickDelete} />
           {/* List */}
         </div>
 
-        {/* Edit Form */}
-        {/* <div className={styles.input_area}>
-          <input
-            className={styles.input}
-            type="text"
-            placeholder="Edit what to do here"
-          />
-          <div className={styles.pull_down}>
-            <TodoState />
-          </div>
-          <button className={styles.add_button}>Save</button>
-        </div> */}
       </main>
-      {/* Edit Form */}
 
       <footer className={styles.footer}>
         <a
