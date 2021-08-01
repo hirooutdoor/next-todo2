@@ -16,7 +16,7 @@ export const AddForm: React.FC<Props> = (props) => {
       <div className={styles.card}>
         <div className={styles.input_area}>
           <input
-            className={styles.input}
+            className={styles.input_add}
             type="text"
             placeholder="Input what to do here"
             value={inputTodo}
