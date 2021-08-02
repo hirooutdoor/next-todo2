@@ -1,8 +1,8 @@
 import styles from 'styles/Pulldown.module.css'
 
 type Props = {
-  todoStatus: string,
-  onChangeTodoStatus: React.ChangeEventHandler<HTMLSelectElement>;
+  todoStatus: string
+  onChangeTodoStatus: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export const TodoState: React.FC<Props> = (props) => {

@@ -2,30 +2,42 @@ import styles from 'styles/Home.module.css'
 import { TodoState } from 'components/button/TodoState'
 
 type Props = {
-  onChangeTodoTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onChangeTodoStatus: React.ChangeEventHandler<HTMLSelectElement>
+  onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
   onClickCancel: (index: number) => void
-  onSubmit: () => void
+  onClickSubmit: (index: number) => void
+  newTitle: string;
+  todo: {
+    title: string
+    status: string
+  }
 }
 
 export const EditForm: React.FC<Props> = (props) => {
-  const { onChangeTodoTitle, onChangeTodoStatus, onClickCancel, onSubmit } =
-    props
+  const {
+    todo,
+    onChangeEditTitle,
+    onChangeEditStatus,
+    onClickCancel,
+    onClickSubmit,
+    newTitle
+  } = props
   return (
     <>
       <input
         className={styles.input_edit}
-        value=""
+        value={newTitle}
+        // value={todo.title}
         type="text"
-        onChange={onChangeTodoTitle}
+        onChange={onChangeEditTitle}
       />
       <div className={styles.pull_down}>
-        <TodoState onChangeTodoStatus={onChangeTodoStatus} />
+        <TodoState onChangeEditStatus={onChangeEditStatus}/>
       </div>
       <button className={styles.edit_button} onClick={() => onClickCancel}>
         Cancel
       </button>
-      <button className={styles.edit_button} onClick={() => onSubmit}>
+      <button className={styles.edit_button} onClick={() => onClickSubmit}>
         Submit
       </button>
     </>

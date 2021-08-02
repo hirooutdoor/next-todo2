@@ -14,27 +14,28 @@ type TodoType = {
 }
 
 export default function Home() {
+  const [isEditing, setIsEditing] = useState<boolean>(false)
   const [todos, setTodos] = useState<Array<TodoType>>([
     {
       title: 'test1',
-      status: 'Not Yet',
+      status: 'Not Yet'
     },
     {
       title: 'test2',
-      status: 'In Progress',
+      status: 'In Progress'
     },
     {
       title: 'test3',
-      status: 'Done',
+      status: 'Done'
     },
   ])
-  const [inputTodo, setInputTodo] = useState('')
-  const [todoStatus, setTodoStatus] = useState('')
-  const [isEditing, setEditing] = useState<boolean>(false)
+  const [inputTodo, setInputTodo] = useState<string>('')
+  const [todoStatus, setTodoStatus] = useState<string>('')
+  const [newTitle, setNewTitle] = useState<string>('')
 
   const newTodo = {
     title: inputTodo,
-    status: todoStatus,
+    status: todoStatus
   }
 
   const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -42,6 +43,14 @@ export default function Home() {
 
   const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setTodoStatus(e.target.value)
+
+  const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTitle(e.target.value)
+  }
+
+  const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setNewTitle(e.target.value)
+  }
 
   // Add Function //
   const onClickAdd = () => {
@@ -58,7 +67,7 @@ export default function Home() {
   // Delete Function //
   const onClickDelete = (index: number) => {
     //alert(index) //for verification
-    //Ask Yes or No
+    //Ask Yes or No *** Add later ***
     const newTodos = [...todos]
     newTodos.splice(index, 1)
     setTodos(newTodos)
@@ -66,14 +75,30 @@ export default function Home() {
 
   // Edit Function //
   const onClickEdit = (index: number) => {
-    alert(index) //for verification
-    setEditing(true)
+    //alert(index) //for verification
+    const newTodos = [...todos]
+    newTodos[index].title,
+    newTodos[index].status
+    setTodos(newTodos);
+    setIsEditing(true)
   }
 
   // Cancel Function //
   const onClickCancel = (index: number) => {
     alert(index) //for verification
-    setEditing(false);
+    setIsEditing(false)
+  }
+
+  // Submit Function //
+
+  const onClickSubmit = (index: number) => {
+    if (!inputTodo || todoStatus === '') return
+    alert(index) //for verification
+    const newTodos = [...todos]
+    newTodos[index].title,
+    newTodos[index].status
+    setTodos(newTodos);
+    setIsEditing(false)
   }
 
   return (
@@ -121,7 +146,11 @@ export default function Home() {
             onClickDelete={onClickDelete}
             onClickEdit={onClickEdit}
             onClickCancel={onClickCancel}
+            onClickSubmit={onClickSubmit}
+            onChangeEditTitle={onChangeEditTitle}
+            onChangeEditStatus={onChangeEditStatus}
             isEditing={isEditing}
+            newTitle={newTitle}
           />
           {/* List */}
         </div>
