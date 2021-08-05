@@ -14,29 +14,24 @@ type TodoType = {
 }
 
 export default function Home() {
-  const [isEditing, setIsEditing] = useState<boolean>(false)
-  const [todos, setTodos] = useState<Array<TodoType>>([
-    {
-      title: 'test1',
-      status: 'Not Yet'
-    },
-    {
-      title: 'test2',
-      status: 'In Progress'
-    },
-    {
-      title: 'test3',
-      status: 'Done'
-    },
-  ])
+  const [todos, setTodos] = useState<Array<TodoType>>([])
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
-  const [newTitle, setNewTitle] = useState<string>('')
+  const [isEditing, setIsEditing] = useState<boolean>(false)
+  // object state to set so we know which todo item we are editing
+  // const [editTitle, setEditTitle] = useState({});
+  // const [editStatus, setEditStatus] = useState({});
+  const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
 
   const newTodo = {
     title: inputTodo,
     status: todoStatus
   }
+
+  // const editTodo = {
+  //   title: editTitle,
+  //   status: editStatus
+  // }
 
   const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(e.target.value)
@@ -45,11 +40,13 @@ export default function Home() {
     setTodoStatus(e.target.value)
 
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTitle(e.target.value)
+    // setEditTitle({ ...editTitle, title: e.target.value });
+    setCurrentTodo({ ...currentTodo, title: e.target.value})
   }
 
   const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setNewTitle(e.target.value)
+    //setEditStatus({ ...editStatus, status: e.target.value });
+    setCurrentTodo({ ...currentTodo, status: e.target.value})
   }
 
   // Add Function //
@@ -75,12 +72,10 @@ export default function Home() {
 
   // Edit Function //
   const onClickEdit = (index: number) => {
-    //alert(index) //for verification
-    const newTodos = [...todos]
-    newTodos[index].title,
-    newTodos[index].status
-    setTodos(newTodos);
+    alert(index) //for verification      
     setIsEditing(true)
+    console.log(currentTodo)
+    setCurrentTodo([ ...todos, newTodo ])
   }
 
   // Cancel Function //
@@ -90,7 +85,6 @@ export default function Home() {
   }
 
   // Submit Function //
-
   const onClickSubmit = (index: number) => {
     if (!inputTodo || todoStatus === '') return
     alert(index) //for verification
@@ -143,14 +137,14 @@ export default function Home() {
           {/* List */}
           <TodoList
             todos={todos}
+            isEditing={isEditing}
             onClickDelete={onClickDelete}
             onClickEdit={onClickEdit}
             onClickCancel={onClickCancel}
             onClickSubmit={onClickSubmit}
             onChangeEditTitle={onChangeEditTitle}
             onChangeEditStatus={onChangeEditStatus}
-            isEditing={isEditing}
-            newTitle={newTitle}
+            // isEditing={isEditing}
           />
           {/* List */}
         </div>

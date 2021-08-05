@@ -13,7 +13,6 @@ type Props = {
   onClickSubmit: (index: number) => void
   onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeEditStatus:React.ChangeEventHandler<HTMLSelectElement>
-  newTitle: string
   isEditing: boolean
 }
 
@@ -24,19 +23,13 @@ export const TodoList: React.FC<Props> = (props) => {
     onClickEdit,
     onClickCancel,
     onClickSubmit,
-    newTitle,
     isEditing,
     onChangeEditTitle,
     onChangeEditStatus
   } = props
 
-  // const onClickEdit = () => {
-  //   setEditing(true);
-  // }
-
   return (
     <>
-      {/* Add Conditional Rendering */}
       <ul>
         {todos.map((todo, index) => {
           return (
@@ -47,8 +40,8 @@ export const TodoList: React.FC<Props> = (props) => {
                   onClickSubmit={() => onClickSubmit(index)}
                   onChangeEditTitle={onChangeEditTitle}
                   onChangeEditStatus={onChangeEditStatus}
-                  todo={todo}
-                  newTitle={newTitle}
+                  isEditing={isEditing}
+
                 />
               ) : (
                 <>

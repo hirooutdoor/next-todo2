@@ -7,32 +7,33 @@ type Props = {
   onClickCancel: (index: number) => void
   onClickSubmit: (index: number) => void
   newTitle: string;
-  todo: {
+  currentTodo: {
     title: string
     status: string
   }
+  isEditing: boolean
 }
 
 export const EditForm: React.FC<Props> = (props) => {
   const {
-    todo,
+    currentTodo,
     onChangeEditTitle,
     onChangeEditStatus,
     onClickCancel,
     onClickSubmit,
-    newTitle
+    isEditing
   } = props
   return (
     <>
       <input
         className={styles.input_edit}
-        value={newTitle}
+        value={currentTodo.title}
         // value={todo.title}
         type="text"
         onChange={onChangeEditTitle}
       />
       <div className={styles.pull_down}>
-        <TodoState onChangeEditStatus={onChangeEditStatus}/>
+        <TodoState onChangeEditStatus={onChangeEditStatus} currentTodo={currentTodo} isEditing={isEditing}/>
       </div>
       <button className={styles.edit_button} onClick={() => onClickCancel}>
         Cancel
