@@ -11,6 +11,7 @@ import styles from 'styles/Home.module.css'
 type TodoType = {
   title: string
   status: string
+  isEditing: boolean
 }
 
 export default function Home() {
@@ -25,7 +26,8 @@ export default function Home() {
 
   const newTodo = {
     title: inputTodo,
-    status: todoStatus
+    status: todoStatus,
+    isEditing: isEditing
   }
 
   // const editTodo = {
@@ -72,10 +74,9 @@ export default function Home() {
 
   // Edit Function //
   const onClickEdit = (index: number) => {
-    alert(index) //for verification      
-    setIsEditing(true)
-    console.log(currentTodo)
-    setCurrentTodo([ ...todos, newTodo ])
+    // alert(index) //for verification      
+    todos[index].isEditing = true;
+    setTodos([ ...todos ])
   }
 
   // Cancel Function //
@@ -144,7 +145,7 @@ export default function Home() {
             onClickSubmit={onClickSubmit}
             onChangeEditTitle={onChangeEditTitle}
             onChangeEditStatus={onChangeEditStatus}
-            // isEditing={isEditing}
+            currentTodo={currentTodo}
           />
           {/* List */}
         </div>

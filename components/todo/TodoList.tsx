@@ -6,24 +6,30 @@ type Props = {
   todos: {
     title: string
     status: string
-  }[]
+    isEditing: boolean
+  }[],
+  currentTodo: {
+    title: string
+    status: string
+  },
   onClickDelete: (index: number) => void
   onClickEdit: (index: number) => void
   onClickCancel: (index: number) => void
   onClickSubmit: (index: number) => void
   onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeEditStatus:React.ChangeEventHandler<HTMLSelectElement>
-  isEditing: boolean
+  isEditing:boolean
 }
 
 export const TodoList: React.FC<Props> = (props) => {
   const {
     todos,
+    currentTodo,
+    isEditing,
     onClickDelete,
     onClickEdit,
     onClickCancel,
     onClickSubmit,
-    isEditing,
     onChangeEditTitle,
     onChangeEditStatus
   } = props
@@ -34,14 +40,14 @@ export const TodoList: React.FC<Props> = (props) => {
         {todos.map((todo, index) => {
           return (
             <li key={index} className={styles.list_row}>
-              {isEditing ? (
+              {todo.isEditing ? (
                 <EditForm
                   onClickCancel={() => onClickCancel(index)}
                   onClickSubmit={() => onClickSubmit(index)}
                   onChangeEditTitle={onChangeEditTitle}
                   onChangeEditStatus={onChangeEditStatus}
                   isEditing={isEditing}
-
+                  currentTodo={currentTodo}
                 />
               ) : (
                 <>
