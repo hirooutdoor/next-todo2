@@ -82,7 +82,8 @@ export default function Home() {
   // Cancel Function //
   const onClickCancel = (index: number) => {
     alert(index) //for verification
-    setIsEditing(false)
+    todos[index].isEditing = false;
+    setTodos([ ...todos ])
   }
 
   // Submit Function //
@@ -92,8 +93,8 @@ export default function Home() {
     const newTodos = [...todos]
     newTodos[index].title,
     newTodos[index].status
+
     setTodos(newTodos);
-    setIsEditing(false)
   }
 
   return (

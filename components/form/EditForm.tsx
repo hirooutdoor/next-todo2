@@ -4,8 +4,8 @@ import { TodoState } from 'components/button/TodoState'
 type Props = {
   onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
-  onClickCancel: (index: number) => void
-  onClickSubmit: (index: number) => void
+  onClickCancel: () => void
+  onClickSubmit: () => void
   newTitle: string;
   currentTodo: {
     title: string
@@ -35,10 +35,10 @@ export const EditForm: React.FC<Props> = (props) => {
       <div className={styles.pull_down}>
         <TodoState onChangeEditStatus={onChangeEditStatus} currentTodo={currentTodo} isEditing={isEditing}/>
       </div>
-      <button className={styles.edit_button} onClick={() => onClickCancel}>
+      <button className={styles.edit_button} onClick={onClickCancel}>
         Cancel
       </button>
-      <button className={styles.edit_button} onClick={() => onClickSubmit}>
+      <button className={styles.edit_button} onClick={onClickSubmit}>
         Submit
       </button>
     </>
