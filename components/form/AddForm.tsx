@@ -1,5 +1,5 @@
 import styles from 'styles/Home.module.css'
-import { TodoState } from 'components/button/TodoState'
+import { AddTodoState } from 'components/select/AddTodoState'
 
 type Props = {
   inputTodo: string
@@ -23,7 +23,7 @@ export const AddForm: React.FC<Props> = (props) => {
             onChange={onChange}
           />
           <div className={styles.pull_down}>
-            <TodoState
+            <AddTodoState
               todoStatus={todoStatus}
               onChangeTodoStatus={onChangeTodoStatus}
             />
