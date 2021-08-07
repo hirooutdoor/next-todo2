@@ -11,6 +11,7 @@ type Props = {
   currentTodo: {
     title: string
     status: string
+    isEditing: boolean
   },
   onClickDelete: (index: number) => void
   onClickEdit: (index: number) => void
@@ -18,14 +19,12 @@ type Props = {
   onClickSubmit: (index: number) => void
   onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeEditStatus:React.ChangeEventHandler<HTMLSelectElement>
-  isEditing:boolean
 }
 
 export const TodoList: React.FC<Props> = (props) => {
   const {
     todos,
     currentTodo,
-    isEditing,
     onClickDelete,
     onClickEdit,
     onClickCancel,
@@ -46,7 +45,6 @@ export const TodoList: React.FC<Props> = (props) => {
                   onClickSubmit={() => onClickSubmit(index)}
                   onChangeEditTitle={onChangeEditTitle}
                   onChangeEditStatus={onChangeEditStatus}
-                  isEditing={isEditing}
                   currentTodo={currentTodo}
                 />
               ) : (

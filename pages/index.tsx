@@ -1,7 +1,5 @@
-import { OrderSortButton } from 'components/button/OrderSort'
-import { TodoState } from 'components/button/TodoState'
+import { OrderSortButton } from 'components/select/OrderSort'
 import { AddForm } from 'components/form/AddForm'
-import { EditForm } from 'components/form/EditForm'
 import { TodoList } from 'components/todo/TodoList'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -18,22 +16,13 @@ export default function Home() {
   const [todos, setTodos] = useState<Array<TodoType>>([])
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
-  const [isEditing, setIsEditing] = useState<boolean>(false)
-  // object state to set so we know which todo item we are editing
-  // const [editTitle, setEditTitle] = useState({});
-  // const [editStatus, setEditStatus] = useState({});
   const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
 
   const newTodo = {
     title: inputTodo,
     status: todoStatus,
-    isEditing: isEditing
+    isEditing: false
   }
-
-  // const editTodo = {
-  //   title: editTitle,
-  //   status: editStatus
-  // }
 
   const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(e.target.value)
@@ -76,25 +65,24 @@ export default function Home() {
   const onClickEdit = (index: number) => {
     // alert(index) //for verification      
     todos[index].isEditing = true;
-    setTodos([ ...todos ])
+    setCurrentTodo([ ...todos ])
   }
 
   // Cancel Function //
   const onClickCancel = (index: number) => {
-    alert(index) //for verification
+    // alert(index) //for verification
     todos[index].isEditing = false;
     setTodos([ ...todos ])
   }
 
   // Submit Function //
   const onClickSubmit = (index: number) => {
-    if (!inputTodo || todoStatus === '') return
-    alert(index) //for verification
-    const newTodos = [...todos]
-    newTodos[index].title,
-    newTodos[index].status
-
-    setTodos(newTodos);
+    // alert(index) //for verification
+    if (!currentTodo.title || currentTodo.status === '') return
+    todos[index].title = currentTodo.title
+    todos[index].status = currentTodo.status
+    todos[index].isEditing = false;
+    setTodos([...todos]);
   }
 
   return (
@@ -139,7 +127,6 @@ export default function Home() {
           {/* List */}
           <TodoList
             todos={todos}
-            isEditing={isEditing}
             onClickDelete={onClickDelete}
             onClickEdit={onClickEdit}
             onClickCancel={onClickCancel}
