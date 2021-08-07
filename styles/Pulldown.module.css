@@ -1,7 +1,7 @@
 .select {
 	overflow: hidden;
 	width: 100%;
-	margin: 2em auto;
+	margin: 12.5px 0;
 	text-align: center;
 }
 .select select {

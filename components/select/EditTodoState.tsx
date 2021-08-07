@@ -1,17 +1,28 @@
 import styles from 'styles/Pulldown.module.css'
 
 type Props = {
-  todoStatus: string,
-  onChangeTodoStatus: React.ChangeEventHandler<HTMLSelectElement>;
+  onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
+  currentTodo: {
+    title: string
+    status: string
+    isEditing: boolean;
+  }
 }
 
-export const TodoState: React.FC<Props> = (props) => {
-  const { todoStatus, onChangeTodoStatus } = props
+export const EditTodoState: React.FC<Props> = (props) => {
+  const {
+    onChangeEditStatus,
+    currentTodo
+  } = props
 
   return (
     <>
       <div className={`${styles.select} ${styles.menu}`}>
-        <select value={todoStatus} onChange={onChangeTodoStatus} required>
+        <select
+          value={currentTodo.status}
+          onChange={onChangeEditStatus}
+          required
+        >
           <option value="" hidden>
             Choose Status
           </option>

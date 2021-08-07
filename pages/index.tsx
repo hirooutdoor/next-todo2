@@ -1,5 +1,4 @@
-import { OrderSortButton } from 'components/button/OrderSort'
-import { TodoState } from 'components/button/TodoState'
+import { OrderSortButton } from 'components/select/OrderSort'
 import { AddForm } from 'components/form/AddForm'
 import { TodoList } from 'components/todo/TodoList'
 import Head from 'next/head'
@@ -10,50 +9,76 @@ import styles from 'styles/Home.module.css'
 type TodoType = {
   title: string
   status: string
+  isEditing: boolean
 }
 
 export default function Home() {
-  const [todos, setTodos] = useState<Array<TodoType>>([
-    {
-      title: 'test1',
-      status: 'Not Yet',
-    },
-    {
-      title: 'test2',
-      status: 'In Progress',
-    },
-    {
-      title: 'test3',
-      status: 'Done',
-    },
-  ])
-  const [inputTodo, setInputTodo] = useState('')
-  const [todoStatus, setTodoStatus] = useState('')
+  const [todos, setTodos] = useState<Array<TodoType>>([])
+  const [inputTodo, setInputTodo] = useState<string>('')
+  const [todoStatus, setTodoStatus] = useState<string>('')
+  const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
 
   const newTodo = {
     title: inputTodo,
     status: todoStatus,
+    isEditing: false,
+  }
+  // Add Form's Value of Todo and Status //
+  const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setInputTodo(e.target.value)
+
+  const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setTodoStatus(e.target.value)
+
+  // Edit Form's Value of Todo and Status //   
+  const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentTodo({ ...currentTodo, title: e.target.value })
   }
 
-  const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) => setInputTodo(e.target.value);
-  const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) => setTodoStatus(e.target.value);
+  const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurrentTodo({ ...currentTodo, status: e.target.value })
+  }
 
+  // Add Function //
   const onClickAdd = () => {
     if (!inputTodo || todoStatus === '') return
-    // alert(inputTodo); //for verification
-    // alert(todoStatus); //for verification
-    // console.log(newTodo) //for verification
     const newTodos = [...todos, newTodo]
     setTodos(newTodos)
     setInputTodo('') //clear input
-    setTodoStatus('')//clear status
+    setTodoStatus('') //clear status
   }
 
-  const onClickDelete = (index:number) => {
+  // Delete Function //
+  const onClickDelete = (index: number) => {
     //alert(index) //for verification
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+    //Ask Yes or No *** Add later ***
+    const newTodos = [...todos]
+    newTodos.splice(index, 1)
+    setTodos(newTodos)
+  }
+
+  // Edit Function //
+  const onClickEdit = (index: number) => {
+    // alert(index) //for verification
+    todos[index].isEditing = true
+    setCurrentTodo([...todos])
+  }
+
+  // Cancel Function //
+  const onClickCancel = (index: number) => {
+    // alert(index) //for verification
+    todos[index].isEditing = false
+    setTodos([...todos])
+  }
+
+  // Submit Function //
+  const onClickSubmit = (index: number) => {
+    // alert(index) //for verification
+    if (!currentTodo.title || currentTodo.status === '') return
+    todos[index].title = currentTodo.title
+    todos[index].status = currentTodo.status
+    todos[index].isEditing = false
+    setTodos([...todos])
   }
 
   return (
@@ -96,24 +121,19 @@ export default function Home() {
           </div>
 
           {/* List */}
-          <TodoList todos={todos} onClickDelete={onClickDelete}/>
+          <TodoList
+            todos={todos}
+            onClickDelete={onClickDelete}
+            onClickEdit={onClickEdit}
+            onClickCancel={onClickCancel}
+            onClickSubmit={onClickSubmit}
+            onChangeEditTitle={onChangeEditTitle}
+            onChangeEditStatus={onChangeEditStatus}
+            currentTodo={currentTodo}
+          />
           {/* List */}
         </div>
-
-        {/* Edit Form */}
-        {/* <div className={styles.input_area}>
-          <input
-            className={styles.input}
-            type="text"
-            placeholder="Edit what to do here"
-          />
-          <div className={styles.pull_down}>
-            <TodoState />
-          </div>
-          <button className={styles.add_button}>Save</button>
-        </div> */}
       </main>
-      {/* Edit Form */}
 
       <footer className={styles.footer}>
         <a
@@ -130,3 +150,7 @@ export default function Home() {
     </div>
   )
 }
+function title<T>(title: any, string: any) {
+  throw new Error('Function not implemented.')
+}
+
