@@ -23,29 +23,25 @@ export default function Home() {
     status: todoStatus,
     isEditing: false,
   }
-
+  // Add Form's Value of Todo and Status //
   const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(e.target.value)
 
   const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setTodoStatus(e.target.value)
 
+  // Edit Form's Value of Todo and Status //   
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setEditTitle({ ...editTitle, title: e.target.value });
     setCurrentTodo({ ...currentTodo, title: e.target.value })
   }
 
   const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    //setEditStatus({ ...editStatus, status: e.target.value });
     setCurrentTodo({ ...currentTodo, status: e.target.value })
   }
 
   // Add Function //
   const onClickAdd = () => {
     if (!inputTodo || todoStatus === '') return
-    // alert(inputTodo); //for verification
-    // alert(todoStatus); //for verification
-    // console.log(newTodo) //for verification
     const newTodos = [...todos, newTodo]
     setTodos(newTodos)
     setInputTodo('') //clear input
@@ -154,3 +150,7 @@ export default function Home() {
     </div>
   )
 }
+function title<T>(title: any, string: any) {
+  throw new Error('Function not implemented.')
+}
+
