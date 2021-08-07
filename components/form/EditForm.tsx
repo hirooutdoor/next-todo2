@@ -2,16 +2,10 @@ import styles from 'styles/Home.module.css'
 import { EditTodoState } from 'components/select/EditTodoState'
 
 type Props = {
-  todos: {
-    title: string
-    status: string
-    isEditing: boolean
-  }[],
   onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
   onClickCancel: () => void
   onClickSubmit: () => void
-  newTitle: string;
   currentTodo: {
     title: string
     status: string
@@ -25,7 +19,7 @@ export const EditForm: React.FC<Props> = (props) => {
     onChangeEditTitle,
     onChangeEditStatus,
     onClickCancel,
-    onClickSubmit
+    onClickSubmit,
   } = props
   return (
     <>
@@ -36,13 +30,16 @@ export const EditForm: React.FC<Props> = (props) => {
         onChange={onChangeEditTitle}
       />
       <div className={styles.pull_down}>
-        <EditTodoState onChangeEditStatus={onChangeEditStatus} currentTodo={currentTodo}/>
+        <EditTodoState
+          onChangeEditStatus={onChangeEditStatus}
+          currentTodo={currentTodo}
+        />
       </div>
       <button className={styles.edit_button} onClick={onClickCancel}>
         Cancel
       </button>
       <button className={styles.edit_button} onClick={onClickSubmit}>
-        Submit
+        Update
       </button>
     </>
   )

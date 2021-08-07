@@ -21,7 +21,7 @@ export default function Home() {
   const newTodo = {
     title: inputTodo,
     status: todoStatus,
-    isEditing: false
+    isEditing: false,
   }
 
   const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -32,12 +32,12 @@ export default function Home() {
 
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     // setEditTitle({ ...editTitle, title: e.target.value });
-    setCurrentTodo({ ...currentTodo, title: e.target.value})
+    setCurrentTodo({ ...currentTodo, title: e.target.value })
   }
 
   const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
     //setEditStatus({ ...editStatus, status: e.target.value });
-    setCurrentTodo({ ...currentTodo, status: e.target.value})
+    setCurrentTodo({ ...currentTodo, status: e.target.value })
   }
 
   // Add Function //
@@ -63,16 +63,16 @@ export default function Home() {
 
   // Edit Function //
   const onClickEdit = (index: number) => {
-    // alert(index) //for verification      
-    todos[index].isEditing = true;
-    setCurrentTodo([ ...todos ])
+    // alert(index) //for verification
+    todos[index].isEditing = true
+    setCurrentTodo([...todos])
   }
 
   // Cancel Function //
   const onClickCancel = (index: number) => {
     // alert(index) //for verification
-    todos[index].isEditing = false;
-    setTodos([ ...todos ])
+    todos[index].isEditing = false
+    setTodos([...todos])
   }
 
   // Submit Function //
@@ -81,8 +81,8 @@ export default function Home() {
     if (!currentTodo.title || currentTodo.status === '') return
     todos[index].title = currentTodo.title
     todos[index].status = currentTodo.status
-    todos[index].isEditing = false;
-    setTodos([...todos]);
+    todos[index].isEditing = false
+    setTodos([...todos])
   }
 
   return (

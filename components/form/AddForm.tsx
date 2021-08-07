@@ -5,7 +5,7 @@ type Props = {
   inputTodo: string
   todoStatus: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onChangeTodoStatus: React.ChangeEventHandler<HTMLSelectElement>;
+  onChangeTodoStatus: React.ChangeEventHandler<HTMLSelectElement>
   onClick: () => void
 }
 
