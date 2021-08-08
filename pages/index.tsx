@@ -62,7 +62,7 @@ export default function Home() {
 
   // Edit Function //
   const onClickEdit = (index: number) => {
-    if (todos.isEditing) return;
+
     // alert(index) //for verification
     todos[index].isEditing = true
     setTodos([...todos])
