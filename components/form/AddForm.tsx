@@ -28,6 +28,7 @@ export const AddForm: React.FC<Props> = (props) => {
             <AddTodoState
               todoStatus={todoStatus}
               onChangeTodoStatus={onChangeTodoStatus}
+              isDisabled={isDisabled}
             />
           </div>
           <button className={styles.add_button} onClick={onClick} disabled={isDisabled} >
