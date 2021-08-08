@@ -7,10 +7,11 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeTodoStatus: React.ChangeEventHandler<HTMLSelectElement>
   onClick: () => void
+  isDisabled: boolean
 }
 
 export const AddForm: React.FC<Props> = (props) => {
-  const { inputTodo, todoStatus, onChange, onChangeTodoStatus, onClick } = props
+  const { inputTodo, todoStatus, onChange, onChangeTodoStatus, onClick, isDisabled } = props
   return (
     <>
       <div className={styles.card}>
@@ -21,6 +22,7 @@ export const AddForm: React.FC<Props> = (props) => {
             placeholder="Input what to do here"
             value={inputTodo}
             onChange={onChange}
+            disabled={isDisabled}
           />
           <div className={styles.pull_down}>
             <AddTodoState
@@ -28,7 +30,7 @@ export const AddForm: React.FC<Props> = (props) => {
               onChangeTodoStatus={onChangeTodoStatus}
             />
           </div>
-          <button className={styles.add_button} onClick={onClick}>
+          <button className={styles.add_button} onClick={onClick} disabled={isDisabled} >
             Add
           </button>
         </div>
