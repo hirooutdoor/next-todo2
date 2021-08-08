@@ -45,6 +45,7 @@ export default function Home() {
   // Add Function //
   const onClickAdd = () => {
     if (!inputTodo || todoStatus === '') return
+    //if (isDisabled === true) return alert("Please complete editing."); 
     const newTodos = [...todos, newTodo]
     setTodos(newTodos)
     setInputTodo('') //clear input
@@ -62,7 +63,8 @@ export default function Home() {
 
   // Edit Function //
   const onClickEdit = (index: number) => {
-
+    currentTodo.title = todos[index].title //set todo.title in edit form
+    currentTodo.status = todos[index].status //set todo.status in edit form
     // alert(index) //for verification
     todos[index].isEditing = true
     setTodos([...todos])
@@ -106,6 +108,7 @@ export default function Home() {
           onChange={onChangeInputTodo}
           onClick={onClickAdd}
           onChangeTodoStatus={onChangeTodoStatus}
+          isDisabled={isDisabled}
         />
 
         {/* Todo List */}
