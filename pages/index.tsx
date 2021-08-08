@@ -17,11 +17,12 @@ export default function Home() {
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
   const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const newTodo = {
     title: inputTodo,
     status: todoStatus,
-    isEditing: false,
+    isEditing: false
   }
   // Add Form's Value of Todo and Status //
   const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -32,10 +33,12 @@ export default function Home() {
 
   // Edit Form's Value of Todo and Status //   
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
     setCurrentTodo({ ...currentTodo, title: e.target.value })
   }
 
   const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
     setCurrentTodo({ ...currentTodo, status: e.target.value })
   }
 
@@ -59,9 +62,11 @@ export default function Home() {
 
   // Edit Function //
   const onClickEdit = (index: number) => {
+    if (todos.isEditing) return;
     // alert(index) //for verification
     todos[index].isEditing = true
-    setCurrentTodo([...todos])
+    setTodos([...todos])
+    setIsDisabled(true);
   }
 
   // Cancel Function //
@@ -69,16 +74,18 @@ export default function Home() {
     // alert(index) //for verification
     todos[index].isEditing = false
     setTodos([...todos])
+    setIsDisabled(false)
   }
 
   // Submit Function //
   const onClickSubmit = (index: number) => {
     // alert(index) //for verification
-    if (!currentTodo.title || currentTodo.status === '') return
+    if (!currentTodo.title || !currentTodo.status) return
     todos[index].title = currentTodo.title
     todos[index].status = currentTodo.status
     todos[index].isEditing = false
-    setTodos([...todos])
+    setCurrentTodo([...todos])
+    setIsDisabled(false)
   }
 
   return (
@@ -130,6 +137,7 @@ export default function Home() {
             onChangeEditTitle={onChangeEditTitle}
             onChangeEditStatus={onChangeEditStatus}
             currentTodo={currentTodo}
+            isDisabled={isDisabled}
           />
           {/* List */}
         </div>

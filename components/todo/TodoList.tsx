@@ -1,24 +1,24 @@
 import styles from 'styles/Home.module.css'
 import { EditForm } from 'components/form/EditForm'
 
-
 type Props = {
   todos: {
     title: string
     status: string
     isEditing: boolean
-  }[],
+  }[]
   currentTodo: {
     title: string
     status: string
     isEditing: boolean
-  },
+  }
   onClickDelete: (index: number) => void
   onClickEdit: (index: number) => void
   onClickCancel: (index: number) => void
   onClickSubmit: (index: number) => void
   onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onChangeEditStatus:React.ChangeEventHandler<HTMLSelectElement>
+  onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
+  isDisabled: boolean
 }
 
 export const TodoList: React.FC<Props> = (props) => {
@@ -30,7 +30,8 @@ export const TodoList: React.FC<Props> = (props) => {
     onClickCancel,
     onClickSubmit,
     onChangeEditTitle,
-    onChangeEditStatus
+    onChangeEditStatus,
+    isDisabled,
   } = props
 
   return (
@@ -54,12 +55,14 @@ export const TodoList: React.FC<Props> = (props) => {
                   <button
                     className={styles.edit_button}
                     onClick={() => onClickEdit(index)}
+                    disabled={isDisabled}
                   >
                     Edit
                   </button>
                   <button
                     className={styles.delete_button}
                     onClick={() => onClickDelete(index)}
+                    disabled={isDisabled}
                   >
                     Delete
                   </button>
