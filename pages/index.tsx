@@ -1,10 +1,10 @@
-import { OrderSortButton } from 'components/select/OrderSort'
-import { AddForm } from 'components/form/AddForm'
-import { TodoList } from 'components/todo/TodoList'
+import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState } from 'react'
 import styles from 'styles/Home.module.css'
+import { TodoList } from 'components/todo/TodoList'
+import { AddForm } from 'components/form/AddForm'
+import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
 
 type TodoType = {
@@ -19,7 +19,7 @@ export default function Home() {
   const [todoStatus, setTodoStatus] = useState<string>('')
   const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const [stateFilter, setStateFilter] = useState<string>("ALL");
+  const [stateFilter, setStateFilter] = useState<string>("All");
 
   const newTodo = {
     title: inputTodo,
@@ -48,8 +48,14 @@ export default function Home() {
     setCurrentTodo({ ...currentTodo, status: e.target.value })
   }
 
+  // Filter Condition Switching //
+  const fileterTodos = todos.filter(todo => {
+    if (stateFilter === 'All') return true;
+    if (stateFilter === 'Not Yet') return todo.status === "Not Yet";
+    if (stateFilter === 'In Progress') return todo.status === "In Progress";
+    if (stateFilter === 'Done') return todo.status === "Done";
+  });
 
-  
   /// ↓↓↓ CLICK ACTION ↓↓↓///
 
   // Add Function //
@@ -101,8 +107,9 @@ export default function Home() {
   }
 
   // Filer Function //
-  const handleFilter = () => {
-    
+  const handleFilter = (stateFilter: string) => {
+    // alert(stateFilter) //for verification
+    setStateFilter(stateFilter)
   }
 
 
@@ -131,7 +138,7 @@ export default function Home() {
         <div className={styles.card}>
           <div className={styles.list_head}>
             {/* Status Filter */}
-            <StatusFilter handleFilter={handleFilter}/>
+            <StatusFilter stateFilter={stateFilter} handleFilter={handleFilter}/>
             {/* Status Filter */}
 
             {/* Order Sort Button*/}
@@ -152,6 +159,7 @@ export default function Home() {
             onChangeEditStatus={onChangeEditStatus}
             currentTodo={currentTodo}
             isDisabled={isDisabled}
+            fileterTodos={fileterTodos}
           />
           {/* List */}
         </div>
