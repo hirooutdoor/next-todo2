@@ -12,6 +12,11 @@ type Props = {
     status: string
     isEditing: boolean
   }
+  fileterTodos: {
+    title: string
+    status: string
+    isEditing: boolean
+  }[]
   onClickDelete: (index: number) => void
   onClickEdit: (index: number) => void
   onClickCancel: (index: number) => void
@@ -32,12 +37,13 @@ export const TodoList: React.FC<Props> = (props) => {
     onChangeEditTitle,
     onChangeEditStatus,
     isDisabled,
+    fileterTodos
   } = props
 
   return (
     <>
       <ul>
-        {todos.map((todo, index) => {
+        {fileterTodos.map((todo, index) => {
           return (
             <li key={index} className={styles.list_row}>
               {todo.isEditing ? (
