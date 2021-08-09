@@ -19,12 +19,16 @@ export default function Home() {
   const [todoStatus, setTodoStatus] = useState<string>('')
   const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [stateFilter, setStateFilter] = useState<string>("ALL");
 
   const newTodo = {
     title: inputTodo,
     status: todoStatus,
     isEditing: false
   }
+
+  /// ↓↓↓ CHANGE STATE ↓↓↓///
+
   // Add Form's Value of Todo and Status //
   const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(e.target.value)
@@ -32,16 +36,21 @@ export default function Home() {
   const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setTodoStatus(e.target.value)
 
-  // Edit Form's Value of Todo and Status //   
+  // Edit Form's Value of Todo //   
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     setCurrentTodo({ ...currentTodo, title: e.target.value })
   }
 
+  // Edit Form's Value of Status //  
   const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
     setCurrentTodo({ ...currentTodo, status: e.target.value })
   }
+
+
+  
+  /// ↓↓↓ CLICK ACTION ↓↓↓///
 
   // Add Function //
   const onClickAdd = () => {
