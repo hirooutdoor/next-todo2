@@ -116,7 +116,7 @@ export default function Home() {
           <div className={styles.list_head}>
             {/* Status Sort */}
             <div className={styles.stateSort_area}>
-              <p>All</p>
+              <p className={styles.is_active}>All</p>
               <p>Not Yet</p>
               <p>In Progress</p>
               <p>Done</p>
