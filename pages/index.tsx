@@ -5,6 +5,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
 import styles from 'styles/Home.module.css'
+import { StatusFilter } from 'components/filter/StatusFilter'
 
 type TodoType = {
   title: string
@@ -90,6 +91,12 @@ export default function Home() {
     setIsDisabled(false)
   }
 
+  // Filer Function //
+  const handleFilter = () => {
+    
+  }
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -114,14 +121,9 @@ export default function Home() {
         {/* Todo List */}
         <div className={styles.card}>
           <div className={styles.list_head}>
-            {/* Status Sort */}
-            <div className={styles.stateSort_area}>
-              <p className={styles.is_active}>All</p>
-              <p>Not Yet</p>
-              <p>In Progress</p>
-              <p>Done</p>
-            </div>
-            {/* State Sort */}
+            {/* Status Filter */}
+            <StatusFilter handleFilter={handleFilter}/>
+            {/* Status Filter */}
 
             {/* Order Sort Button*/}
             <div className={styles.pulldown_orderSort}>
