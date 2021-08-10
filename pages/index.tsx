@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from 'styles/Home.module.css'
@@ -6,6 +6,7 @@ import { TodoList } from 'components/todo/TodoList'
 import { AddForm } from 'components/form/AddForm'
 import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
+import { ContactSupport } from '@material-ui/icons'
 
 type TodoType = {
   title: string
@@ -14,54 +15,58 @@ type TodoType = {
 }
 
 export default function Home() {
+  console.log('Rendering check.') //for verification
+
   const [todos, setTodos] = useState<Array<TodoType>>([])
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
   const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const [stateFilter, setStateFilter] = useState<string>("All");
+  const [isDisabled, setIsDisabled] = useState<boolean>(false)
+  const [stateFilter, setStateFilter] = useState<string>('All')
 
   const newTodo = {
     title: inputTodo,
     status: todoStatus,
-    isEditing: false
+    isEditing: false,
   }
 
   /// ↓↓↓ CHANGE STATE ↓↓↓///
 
   // Add Form's Value of Todo and Status //
-  const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
     setInputTodo(e.target.value)
+  }
 
   const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setTodoStatus(e.target.value)
 
-  // Edit Form's Value of Todo //   
+  // Edit Form's Value of Todo //
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     setCurrentTodo({ ...currentTodo, title: e.target.value })
   }
 
-  // Edit Form's Value of Status //  
+  // Edit Form's Value of Status //
   const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
     setCurrentTodo({ ...currentTodo, status: e.target.value })
   }
 
   // Filter Condition Switching //
-  const fileterTodos = todos.filter(todo => {
-    if (stateFilter === 'All') return true;
-    if (stateFilter === 'Not Yet') return todo.status === "Not Yet";
-    if (stateFilter === 'In Progress') return todo.status === "In Progress";
-    if (stateFilter === 'Done') return todo.status === "Done";
-  });
+  const filterTodos = todos.filter((todo) => {
+    if (stateFilter === 'All') return true
+    if (stateFilter === 'Not Yet') return todo.status === 'Not Yet'
+    if (stateFilter === 'In Progress') return todo.status === 'In Progress'
+    if (stateFilter === 'Done') return todo.status === 'Done'
+  })
 
   /// ↓↓↓ CLICK ACTION ↓↓↓///
 
   // Add Function //
   const onClickAdd = () => {
     if (!inputTodo || todoStatus === '') return
-    //if (isDisabled === true) return alert("Please complete editing."); 
+    //if (isDisabled === true) return alert("Please complete editing.");
     const newTodos = [...todos, newTodo]
     setTodos(newTodos)
     setInputTodo('') //clear input
@@ -84,7 +89,7 @@ export default function Home() {
     // alert(index) //for verification
     todos[index].isEditing = true
     setTodos([...todos])
-    setIsDisabled(true);
+    setIsDisabled(true)
   }
 
   // Cancel Function //
@@ -112,7 +117,6 @@ export default function Home() {
     setStateFilter(stateFilter)
   }
 
-
   return (
     <div className={styles.container}>
       <Head>
@@ -125,20 +129,25 @@ export default function Home() {
         <h1 className={styles.appTitle}>NEXT TODO</h1>
 
         {/* Add Form */}
+        {todos.length >= 20 &&
+          <p style={{color:"red"}}>You can only keep 20 todos at a time.</p>}
         <AddForm
           inputTodo={inputTodo}
           todoStatus={todoStatus}
           onChange={onChangeInputTodo}
           onClick={onClickAdd}
           onChangeTodoStatus={onChangeTodoStatus}
-          isDisabled={isDisabled}
+          isDisabled={todos.length > 20 || isDisabled}
         />
 
         {/* Todo List */}
         <div className={styles.card}>
           <div className={styles.list_head}>
             {/* Status Filter */}
-            <StatusFilter stateFilter={stateFilter} handleFilter={handleFilter}/>
+            <StatusFilter
+              stateFilter={stateFilter}
+              handleFilter={handleFilter}
+            />
             {/* Status Filter */}
 
             {/* Order Sort Button*/}
@@ -159,7 +168,7 @@ export default function Home() {
             onChangeEditStatus={onChangeEditStatus}
             currentTodo={currentTodo}
             isDisabled={isDisabled}
-            fileterTodos={fileterTodos}
+            filterTodos={filterTodos}
           />
           {/* List */}
         </div>
@@ -183,4 +192,3 @@ export default function Home() {
 function title<T>(title: any, string: any) {
   throw new Error('Function not implemented.')
 }
-
