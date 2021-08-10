@@ -12,7 +12,7 @@ type Props = {
     status: string
     isEditing: boolean
   }
-  fileterTodos: {
+  filterTodos: {
     title: string
     status: string
     isEditing: boolean
@@ -37,13 +37,13 @@ export const TodoList: React.FC<Props> = (props) => {
     onChangeEditTitle,
     onChangeEditStatus,
     isDisabled,
-    fileterTodos
+    filterTodos
   } = props
 
   return (
     <>
       <ul>
-        {fileterTodos.map((todo, index) => {
+        {filterTodos.map((todo, index) => {
           return (
             <li key={index} className={styles.list_row}>
               {todo.isEditing ? (
