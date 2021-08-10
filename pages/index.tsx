@@ -23,6 +23,7 @@ export default function Home() {
   const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [stateFilter, setStateFilter] = useState<string>('All')
+  const [hoverInFilter, setHoverInFilter] = useState<string>('All')
 
   const newTodo = {
     title: inputTodo,
@@ -55,6 +56,10 @@ export default function Home() {
 
   // Filter Condition Switching //
   const filterTodos = todos.filter((todo) => {
+    if (hoverInFilter === 'All') return true
+    if (hoverInFilter === 'Not Yet') return todo.status === 'Not Yet'
+    if (hoverInFilter === 'In Progress') return todo.status === 'In Progress'
+    if (hoverInFilter === 'Done') return todo.status === 'Done'
     if (stateFilter === 'All') return true
     if (stateFilter === 'Not Yet') return todo.status === 'Not Yet'
     if (stateFilter === 'In Progress') return todo.status === 'In Progress'
@@ -117,6 +122,15 @@ export default function Home() {
     setStateFilter(stateFilter)
   }
 
+  const handleHoverInFilter = (hoverInFilter: string) => {
+    setHoverInFilter(hoverInFilter)
+  }
+
+  const handleHoverOutFilter = () => {
+    setHoverInFilter(stateFilter)
+  }
+  
+
   return (
     <div className={styles.container}>
       <Head>
@@ -146,7 +160,10 @@ export default function Home() {
             {/* Status Filter */}
             <StatusFilter
               stateFilter={stateFilter}
+              hoverInFilter={hoverInFilter}
               handleFilter={handleFilter}
+              handleHoverInFilter={handleHoverInFilter}
+              handleHoverOutFilter={handleHoverOutFilter}
             />
             {/* Status Filter */}
 
