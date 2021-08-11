@@ -1,5 +1,6 @@
 import styles from 'styles/Home.module.css'
 import { EditForm } from 'components/form/EditForm'
+import { memo } from 'react'
 
 type Props = {
   todos: {
@@ -26,9 +27,9 @@ type Props = {
   isDisabled: boolean
 }
 
-export const TodoList: React.FC<Props> = (props) => {
+export const TodoList: React.FC<Props> = memo((props) => {
+  TodoList.displayName = 'TodoList';
   const {
-    todos,
     currentTodo,
     onClickDelete,
     onClickEdit,
@@ -80,4 +81,5 @@ export const TodoList: React.FC<Props> = (props) => {
       </ul>
     </>
   )
-}
+})
+

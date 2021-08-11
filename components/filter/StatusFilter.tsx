@@ -1,49 +1,73 @@
 import styles from 'styles/Home.module.css'
 import classnames from 'classnames'
+import { memo, useCallback } from 'react'
 
 type Props = {
-  handleFilter: (stateFilter: string) => void
+  handleClickFilter: (clickFilter: string) => void
   handleHoverInFilter: (hoverInFilter: string) => void
   handleHoverOutFilter: () => void
-  stateFilter: string
+  clickFilter: string
   hoverInFilter: string
 }
 
-export const StatusFilter: React.FC<Props> = (props) => {
-  const { handleFilter, stateFilter, hoverInFilter, handleHoverInFilter, handleHoverOutFilter } = props
+export const StatusFilter: React.FC<Props> = memo((props) => {
+  StatusFilter.displayName = 'StatusFilter'
+  const {
+    handleClickFilter,
+    clickFilter,
+    hoverInFilter,
+    handleHoverInFilter,
+    handleHoverOutFilter,
+  } = props
 
   return (
     <>
       <div className={styles.stateSort_area}>
         <p
-          className={classnames({ [styles.is_active]: stateFilter === 'All' || hoverInFilter === 'All' })}
-          onClick={() => handleFilter('All')} onMouseEnter={() => handleHoverInFilter('All')} onMouseLeave={handleHoverOutFilter}
+          className={classnames({
+            [styles.is_active]:
+              clickFilter === 'All' || hoverInFilter === 'All',
+          })}
+          onClick={() => handleClickFilter('All')}
+          onMouseEnter={() => handleHoverInFilter('All')}
+          onMouseLeave={handleHoverOutFilter}
         >
           All
         </p>
         <p
           className={classnames({
-            [styles.is_active]: stateFilter === 'Not Yet'|| hoverInFilter === 'Not Yet',
+            [styles.is_active]:
+              clickFilter === 'Not Yet' || hoverInFilter === 'Not Yet',
           })}
-          onClick={() => handleFilter('Not Yet') } onMouseEnter={() => handleHoverInFilter('Not Yet')} onMouseLeave={handleHoverOutFilter}
+          onClick={() => handleClickFilter('Not Yet')}
+          onMouseEnter={() => handleHoverInFilter('Not Yet')}
+          onMouseLeave={handleHoverOutFilter}
         >
           Not Yet
         </p>
         <p
           className={classnames({
-            [styles.is_active]: stateFilter === 'In Progress'|| hoverInFilter === 'In Progress',
+            [styles.is_active]:
+              clickFilter === 'In Progress' || hoverInFilter === 'In Progress',
           })}
-          onClick={() => handleFilter('In Progress')} onMouseEnter={() => handleHoverInFilter('In Progress')} onMouseLeave={handleHoverOutFilter}
+          onClick={() => handleClickFilter('In Progress')}
+          onMouseEnter={() => handleHoverInFilter('In Progress')}
+          onMouseLeave={handleHoverOutFilter}
         >
           In Progress
         </p>
         <p
-          className={classnames({ [styles.is_active]: stateFilter === 'Done' || hoverInFilter === 'Done' })}
-          onClick={() => handleFilter('Done')} onMouseEnter={() => handleHoverInFilter('Done')} onMouseLeave={handleHoverOutFilter}
+          className={classnames({
+            [styles.is_active]:
+              clickFilter === 'Done' || hoverInFilter === 'Done',
+          })}
+          onClick={() => handleClickFilter('Done')}
+          onMouseEnter={() => handleHoverInFilter('Done')}
+          onMouseLeave={handleHoverOutFilter}
         >
           Done
         </p>
       </div>
     </>
   )
-}
+})

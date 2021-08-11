@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from 'styles/Home.module.css'
@@ -22,14 +22,10 @@ export default function Home() {
   const [todoStatus, setTodoStatus] = useState<string>('')
   const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
-  const [stateFilter, setStateFilter] = useState<string>('All')
+  const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
 
-  const newTodo = {
-    title: inputTodo,
-    status: todoStatus,
-    isEditing: false,
-  }
+  
 
   /// ↓↓↓ CHANGE STATE ↓↓↓///
 
@@ -56,80 +52,97 @@ export default function Home() {
 
   // Filter Condition Switching //
   const filterTodos = todos.filter((todo) => {
-    if (hoverInFilter === 'All') return true
-    if (hoverInFilter === 'Not Yet') return todo.status === 'Not Yet'
-    if (hoverInFilter === 'In Progress') return todo.status === 'In Progress'
-    if (hoverInFilter === 'Done') return todo.status === 'Done'
-    if (stateFilter === 'All') return true
-    if (stateFilter === 'Not Yet') return todo.status === 'Not Yet'
-    if (stateFilter === 'In Progress') return todo.status === 'In Progress'
-    if (stateFilter === 'Done') return todo.status === 'Done'
-  })
+      if (hoverInFilter === 'All') return true
+      if (hoverInFilter === 'Not Yet') return todo.status === 'Not Yet'
+      if (hoverInFilter === 'In Progress') return todo.status === 'In Progress'
+      if (hoverInFilter === 'Done') return todo.status === 'Done'
+      if (clickFilter === 'All') return true
+      if (clickFilter === 'Not Yet') return todo.status === 'Not Yet'
+      if (clickFilter === 'In Progress') return todo.status === 'In Progress'
+      if (clickFilter === 'Done') return todo.status === 'Done'
+    })
+  
 
   /// ↓↓↓ CLICK ACTION ↓↓↓///
 
   // Add Function //
-  const onClickAdd = () => {
+  const onClickAdd = useCallback(() => {
     if (!inputTodo || todoStatus === '') return
     //if (isDisabled === true) return alert("Please complete editing.");
+    const newTodo = {
+      title: inputTodo,
+      status: todoStatus,
+      isEditing: false,
+    }
     const newTodos = [...todos, newTodo]
     setTodos(newTodos)
     setInputTodo('') //clear input
     setTodoStatus('') //clear status
-  }
+  }, [todos, inputTodo, todoStatus])
 
   // Delete Function //
-  const onClickDelete = (index: number) => {
-    //alert(index) //for verification
-    //Ask Yes or No *** Add later ***
-    const newTodos = [...todos]
-    newTodos.splice(index, 1)
-    setTodos(newTodos)
-  }
+  const onClickDelete = useCallback(
+    (index: number) => {
+      //alert(index) //for verification
+      //Ask Yes or No *** Add later ***
+      const newTodos = [...todos]
+      newTodos.splice(index, 1)
+      setTodos(newTodos)
+    },
+    [todos]
+  )
 
   // Edit Function //
-  const onClickEdit = (index: number) => {
-    currentTodo.title = todos[index].title //set todo.title in edit form
-    currentTodo.status = todos[index].status //set todo.status in edit form
-    // alert(index) //for verification
-    todos[index].isEditing = true
-    setTodos([...todos])
-    setIsDisabled(true)
-  }
+  const onClickEdit = useCallback(
+    (index: number) => {
+      currentTodo.title = todos[index].title //set todo.title in edit form
+      currentTodo.status = todos[index].status //set todo.status in edit form
+      // alert(index) //for verification
+      todos[index].isEditing = true
+      setTodos([...todos])
+      setIsDisabled(true)
+    },
+    [currentTodo, todos]
+  )
 
   // Cancel Function //
-  const onClickCancel = (index: number) => {
-    // alert(index) //for verification
-    todos[index].isEditing = false
-    setTodos([...todos])
-    setIsDisabled(false)
-  }
+  const onClickCancel = useCallback(
+    (index: number) => {
+      // alert(index) //for verification
+      todos[index].isEditing = false
+      setTodos([...todos])
+      setIsDisabled(false)
+    },
+    [todos]
+  )
 
   // Submit Function //
-  const onClickSubmit = (index: number) => {
-    // alert(index) //for verification
-    if (!currentTodo.title || !currentTodo.status) return
-    todos[index].title = currentTodo.title
-    todos[index].status = currentTodo.status
-    todos[index].isEditing = false
-    setCurrentTodo([...todos])
-    setIsDisabled(false)
-  }
+  const onClickSubmit = useCallback(
+    (index: number) => {
+      // alert(index) //for verification
+      if (!currentTodo.title || !currentTodo.status) return
+      todos[index].title = currentTodo.title
+      todos[index].status = currentTodo.status
+      todos[index].isEditing = false
+      setCurrentTodo([...todos])
+      setIsDisabled(false)
+    },
+    [todos, currentTodo.title, currentTodo.status]
+  )
 
   // Filer Function //
-  const handleFilter = (stateFilter: string) => {
-    // alert(stateFilter) //for verification
-    setStateFilter(stateFilter)
-  }
+  const handleClickFilter = useCallback((clickFilter: string) => {
+    // alert(clickFilter) //for verification
+    setClickFilter(clickFilter)
+  }, [])
 
-  const handleHoverInFilter = (hoverInFilter: string) => {
+  const handleHoverInFilter = useCallback((hoverInFilter: string) => {
     setHoverInFilter(hoverInFilter)
-  }
+  }, [])
 
-  const handleHoverOutFilter = () => {
-    setHoverInFilter(stateFilter)
-  }
-  
+  const handleHoverOutFilter = useCallback(() => {
+    setHoverInFilter(clickFilter)
+  }, [clickFilter])
 
   return (
     <div className={styles.container}>
@@ -143,8 +156,9 @@ export default function Home() {
         <h1 className={styles.appTitle}>NEXT TODO</h1>
 
         {/* Add Form */}
-        {todos.length >= 20 &&
-          <p style={{color:"red"}}>You can only keep 20 todos at a time.</p>}
+        {todos.length >= 20 && (
+          <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
+        )}
         <AddForm
           inputTodo={inputTodo}
           todoStatus={todoStatus}
@@ -159,9 +173,9 @@ export default function Home() {
           <div className={styles.list_head}>
             {/* Status Filter */}
             <StatusFilter
-              stateFilter={stateFilter}
+              clickFilter={clickFilter}
               hoverInFilter={hoverInFilter}
-              handleFilter={handleFilter}
+              handleClickFilter={handleClickFilter}
               handleHoverInFilter={handleHoverInFilter}
               handleHoverOutFilter={handleHoverOutFilter}
             />

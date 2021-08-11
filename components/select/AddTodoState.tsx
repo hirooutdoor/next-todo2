@@ -1,4 +1,5 @@
 import styles from 'styles/Pulldown.module.css'
+import { memo } from 'react'
 
 type Props = {
   todoStatus: string
@@ -6,7 +7,8 @@ type Props = {
   isDisabled: boolean
 }
 
-export const AddTodoState: React.FC<Props> = (props) => {
+export const AddTodoState: React.FC<Props> = memo((props) => {
+  AddTodoState.displayName = 'AddTodoState';
   const { todoStatus, onChangeTodoStatus, isDisabled } = props
 
   return (
@@ -24,3 +26,4 @@ export const AddTodoState: React.FC<Props> = (props) => {
     </>
   )
 }
+)
