@@ -7,6 +7,7 @@ import { AddForm } from 'components/form/AddForm'
 import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
 import { ContactSupport } from '@material-ui/icons'
+import React from "react"
 
 type TodoType = {
   title: string
@@ -24,8 +25,7 @@ export default function Home() {
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
-
-  
+  const [orderSort, setOrderSort] = useState<string>('Oldest')
 
   /// ↓↓↓ CHANGE STATE ↓↓↓///
 
@@ -50,18 +50,45 @@ export default function Home() {
     setCurrentTodo({ ...currentTodo, status: e.target.value })
   }
 
+  // Order Sort Value //
+  const onChangeOrderSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+    setOrderSort(e.target.value)
+      // Sort Todos by Name //
+  }
+
   // Filter Condition Switching //
-  const filterTodos = todos.filter((todo) => {
-      if (hoverInFilter === 'All') return true
-      if (hoverInFilter === 'Not Yet') return todo.status === 'Not Yet'
-      if (hoverInFilter === 'In Progress') return todo.status === 'In Progress'
-      if (hoverInFilter === 'Done') return todo.status === 'Done'
-      if (clickFilter === 'All') return true
-      if (clickFilter === 'Not Yet') return todo.status === 'Not Yet'
-      if (clickFilter === 'In Progress') return todo.status === 'In Progress'
-      if (clickFilter === 'Done') return todo.status === 'Done'
-    })
+    //Hover filter function //
+  const hoverInFilterState = todos.filter((todo) => {
+    if (hoverInFilter === 'All') return true
+    if (hoverInFilter === 'Not Yet') return todo.status === 'Not Yet'
+    if (hoverInFilter === 'In Progress') return todo.status === 'In Progress'
+    if (hoverInFilter === 'Done') return todo.status === 'Done'
+  })
+    //Click filter function //
+  const clickFilterState = todos.filter((todo) => {
+    if (clickFilter === 'All') return true
+    if (clickFilter === 'Not Yet') return todo.status === 'Not Yet'
+    if (clickFilter === 'In Progress') return todo.status === 'In Progress'
+    if (clickFilter === 'Done') return todo.status === 'Done'
+  })
   
+  const filterTodos = hoverInFilterState || clickFilterState
+  
+  useEffect(()=>{filterTodos},[filterTodos])  
+
+  // Order Sort //
+  // const sortByName = filterTodos.sort((a, b) => {
+  //   if (a.title > b.title) {
+  //     return 1;
+  //   } else {
+  //     return -1;
+  //   }
+
+  // })
+  // if (orderSort === 'Name') return console.log(sortByName)
+  // if (orderSort === 'Newest') return console.log("Newest")
+  // if (orderSort === 'Oldest') return console.log("Oldest")
 
   /// ↓↓↓ CLICK ACTION ↓↓↓///
 
@@ -137,10 +164,12 @@ export default function Home() {
   }, [])
 
   const handleHoverInFilter = useCallback((hoverInFilter: string) => {
+    console.log("hoge")
     setHoverInFilter(hoverInFilter)
   }, [])
 
   const handleHoverOutFilter = useCallback(() => {
+    console.log("hoge")
     setHoverInFilter(clickFilter)
   }, [clickFilter])
 
@@ -165,7 +194,7 @@ export default function Home() {
           onChange={onChangeInputTodo}
           onClick={onClickAdd}
           onChangeTodoStatus={onChangeTodoStatus}
-          isDisabled={todos.length > 20 || isDisabled}
+          isDisabled={todos.length >= 20 || isDisabled}
         />
 
         {/* Todo List */}
@@ -183,7 +212,7 @@ export default function Home() {
 
             {/* Order Sort Button*/}
             <div className={styles.pulldown_orderSort}>
-              <OrderSortButton />
+              <OrderSortButton orderSort={orderSort} onChangeOrderSort={onChangeOrderSort} />
             </div>
             {/* id & name Sort Button*/}
           </div>

@@ -8,13 +8,18 @@ type Props = {
 }
 
 export const AddTodoState: React.FC<Props> = memo((props) => {
-  AddTodoState.displayName = 'AddTodoState';
+  AddTodoState.displayName = 'AddTodoState'
   const { todoStatus, onChangeTodoStatus, isDisabled } = props
 
   return (
     <>
       <div className={`${styles.select} ${styles.menu}`}>
-        <select value={todoStatus} onChange={onChangeTodoStatus} required disabled={isDisabled}>
+        <select
+          value={todoStatus}
+          onChange={onChangeTodoStatus}
+          required
+          disabled={isDisabled}
+        >
           <option value="" hidden>
             Choose Status
           </option>
@@ -25,5 +30,4 @@ export const AddTodoState: React.FC<Props> = memo((props) => {
       </div>
     </>
   )
-}
-)
+})
