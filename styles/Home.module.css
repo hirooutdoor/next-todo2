@@ -32,13 +32,39 @@
   width: 150%;
 }
 
+.todo_card {
+  margin: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  width: 150%;
+  min-height:100vh;
+  max-height:inherit;
+}
+
+
+
 .card:hover,
 .card:focus,
 .card:active {
   border-color: #0070f3;
 }
 
+.todo_card:hover,
+.todo_card:focus,
+.todo_card:active {
+  border-color: #0070f3;
+}
+
 .card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+.todo_card h2 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
 }
