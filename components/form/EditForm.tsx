@@ -11,7 +11,7 @@ type Props = {
     title: string
     status: string
     isEditing: boolean
-  }[]
+  }
 }
 
 export const EditForm: React.FC<Props> = memo((props) => {
