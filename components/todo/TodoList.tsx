@@ -18,6 +18,11 @@ type Props = {
     status: string
     isEditing: boolean
   }[]
+  orderSortTodos: {
+    title: string
+    status: string
+    isEditing: boolean
+  }[]
   onClickDelete: (index: number) => void
   onClickEdit: (index: number) => void
   onClickCancel: (index: number) => void
@@ -38,13 +43,14 @@ export const TodoList: React.FC<Props> = memo((props) => {
     onChangeEditTitle,
     onChangeEditStatus,
     isDisabled,
-    filterTodos
+    filterTodos,
+    orderSortTodos
   } = props
 
   return (
     <>
       <ul>
-        {filterTodos.map((todo, index) => {
+        {orderSortTodos.map((todo, index) => {
           return (
             <li key={index} className={styles.list_row}>
               {todo.isEditing ? (

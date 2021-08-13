@@ -8,6 +8,7 @@ import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
 import { ContactSupport } from '@material-ui/icons'
 import React from "react"
+import { useMemo } from 'react'
 
 type TodoType = {
   title: string
@@ -74,28 +75,30 @@ export default function Home() {
   })
   
   const filterTodos = hoverInFilterState || clickFilterState
-  
   useEffect(()=>{filterTodos},[filterTodos])  
 
   // Order Sort //
-  // const sortByName = filterTodos.sort((a, b) => {
-  //   if (a.title > b.title) {
-  //     return 1;
-  //   } else {
-  //     return -1;
-  //   }
-
-  // })
-  // if (orderSort === 'Name') return console.log(sortByName)
-  // if (orderSort === 'Newest') return console.log("Newest")
-  // if (orderSort === 'Oldest') return console.log("Oldest")
+  // const copyFilterTodos = filterTodos.slice()
+  const copyFilterTodos = [...filterTodos]
+  const orderSortTodos = copyFilterTodos.sort((a, b) => {
+    if (orderSort === "Oldest") return 1;
+    if (orderSort === "Newest") return -1;
+    if (orderSort === "Name") {
+      if (a.title > b.title) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+  })
+  useMemo(()=>{orderSortTodos},[orderSortTodos])
+  console.log(orderSortTodos)
 
   /// ↓↓↓ CLICK ACTION ↓↓↓///
 
   // Add Function //
   const onClickAdd = useCallback(() => {
     if (!inputTodo || todoStatus === '') return
-    //if (isDisabled === true) return alert("Please complete editing.");
     const newTodo = {
       title: inputTodo,
       status: todoStatus,
@@ -112,35 +115,37 @@ export default function Home() {
     (index: number) => {
       //alert(index) //for verification
       //Ask Yes or No *** Add later ***
-      const newTodos = [...todos]
+      const newTodos = [...orderSortTodos]
       newTodos.splice(index, 1)
       setTodos(newTodos)
     },
-    [todos]
+    [orderSortTodos]
   )
 
   // Edit Function //
   const onClickEdit = useCallback(
     (index: number) => {
-      currentTodo.title = todos[index].title //set todo.title in edit form
-      currentTodo.status = todos[index].status //set todo.status in edit form
+      currentTodo.title = orderSortTodos[index].title //set todo.title in edit form
+      currentTodo.status = orderSortTodos[index].status //set todo.status in edit form
       // alert(index) //for verification
-      todos[index].isEditing = true
-      setTodos([...todos])
+      orderSortTodos[index].isEditing = true
+      setTodos([...orderSortTodos])
+      if (orderSort === "Newest") return setTodos([...orderSortTodos].reverse())
       setIsDisabled(true)
     },
-    [currentTodo, todos]
+    [currentTodo, orderSortTodos, orderSort]
   )
 
   // Cancel Function //
   const onClickCancel = useCallback(
     (index: number) => {
       // alert(index) //for verification
-      todos[index].isEditing = false
-      setTodos([...todos])
+      orderSortTodos[index].isEditing = false
+      setTodos([...orderSortTodos])
+      if (orderSort === "Newest") return setTodos([...orderSortTodos].reverse())
       setIsDisabled(false)
     },
-    [todos]
+    [orderSortTodos, orderSort]
   )
 
   // Submit Function //
@@ -148,13 +153,13 @@ export default function Home() {
     (index: number) => {
       // alert(index) //for verification
       if (!currentTodo.title || !currentTodo.status) return
-      todos[index].title = currentTodo.title
-      todos[index].status = currentTodo.status
-      todos[index].isEditing = false
-      setCurrentTodo([...todos])
+      orderSortTodos[index].title = currentTodo.title
+      orderSortTodos[index].status = currentTodo.status
+      orderSortTodos[index].isEditing = false
+      setCurrentTodo([...orderSortTodos])
       setIsDisabled(false)
     },
-    [todos, currentTodo.title, currentTodo.status]
+    [orderSortTodos, currentTodo.title, currentTodo.status]
   )
 
   // Filer Function //
@@ -164,12 +169,12 @@ export default function Home() {
   }, [])
 
   const handleHoverInFilter = useCallback((hoverInFilter: string) => {
-    console.log("hoge")
+    // console.log("hoge") //for verificaiton
     setHoverInFilter(hoverInFilter)
   }, [])
 
   const handleHoverOutFilter = useCallback(() => {
-    console.log("hoge")
+    // console.log("hoge") //for verificaiton
     setHoverInFilter(clickFilter)
   }, [clickFilter])
 
@@ -198,7 +203,7 @@ export default function Home() {
         />
 
         {/* Todo List */}
-        <div className={styles.card}>
+        <div className={styles.todo_card}>
           <div className={styles.list_head}>
             {/* Status Filter */}
             <StatusFilter
@@ -207,12 +212,13 @@ export default function Home() {
               handleClickFilter={handleClickFilter}
               handleHoverInFilter={handleHoverInFilter}
               handleHoverOutFilter={handleHoverOutFilter}
+              isDisabled={isDisabled}
             />
             {/* Status Filter */}
 
             {/* Order Sort Button*/}
             <div className={styles.pulldown_orderSort}>
-              <OrderSortButton orderSort={orderSort} onChangeOrderSort={onChangeOrderSort} />
+              <OrderSortButton orderSort={orderSort} onChangeOrderSort={onChangeOrderSort} isDisabled={isDisabled}/>
             </div>
             {/* id & name Sort Button*/}
           </div>
@@ -229,6 +235,7 @@ export default function Home() {
             currentTodo={currentTodo}
             isDisabled={isDisabled}
             filterTodos={filterTodos}
+            orderSortTodos={orderSortTodos}
           />
           {/* List */}
         </div>
