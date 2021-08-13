@@ -114,9 +114,14 @@ export default function Home() {
     (index: number) => {
       //alert(index) //for verification
       //Ask Yes or No *** Add later ***
-      const newTodos = [...orderSortTodos]
-      newTodos.splice(index, 1)
-      setTodos(newTodos)
+      const askDelete = confirm('Are you sure?')
+      if (askDelete) {
+        const newTodos = [...orderSortTodos]
+        newTodos.splice(index, 1)
+        setTodos(newTodos)
+      } else {
+        null
+      }
     },
     [orderSortTodos]
   )
