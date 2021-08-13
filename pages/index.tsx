@@ -40,13 +40,14 @@ export default function Home() {
   // Edit Form's Value of Todo //
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setCurrentTodo({ ...currentTodo, title: e.target.value })
+
+    setCurrentTodo({ ...currentTodo, title: e.currentTarget.value })
   }
 
   // Edit Form's Value of Status //
   const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
-    setCurrentTodo({ ...currentTodo, status: e.target.value })
+    setCurrentTodo({ ...currentTodo, status: e.currentTarget.value })
   }
 
   // Order Sort Value //
