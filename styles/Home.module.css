@@ -237,6 +237,10 @@
   border-bottom: #eaeaea 2px solid;
 }
 
+.is_nonactive {
+  pointer-events: none;
+}
+
 /* Oder Sort Button */
 .pulldown_orderSort {
   position: relative;

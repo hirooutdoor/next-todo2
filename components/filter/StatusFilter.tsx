@@ -8,6 +8,7 @@ type Props = {
   handleHoverOutFilter: () => void
   clickFilter: string
   hoverInFilter: string
+  isDisabled: boolean
 }
 
 export const StatusFilter: React.FC<Props> = memo((props) => {
@@ -18,16 +19,20 @@ export const StatusFilter: React.FC<Props> = memo((props) => {
     hoverInFilter,
     handleHoverInFilter,
     handleHoverOutFilter,
+    isDisabled,
   } = props
 
   return (
     <>
       <div className={styles.stateSort_area}>
         <p
-          className={classnames({
-            [styles.is_active]:
-              clickFilter === 'All' || hoverInFilter === 'All',
-          })}
+          className={classnames(
+            {
+              [styles.is_active]:
+                clickFilter === 'All' || hoverInFilter === 'All',
+            },
+            { [styles.is_nonactive]: isDisabled === true }
+          )}
           onClick={() => handleClickFilter('All')}
           onMouseEnter={() => handleHoverInFilter('All')}
           onMouseLeave={handleHoverOutFilter}
@@ -35,10 +40,13 @@ export const StatusFilter: React.FC<Props> = memo((props) => {
           All
         </p>
         <p
-          className={classnames({
-            [styles.is_active]:
-              clickFilter === 'Not Yet' || hoverInFilter === 'Not Yet',
-          })}
+          className={classnames(
+            {
+              [styles.is_active]:
+                clickFilter === 'Not Yet' || hoverInFilter === 'Not Yet',
+            },
+            { [styles.is_nonactive]: isDisabled === true }
+          )}
           onClick={() => handleClickFilter('Not Yet')}
           onMouseEnter={() => handleHoverInFilter('Not Yet')}
           onMouseLeave={handleHoverOutFilter}
@@ -46,10 +54,14 @@ export const StatusFilter: React.FC<Props> = memo((props) => {
           Not Yet
         </p>
         <p
-          className={classnames({
-            [styles.is_active]:
-              clickFilter === 'In Progress' || hoverInFilter === 'In Progress',
-          })}
+          className={classnames(
+            {
+              [styles.is_active]:
+                clickFilter === 'In Progress' ||
+                hoverInFilter === 'In Progress',
+            },
+            { [styles.is_nonactive]: isDisabled === true }
+          )}
           onClick={() => handleClickFilter('In Progress')}
           onMouseEnter={() => handleHoverInFilter('In Progress')}
           onMouseLeave={handleHoverOutFilter}
@@ -57,10 +69,13 @@ export const StatusFilter: React.FC<Props> = memo((props) => {
           In Progress
         </p>
         <p
-          className={classnames({
-            [styles.is_active]:
-              clickFilter === 'Done' || hoverInFilter === 'Done',
-          })}
+          className={classnames(
+            {
+              [styles.is_active]:
+                clickFilter === 'Done' || hoverInFilter === 'Done',
+            },
+            { [styles.is_nonactive]: isDisabled === true }
+          )}
           onClick={() => handleClickFilter('Done')}
           onMouseEnter={() => handleHoverInFilter('Done')}
           onMouseLeave={handleHoverOutFilter}
