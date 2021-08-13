@@ -12,7 +12,7 @@ type Props = {
     title: string
     status: string
     isEditing: boolean
-  }
+  }[]
   filterTodos: {
     title: string
     status: string
