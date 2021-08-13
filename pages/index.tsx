@@ -6,8 +6,6 @@ import { TodoList } from 'components/todo/TodoList'
 import { AddForm } from 'components/form/AddForm'
 import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
-import { ContactSupport } from '@material-ui/icons'
-import React from "react"
 import { useMemo } from 'react'
 
 type TodoType = {
