@@ -160,7 +160,7 @@ export default function Home() {
       orderSortTodos[index].title = currentTodo.title
       orderSortTodos[index].status = currentTodo.status
       orderSortTodos[index].isEditing = false
-      setCurrentTodo([...orderSortTodos])
+      setTodos([...orderSortTodos])
       setIsDisabled(false)
     },
     [orderSortTodos, currentTodo.title, currentTodo.status]
