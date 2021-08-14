@@ -88,6 +88,7 @@ export default function Home() {
         return -1;
       }
     }
+    return 0
   })
   useMemo(()=>{orderSortTodos},[orderSortTodos])
   console.log(orderSortTodos)
