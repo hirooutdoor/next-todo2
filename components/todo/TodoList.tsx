@@ -1,5 +1,6 @@
 import styles from 'styles/Home.module.css'
 import { EditForm } from 'components/form/EditForm'
+import { memo } from 'react'
 
 type Props = {
   todos: {
@@ -17,6 +18,11 @@ type Props = {
     status: string
     isEditing: boolean
   }[]
+  orderSortTodos: {
+    title: string
+    status: string
+    isEditing: boolean
+  }[]
   onClickDelete: (index: number) => void
   onClickEdit: (index: number) => void
   onClickCancel: (index: number) => void
@@ -26,9 +32,9 @@ type Props = {
   isDisabled: boolean
 }
 
-export const TodoList: React.FC<Props> = (props) => {
+export const TodoList: React.FC<Props> = memo((props) => {
+  TodoList.displayName = 'TodoList';
   const {
-    todos,
     currentTodo,
     onClickDelete,
     onClickEdit,
@@ -37,13 +43,14 @@ export const TodoList: React.FC<Props> = (props) => {
     onChangeEditTitle,
     onChangeEditStatus,
     isDisabled,
-    filterTodos
+    filterTodos,
+    orderSortTodos
   } = props
 
   return (
     <>
       <ul>
-        {filterTodos.map((todo, index) => {
+        {orderSortTodos.map((todo, index) => {
           return (
             <li key={index} className={styles.list_row}>
               {todo.isEditing ? (
@@ -80,4 +87,5 @@ export const TodoList: React.FC<Props> = (props) => {
       </ul>
     </>
   )
-}
+})
+

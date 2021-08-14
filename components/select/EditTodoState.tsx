@@ -1,4 +1,5 @@
 import styles from 'styles/Pulldown.module.css'
+import { memo } from 'react'
 
 type Props = {
   onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
@@ -9,7 +10,8 @@ type Props = {
   }
 }
 
-export const EditTodoState: React.FC<Props> = (props) => {
+export const EditTodoState: React.FC<Props> = memo((props) => {
+  EditTodoState.displayName = 'EditTodoState';
   const {
     onChangeEditStatus,
     currentTodo
@@ -34,3 +36,4 @@ export const EditTodoState: React.FC<Props> = (props) => {
     </>
   )
 }
+)

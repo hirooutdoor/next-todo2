@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from 'styles/Home.module.css'
@@ -6,7 +6,7 @@ import { TodoList } from 'components/todo/TodoList'
 import { AddForm } from 'components/form/AddForm'
 import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
-import { ContactSupport } from '@material-ui/icons'
+import { useMemo } from 'react'
 
 type TodoType = {
   title: string
@@ -20,15 +20,11 @@ export default function Home() {
   const [todos, setTodos] = useState<Array<TodoType>>([])
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
-  const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
+  const [currentTodo, setCurrentTodo] = useState<TodoType>({title: "", status: "", isEditing:false})
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
-  const [stateFilter, setStateFilter] = useState<string>('All')
-
-  const newTodo = {
-    title: inputTodo,
-    status: todoStatus,
-    isEditing: false,
-  }
+  const [clickFilter, setClickFilter] = useState<string>('All')
+  const [hoverInFilter, setHoverInFilter] = useState<string>('All')
+  const [orderSort, setOrderSort] = useState<string>('Oldest')
 
   /// ↓↓↓ CHANGE STATE ↓↓↓///
 
@@ -44,78 +40,147 @@ export default function Home() {
   // Edit Form's Value of Todo //
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setCurrentTodo({ ...currentTodo, title: e.target.value })
+    setCurrentTodo({ ...currentTodo, title: e.currentTarget.value })
   }
 
   // Edit Form's Value of Status //
   const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
-    setCurrentTodo({ ...currentTodo, status: e.target.value })
+    setCurrentTodo({ ...currentTodo, status: e.currentTarget.value })
+  }
+
+  // Order Sort Value //
+  const onChangeOrderSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+    setOrderSort(e.target.value)
+      // Sort Todos by Name //
   }
 
   // Filter Condition Switching //
-  const filterTodos = todos.filter((todo) => {
-    if (stateFilter === 'All') return true
-    if (stateFilter === 'Not Yet') return todo.status === 'Not Yet'
-    if (stateFilter === 'In Progress') return todo.status === 'In Progress'
-    if (stateFilter === 'Done') return todo.status === 'Done'
+    //Hover filter function //
+  const hoverInFilterState = todos.filter((todo) => {
+    if (hoverInFilter === 'All') return true
+    if (hoverInFilter === 'Not Yet') return todo.status === 'Not Yet'
+    if (hoverInFilter === 'In Progress') return todo.status === 'In Progress'
+    if (hoverInFilter === 'Done') return todo.status === 'Done'
   })
+    //Click filter function //
+  const clickFilterState = todos.filter((todo) => {
+    if (clickFilter === 'All') return true
+    if (clickFilter === 'Not Yet') return todo.status === 'Not Yet'
+    if (clickFilter === 'In Progress') return todo.status === 'In Progress'
+    if (clickFilter === 'Done') return todo.status === 'Done'
+  })
+  
+  const filterTodos = hoverInFilterState || clickFilterState
+  useEffect(()=>{filterTodos},[filterTodos])  
+
+  // Order Sort //
+  // const copyFilterTodos = filterTodos.slice()
+  const copyFilterTodos = [...filterTodos]
+  const orderSortTodos = copyFilterTodos.sort((a, b) => {
+    if (orderSort === "Oldest") return 1;
+    if (orderSort === "Newest") return -1;
+    if (orderSort === "Name") {
+      if (a.title > b.title) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+    return 0
+  })
+  useMemo(()=>{orderSortTodos},[orderSortTodos])
+  console.log(orderSortTodos)
 
   /// ↓↓↓ CLICK ACTION ↓↓↓///
 
   // Add Function //
-  const onClickAdd = () => {
+  const onClickAdd = useCallback(() => {
     if (!inputTodo || todoStatus === '') return
-    //if (isDisabled === true) return alert("Please complete editing.");
+    const newTodo = {
+      title: inputTodo,
+      status: todoStatus,
+      isEditing: false,
+    }
     const newTodos = [...todos, newTodo]
     setTodos(newTodos)
     setInputTodo('') //clear input
     setTodoStatus('') //clear status
-  }
+  }, [todos, inputTodo, todoStatus])
 
   // Delete Function //
-  const onClickDelete = (index: number) => {
-    //alert(index) //for verification
-    //Ask Yes or No *** Add later ***
-    const newTodos = [...todos]
-    newTodos.splice(index, 1)
-    setTodos(newTodos)
-  }
+  const onClickDelete = useCallback(
+    (index: number) => {
+      //alert(index) //for verification
+      //Ask Yes or No *** Add later ***
+      const askDelete = confirm('Are you sure?')
+      if (askDelete) {
+        const newTodos = [...orderSortTodos]
+        newTodos.splice(index, 1)
+        setTodos(newTodos)
+      } else {
+        null
+      }
+    },
+    [orderSortTodos]
+  )
 
   // Edit Function //
-  const onClickEdit = (index: number) => {
-    currentTodo.title = todos[index].title //set todo.title in edit form
-    currentTodo.status = todos[index].status //set todo.status in edit form
-    // alert(index) //for verification
-    todos[index].isEditing = true
-    setTodos([...todos])
-    setIsDisabled(true)
-  }
+  const onClickEdit = useCallback(
+    (index: number) => {
+      currentTodo.title = orderSortTodos[index].title //set todo.title in edit form
+      currentTodo.status = orderSortTodos[index].status //set todo.status in edit form
+      // alert(index) //for verification
+      orderSortTodos[index].isEditing = true
+      setTodos([...orderSortTodos])
+      if (orderSort === "Newest") return setTodos([...orderSortTodos].reverse())
+      setIsDisabled(true)
+    },
+    [currentTodo, orderSortTodos, orderSort]
+  )
 
   // Cancel Function //
-  const onClickCancel = (index: number) => {
-    // alert(index) //for verification
-    todos[index].isEditing = false
-    setTodos([...todos])
-    setIsDisabled(false)
-  }
+  const onClickCancel = useCallback(
+    (index: number) => {
+      // alert(index) //for verification
+      orderSortTodos[index].isEditing = false
+      setTodos([...orderSortTodos])
+      if (orderSort === "Newest") return setTodos([...orderSortTodos].reverse())
+      setIsDisabled(false)
+    },
+    [orderSortTodos, orderSort]
+  )
 
   // Submit Function //
-  const onClickSubmit = (index: number) => {
-    // alert(index) //for verification
-    if (!currentTodo.title || !currentTodo.status) return
-    todos[index].title = currentTodo.title
-    todos[index].status = currentTodo.status
-    todos[index].isEditing = false
-    setCurrentTodo([...todos])
-    setIsDisabled(false)
-  }
+  const onClickSubmit = useCallback(
+    (index: number) => {
+      // alert(index) //for verification
+      if (!currentTodo.title || !currentTodo.status) return
+      orderSortTodos[index].title = currentTodo.title
+      orderSortTodos[index].status = currentTodo.status
+      orderSortTodos[index].isEditing = false
+      setTodos([...orderSortTodos])
+      setIsDisabled(false)
+    },
+    [orderSortTodos, currentTodo.title, currentTodo.status]
+  )
 
   // Filer Function //
-  const handleFilter = (stateFilter: string) => {
-    // alert(stateFilter) //for verification
-    setStateFilter(stateFilter)
-  }
+  const handleClickFilter = useCallback((clickFilter: string) => {
+    // alert(clickFilter) //for verification
+    setClickFilter(clickFilter)
+  }, [])
+
+  const handleHoverInFilter = useCallback((hoverInFilter: string) => {
+    // console.log("hoge") //for verificaiton
+    setHoverInFilter(hoverInFilter)
+  }, [])
+
+  const handleHoverOutFilter = useCallback(() => {
+    // console.log("hoge") //for verificaiton
+    setHoverInFilter(clickFilter)
+  }, [clickFilter])
 
   return (
     <div className={styles.container}>
@@ -129,30 +194,35 @@ export default function Home() {
         <h1 className={styles.appTitle}>NEXT TODO</h1>
 
         {/* Add Form */}
-        {todos.length >= 20 &&
-          <p style={{color:"red"}}>You can only keep 20 todos at a time.</p>}
+        {todos.length >= 20 && (
+          <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
+        )}
         <AddForm
           inputTodo={inputTodo}
           todoStatus={todoStatus}
           onChange={onChangeInputTodo}
           onClick={onClickAdd}
           onChangeTodoStatus={onChangeTodoStatus}
-          isDisabled={todos.length > 20 || isDisabled}
+          isDisabled={todos.length >= 20 || isDisabled}
         />
 
         {/* Todo List */}
-        <div className={styles.card}>
+        <div className={styles.todo_card}>
           <div className={styles.list_head}>
             {/* Status Filter */}
             <StatusFilter
-              stateFilter={stateFilter}
-              handleFilter={handleFilter}
+              clickFilter={clickFilter}
+              hoverInFilter={hoverInFilter}
+              handleClickFilter={handleClickFilter}
+              handleHoverInFilter={handleHoverInFilter}
+              handleHoverOutFilter={handleHoverOutFilter}
+              isDisabled={isDisabled}
             />
             {/* Status Filter */}
 
             {/* Order Sort Button*/}
             <div className={styles.pulldown_orderSort}>
-              <OrderSortButton />
+              <OrderSortButton orderSort={orderSort} onChangeOrderSort={onChangeOrderSort} isDisabled={isDisabled}/>
             </div>
             {/* id & name Sort Button*/}
           </div>
@@ -169,6 +239,7 @@ export default function Home() {
             currentTodo={currentTodo}
             isDisabled={isDisabled}
             filterTodos={filterTodos}
+            orderSortTodos={orderSortTodos}
           />
           {/* List */}
         </div>

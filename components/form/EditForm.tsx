@@ -1,5 +1,6 @@
 import styles from 'styles/Home.module.css'
 import { EditTodoState } from 'components/select/EditTodoState'
+import { memo } from 'react'
 
 type Props = {
   onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -13,7 +14,8 @@ type Props = {
   }
 }
 
-export const EditForm: React.FC<Props> = (props) => {
+export const EditForm: React.FC<Props> = memo((props) => {
+  EditForm.displayName = 'EditForm';
   const {
     currentTodo,
     onChangeEditTitle,
@@ -43,4 +45,4 @@ export const EditForm: React.FC<Props> = (props) => {
       </button>
     </>
   )
-}
+})
