@@ -20,7 +20,7 @@ export default function Home() {
   const [todos, setTodos] = useState<Array<TodoType>>([])
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
-  const [currentTodo, setCurrentTodo] = useState<Array<TodoType>>([])
+  const [currentTodo, setCurrentTodo] = useState<TodoType>([])
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
@@ -40,7 +40,6 @@ export default function Home() {
   // Edit Form's Value of Todo //
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-
     setCurrentTodo({ ...currentTodo, title: e.currentTarget.value })
   }
 
