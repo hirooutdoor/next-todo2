@@ -20,7 +20,7 @@ export default function Home() {
   const [todos, setTodos] = useState<Array<TodoType>>([])
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
-  const [currentTodo, setCurrentTodo] = useState<TodoType>([])
+  const [currentTodo, setCurrentTodo] = useState<TodoType>({title: "", status: "", isEditing:false})
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
