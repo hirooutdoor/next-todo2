@@ -23,9 +23,15 @@ export const TodoProvider:FC<Props> = (props) => {
   const { children } = props;
 
   const [ currentTodo, setCurrentTodo ] = useState<TodoType>({title: "", status: "", isEditing:false})
+  
+  
+  const value = {
+  currentTodo,
+  setCurrentTodo
+  }
 
   return (
-    <TodoContext.Provider value={{ currentTodo, setCurrentTodo }}>
+    <TodoContext.Provider value={value}>
       {children}
     </TodoContext.Provider>
   )
