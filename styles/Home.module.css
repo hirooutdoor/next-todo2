@@ -192,6 +192,7 @@
 
 .todo_title {
   font-size: 20px;
+  overflow-wrap: break-word;
 }
 
 .todo_state {
@@ -221,6 +222,7 @@
 
   margin: 0 10px;
   font-size: 22px;
+  overflow-wrap: break-word;
 }
 
 .stateSort_area p:hover {

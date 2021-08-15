@@ -1,28 +1,27 @@
 import styles from 'styles/Home.module.css'
 import { EditTodoState } from 'components/select/EditTodoState'
-import { memo } from 'react'
+import { useContext, memo } from 'react'
+import { TodoContext } from 'providers/TodoProvider'
 
 type Props = {
   onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
   onClickCancel: () => void
   onClickSubmit: () => void
-  currentTodo: {
-    title: string
-    status: string
-    isEditing: boolean
-  }
 }
 
 export const EditForm: React.FC<Props> = memo((props) => {
   EditForm.displayName = 'EditForm';
   const {
-    currentTodo,
+
     onChangeEditTitle,
     onChangeEditStatus,
     onClickCancel,
     onClickSubmit,
   } = props
+  const { currentTodo } = useContext(TodoContext)
+  
+
   return (
     <>
       <input
@@ -34,7 +33,6 @@ export const EditForm: React.FC<Props> = memo((props) => {
       <div className={styles.pull_down}>
         <EditTodoState
           onChangeEditStatus={onChangeEditStatus}
-          currentTodo={currentTodo}
         />
       </div>
       <button className={styles.edit_button} onClick={onClickCancel}>

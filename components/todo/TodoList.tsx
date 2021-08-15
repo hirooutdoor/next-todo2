@@ -8,11 +8,6 @@ type Props = {
     status: string
     isEditing: boolean
   }[]
-  currentTodo: {
-    title: string
-    status: string
-    isEditing: boolean
-  }
   filterTodos: {
     title: string
     status: string
@@ -35,7 +30,6 @@ type Props = {
 export const TodoList: React.FC<Props> = memo((props) => {
   TodoList.displayName = 'TodoList';
   const {
-    currentTodo,
     onClickDelete,
     onClickEdit,
     onClickCancel,
@@ -43,7 +37,6 @@ export const TodoList: React.FC<Props> = memo((props) => {
     onChangeEditTitle,
     onChangeEditStatus,
     isDisabled,
-    filterTodos,
     orderSortTodos
   } = props
 
@@ -59,7 +52,6 @@ export const TodoList: React.FC<Props> = memo((props) => {
                   onClickSubmit={() => onClickSubmit(index)}
                   onChangeEditTitle={onChangeEditTitle}
                   onChangeEditStatus={onChangeEditStatus}
-                  currentTodo={currentTodo}
                 />
               ) : (
                 <>

@@ -14,6 +14,7 @@ type Props = {
 export const AddForm: React.FC<Props> = memo((props) => {
   AddForm.displayName = 'AddForm';
   const { inputTodo, todoStatus, onChange, onChangeTodoStatus, onClick, isDisabled } = props
+
   return (
     <>
       <div className={styles.card}>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo, useContext } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from 'styles/Home.module.css'
@@ -6,7 +6,7 @@ import { TodoList } from 'components/todo/TodoList'
 import { AddForm } from 'components/form/AddForm'
 import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
-import { useMemo } from 'react'
+import { TodoContext } from 'providers/TodoProvider'
 
 type TodoType = {
   title: string
@@ -16,11 +16,11 @@ type TodoType = {
 
 export default function Home() {
   console.log('Rendering check.') //for verification
-
+  const { currentTodo, setCurrentTodo} = useContext(TodoContext)
   const [todos, setTodos] = useState<Array<TodoType>>([])
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
-  const [currentTodo, setCurrentTodo] = useState<TodoType>({title: "", status: "", isEditing:false})
+  // const [currentTodo, setCurrentTodo] = useState<TodoType>({title: "", status: "", isEditing:false})
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
@@ -236,7 +236,6 @@ export default function Home() {
             onClickSubmit={onClickSubmit}
             onChangeEditTitle={onChangeEditTitle}
             onChangeEditStatus={onChangeEditStatus}
-            currentTodo={currentTodo}
             isDisabled={isDisabled}
             filterTodos={filterTodos}
             orderSortTodos={orderSortTodos}
