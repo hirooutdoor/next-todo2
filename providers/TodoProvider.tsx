@@ -24,7 +24,9 @@ export const TodoContext = createContext({} as {
   }[],
   setTodos:Dispatch<SetStateAction<Array<TodoType>>>,
   inputTodo: string,
-  setInputTodo: Dispatch<SetStateAction<string>>
+  setInputTodo: Dispatch<SetStateAction<string>>,
+  todoStatus: string,
+  setTodoStatus: Dispatch<SetStateAction<string>>
 });
 
 export const TodoProvider:FC<Props> = (props) => {
@@ -33,14 +35,17 @@ export const TodoProvider:FC<Props> = (props) => {
   const [ currentTodo, setCurrentTodo ] = useState<TodoType>({title: "", status: "", isEditing:false})
   const [ todos, setTodos ] = useState<Array<TodoType>>([])
   const [inputTodo, setInputTodo] = useState<string>('')
-  
+  const [todoStatus, setTodoStatus] = useState<string>('')
+
   const value = {
   currentTodo,
   setCurrentTodo,
   todos,
   setTodos,
   inputTodo,
-  setInputTodo
+  setInputTodo,
+  todoStatus,
+  setTodoStatus
   }
 
   return (

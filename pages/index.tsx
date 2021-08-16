@@ -13,7 +13,7 @@ export default function Home() {
   const { currentTodo, setCurrentTodo} = useContext(TodoContext)
   const { todos, setTodos } = useContext(TodoContext)
   const { inputTodo, setInputTodo } = useContext(TodoContext)
-  const [todoStatus, setTodoStatus] = useState<string>('')
+  const { todoStatus, setTodoStatus } = useContext(TodoContext)
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
@@ -100,7 +100,7 @@ export default function Home() {
     setTodos(newTodos)
     setInputTodo('') //clear input
     setTodoStatus('') //clear status
-  }, [todos, inputTodo, todoStatus, setTodos, setInputTodo])
+  }, [todos, inputTodo, todoStatus, setTodos, setInputTodo, setTodoStatus])
 
   // Delete Function //
   const onClickDelete = useCallback(
@@ -191,7 +191,6 @@ export default function Home() {
           <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
         )}
         <AddForm
-          todoStatus={todoStatus}
           onChange={onChangeInputTodo}
           onClick={onClickAdd}
           onChangeTodoStatus={onChangeTodoStatus}
