@@ -12,8 +12,8 @@ type Props = {
 
 export const EditForm: React.FC<Props> = memo((props) => {
   EditForm.displayName = 'EditForm';
+  console.log('Render EditForm')
   const {
-
     onChangeEditTitle,
     onChangeEditStatus,
     onClickCancel,

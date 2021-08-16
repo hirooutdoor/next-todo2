@@ -6,30 +6,20 @@ import { TodoList } from 'components/todo/TodoList'
 import { AddForm } from 'components/form/AddForm'
 import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
-import { TodoContext } from 'providers/TodoProvider'
+import { InputTodoContext, TodoContext, TodosContext, TodoStatusContext } from 'providers/TodoProvider'
 
 export default function Home() {
-  console.log('Rendering check.') //for verification
+  console.log('Render Parents') //for verification
   const { currentTodo, setCurrentTodo } = useContext(TodoContext)
-  const { todos, setTodos } = useContext(TodoContext)
-  const { inputTodo, setInputTodo } = useContext(TodoContext)
-  const { todoStatus, setTodoStatus } = useContext(TodoContext)
+  const { todos, setTodos } = useContext(TodosContext)
+  const { inputTodo, setInputTodo } = useContext(InputTodoContext)
+  const { todoStatus, setTodoStatus } = useContext(TodoStatusContext)
   const { setIsDisabled } = useContext(TodoContext)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
   const [orderSort, setOrderSort] = useState<string>('Oldest')
 
   /// ↓↓↓ CHANGE STATE ↓↓↓///
-
-  // Add Form's Value of Todo and Status //
-  const onChangeInputTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    setInputTodo(e.target.value)
-  }
-
-  const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setTodoStatus(e.target.value)
-
   // Edit Form's Value of Todo //
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -88,10 +78,8 @@ export default function Home() {
   useMemo(() => {
     orderSortTodos
   }, [orderSortTodos])
-  console.log(orderSortTodos)
 
   /// ↓↓↓ CLICK ACTION ↓↓↓///
-
   // Add Function //
   const onClickAdd = useCallback(() => {
     if (!inputTodo || todoStatus === '') return
@@ -201,11 +189,9 @@ export default function Home() {
           <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
         )}
         <AddForm
-          onChange={onChangeInputTodo}
           onClick={onClickAdd}
-          onChangeTodoStatus={onChangeTodoStatus}
         />
-
+        
         {/* Todo List */}
         <div className={styles.todo_card}>
           <div className={styles.list_head}>

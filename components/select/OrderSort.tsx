@@ -10,6 +10,8 @@ type Props = {
 
 export const OrderSortButton:React.FC<Props> = memo((props) => {
   OrderSortButton.displayName = 'OrderSortButton';
+  console.log('Render Order Sort')
+
   const {orderSort, onChangeOrderSort } = props;
   const { isDisabled } = useContext(TodoContext)
 

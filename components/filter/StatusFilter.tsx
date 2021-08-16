@@ -13,6 +13,7 @@ type Props = {
 
 export const StatusFilter: React.FC<Props> = memo((props) => {
   StatusFilter.displayName = 'StatusFilter'
+  console.log('Render Status Filter')
   const {
     handleClickFilter,
     clickFilter,

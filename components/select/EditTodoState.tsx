@@ -8,6 +8,7 @@ type Props = {
 
 export const EditTodoState: React.FC<Props> = memo((props) => {
   EditTodoState.displayName = 'EditTodoState';
+  console.log('Render edit state')
   const {
     onChangeEditStatus,
   } = props

@@ -24,6 +24,7 @@ type Props = {
 
 export const TodoList: React.FC<Props> = memo((props) => {
   TodoList.displayName = 'TodoList';
+  console.log('Render Todolist')
   const {
     onClickDelete,
     onClickEdit,
