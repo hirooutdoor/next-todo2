@@ -4,8 +4,6 @@ import { useContext, memo } from 'react'
 import { TodoContext } from 'providers/TodoProvider'
 
 type Props = {
-  onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
   onClickCancel: () => void
   onClickSubmit: () => void
 }
@@ -14,13 +12,15 @@ export const EditForm: React.FC<Props> = memo((props) => {
   EditForm.displayName = 'EditForm';
   console.log('Render EditForm')
   const {
-    onChangeEditTitle,
-    onChangeEditStatus,
     onClickCancel,
     onClickSubmit,
   } = props
-  const { currentTodo } = useContext(TodoContext)
+  const { currentTodo, setCurrentTodo } = useContext(TodoContext)
   
+  const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    setCurrentTodo({ ...currentTodo, title: e.currentTarget.value })
+  }
 
   return (
     <>
@@ -32,7 +32,6 @@ export const EditForm: React.FC<Props> = memo((props) => {
       />
       <div className={styles.pull_down}>
         <EditTodoState
-          onChangeEditStatus={onChangeEditStatus}
         />
       </div>
       <button className={styles.edit_button} onClick={onClickCancel}>

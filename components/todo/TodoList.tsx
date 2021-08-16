@@ -18,8 +18,6 @@ type Props = {
   onClickEdit: (index: number) => void
   onClickCancel: (index: number) => void
   onClickSubmit: (index: number) => void
-  onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
 }
 
 export const TodoList: React.FC<Props> = memo((props) => {
@@ -30,8 +28,6 @@ export const TodoList: React.FC<Props> = memo((props) => {
     onClickEdit,
     onClickCancel,
     onClickSubmit,
-    onChangeEditTitle,
-    onChangeEditStatus,
     orderSortTodos
   } = props
 
@@ -47,8 +43,6 @@ export const TodoList: React.FC<Props> = memo((props) => {
                 <EditForm
                   onClickCancel={() => onClickCancel(index)}
                   onClickSubmit={() => onClickSubmit(index)}
-                  onChangeEditTitle={onChangeEditTitle}
-                  onChangeEditStatus={onChangeEditStatus}
                 />
               ) : (
                 <>

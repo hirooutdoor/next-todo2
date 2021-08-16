@@ -2,7 +2,7 @@ import styles from 'styles/Pulldown.module.css'
 import { memo, useContext } from 'react'
 import { TodoContext, TodoStatusContext } from 'providers/TodoProvider'
 
-export const AddTodoState: React.VFC = memo((props) => {
+export const AddTodoState: React.VFC = memo(() => {
   AddTodoState.displayName = 'AddTodoState'
   console.log('Render Add state')
   const { todoStatus, setTodoStatus } = useContext(TodoStatusContext)

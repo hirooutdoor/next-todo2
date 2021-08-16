@@ -2,17 +2,15 @@ import styles from 'styles/Pulldown.module.css'
 import { memo, useContext } from 'react'
 import { TodoContext } from 'providers/TodoProvider';
 
-type Props = {
-  onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
-}
-
-export const EditTodoState: React.FC<Props> = memo((props) => {
+export const EditTodoState: React.VFC = memo(() => {
   EditTodoState.displayName = 'EditTodoState';
   console.log('Render edit state')
-  const {
-    onChangeEditStatus,
-  } = props
-  const { currentTodo } = useContext(TodoContext)
+  const { currentTodo, setCurrentTodo } = useContext(TodoContext)
+
+  const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+    setCurrentTodo({ ...currentTodo, status: e.currentTarget.value })
+  }
 
   return (
     <>

@@ -10,7 +10,7 @@ import { InputTodoContext, TodoContext, TodosContext, TodoStatusContext } from '
 
 export default function Home() {
   console.log('Render Parents') //for verification
-  const { currentTodo, setCurrentTodo } = useContext(TodoContext)
+  const { currentTodo } = useContext(TodoContext)
   const { todos, setTodos } = useContext(TodosContext)
   const { inputTodo, setInputTodo } = useContext(InputTodoContext)
   const { todoStatus, setTodoStatus } = useContext(TodoStatusContext)
@@ -20,23 +20,14 @@ export default function Home() {
   const [orderSort, setOrderSort] = useState<string>('Oldest')
 
   /// ↓↓↓ CHANGE STATE ↓↓↓///
-  // Edit Form's Value of Todo //
-  const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    setCurrentTodo({ ...currentTodo, title: e.currentTarget.value })
-  }
+  // Edit Form's Value of Todo /
 
   // Edit Form's Value of Status //
-  const onChangeEditStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault()
-    setCurrentTodo({ ...currentTodo, status: e.currentTarget.value })
-  }
 
   // Order Sort Value //
   const onChangeOrderSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
     setOrderSort(e.target.value)
-    // Sort Todos by Name //
   }
 
   // Filter Condition Switching //
@@ -218,8 +209,6 @@ export default function Home() {
             onClickEdit={onClickEdit}
             onClickCancel={onClickCancel}
             onClickSubmit={onClickSubmit}
-            onChangeEditTitle={onChangeEditTitle}
-            onChangeEditStatus={onChangeEditStatus}
             filterTodos={filterTodos}
             orderSortTodos={orderSortTodos}
           />
