@@ -1,9 +1,10 @@
 import styles from 'styles/Home.module.css'
 import { AddTodoState } from 'components/select/AddTodoState'
 import { memo, useEffect } from 'react'
+import { useContext } from 'react'
+import { TodoContext } from 'providers/TodoProvider'
 
 type Props = {
-  inputTodo: string
   todoStatus: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeTodoStatus: React.ChangeEventHandler<HTMLSelectElement>
@@ -13,7 +14,8 @@ type Props = {
 
 export const AddForm: React.FC<Props> = memo((props) => {
   AddForm.displayName = 'AddForm';
-  const { inputTodo, todoStatus, onChange, onChangeTodoStatus, onClick, isDisabled } = props
+  const { todoStatus, onChange, onChangeTodoStatus, onClick, isDisabled } = props
+  const { inputTodo, setInputTodo } = useContext(TodoContext)
 
   return (
     <>

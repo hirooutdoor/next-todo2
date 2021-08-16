@@ -1,13 +1,9 @@
 import styles from 'styles/Home.module.css'
 import { EditForm } from 'components/form/EditForm'
-import { memo } from 'react'
+import { memo, useContext } from 'react'
+import { TodoContext } from 'providers/TodoProvider'
 
 type Props = {
-  todos: {
-    title: string
-    status: string
-    isEditing: boolean
-  }[]
   filterTodos: {
     title: string
     status: string
