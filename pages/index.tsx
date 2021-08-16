@@ -8,19 +8,12 @@ import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
 import { TodoContext } from 'providers/TodoProvider'
 
-type TodoType = {
-  title: string
-  status: string
-  isEditing: boolean
-}
-
 export default function Home() {
   console.log('Rendering check.') //for verification
   const { currentTodo, setCurrentTodo} = useContext(TodoContext)
-  const [todos, setTodos] = useState<Array<TodoType>>([])
+  const { todos, setTodos } = useContext(TodoContext)
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
-  // const [currentTodo, setCurrentTodo] = useState<TodoType>({title: "", status: "", isEditing:false})
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
@@ -107,7 +100,7 @@ export default function Home() {
     setTodos(newTodos)
     setInputTodo('') //clear input
     setTodoStatus('') //clear status
-  }, [todos, inputTodo, todoStatus])
+  }, [todos, inputTodo, todoStatus, setTodos])
 
   // Delete Function //
   const onClickDelete = useCallback(
@@ -123,7 +116,7 @@ export default function Home() {
         null
       }
     },
-    [orderSortTodos]
+    [orderSortTodos, setTodos]
   )
 
   // Edit Function //
@@ -137,7 +130,7 @@ export default function Home() {
       if (orderSort === "Newest") return setTodos([...orderSortTodos].reverse())
       setIsDisabled(true)
     },
-    [currentTodo, orderSortTodos, orderSort]
+    [currentTodo, orderSortTodos, orderSort, setTodos]
   )
 
   // Cancel Function //
@@ -149,7 +142,7 @@ export default function Home() {
       if (orderSort === "Newest") return setTodos([...orderSortTodos].reverse())
       setIsDisabled(false)
     },
-    [orderSortTodos, orderSort]
+    [orderSortTodos, orderSort, setTodos]
   )
 
   // Submit Function //
@@ -163,7 +156,7 @@ export default function Home() {
       setTodos([...orderSortTodos])
       setIsDisabled(false)
     },
-    [orderSortTodos, currentTodo.title, currentTodo.status]
+    [orderSortTodos, currentTodo.title, currentTodo.status, setTodos]
   )
 
   // Filer Function //

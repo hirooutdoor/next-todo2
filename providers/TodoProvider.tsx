@@ -17,17 +17,25 @@ export const TodoContext = createContext({} as {
     isEditing: boolean
   }
   setCurrentTodo: Dispatch<SetStateAction<TodoType>>
+  todos: {
+    title: string
+    status: string
+    isEditing: boolean
+  }[],
+  setTodos:Dispatch<SetStateAction<Array<TodoType>>>
 });
 
 export const TodoProvider:FC<Props> = (props) => {
   const { children } = props;
 
   const [ currentTodo, setCurrentTodo ] = useState<TodoType>({title: "", status: "", isEditing:false})
-  
+  const [ todos, setTodos ] = useState<Array<TodoType>>([])
   
   const value = {
   currentTodo,
-  setCurrentTodo
+  setCurrentTodo,
+  todos,
+  setTodos
   }
 
   return (
