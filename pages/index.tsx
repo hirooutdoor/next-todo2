@@ -75,9 +75,7 @@ export default function Home() {
     }
     return 0
   })
-  useMemo(() => {
-    orderSortTodos
-  }, [orderSortTodos])
+
 
   /// ↓↓↓ CLICK ACTION ↓↓↓///
   // Add Function //
@@ -98,7 +96,6 @@ export default function Home() {
   const onClickDelete = useCallback(
     (index: number) => {
       //alert(index) //for verification
-      //Ask Yes or No *** Add later ***
       const askDelete = confirm('Are you sure?')
       if (askDelete) {
         const newTodos = [...orderSortTodos]
@@ -118,9 +115,9 @@ export default function Home() {
       currentTodo.status = orderSortTodos[index].status //set todo.status in edit form
       // alert(index) //for verification
       orderSortTodos[index].isEditing = true
+      setIsDisabled(true)
       setTodos([...orderSortTodos])
       if (orderSort === 'Newest') return setTodos([...orderSortTodos].reverse())
-      setIsDisabled(true)
     },
     [currentTodo, orderSortTodos, orderSort, setTodos, setIsDisabled]
   )
@@ -131,8 +128,8 @@ export default function Home() {
       // alert(index) //for verification
       orderSortTodos[index].isEditing = false
       setTodos([...orderSortTodos])
-      if (orderSort === 'Newest') return setTodos([...orderSortTodos].reverse())
       setIsDisabled(false)
+      if (orderSort === 'Newest') return setTodos([...orderSortTodos].reverse())
     },
     [orderSortTodos, orderSort, setTodos, setIsDisabled]
   )
@@ -191,7 +188,7 @@ export default function Home() {
         <AddForm
           onClick={onClickAdd}
         />
-        
+
         {/* Todo List */}
         <div className={styles.todo_card}>
           <div className={styles.list_head}>
