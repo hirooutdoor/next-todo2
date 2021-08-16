@@ -1,16 +1,18 @@
 import styles from 'styles/Pulldown.module.css'
-import {memo} from "react"
+import {memo, useContext} from "react"
+import { TodoContext } from 'providers/TodoProvider';
 
 
 type Props = {
   orderSort: string
   onChangeOrderSort: (e: React.ChangeEvent<HTMLSelectElement>) => void
-  isDisabled: boolean
 }
 
 export const OrderSortButton:React.FC<Props> = memo((props) => {
   OrderSortButton.displayName = 'OrderSortButton';
-  const {orderSort, onChangeOrderSort, isDisabled} = props;
+  const {orderSort, onChangeOrderSort } = props;
+  const { isDisabled } = useContext(TodoContext)
+
   return (
     <>
       <div className={`${styles.select} ${styles.menu}`}>

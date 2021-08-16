@@ -20,7 +20,6 @@ type Props = {
   onClickSubmit: (index: number) => void
   onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
-  isDisabled: boolean
 }
 
 export const TodoList: React.FC<Props> = memo((props) => {
@@ -32,9 +31,10 @@ export const TodoList: React.FC<Props> = memo((props) => {
     onClickSubmit,
     onChangeEditTitle,
     onChangeEditStatus,
-    isDisabled,
     orderSortTodos
   } = props
+
+  const { isDisabled } = useContext(TodoContext)
 
   return (
     <>

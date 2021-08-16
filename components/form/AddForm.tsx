@@ -7,14 +7,15 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeTodoStatus: React.ChangeEventHandler<HTMLSelectElement>
   onClick: () => void
-  isDisabled: boolean
 }
 
 export const AddForm: React.FC<Props> = memo((props) => {
   AddForm.displayName = 'AddForm';
-  const { onChange, onChangeTodoStatus, onClick, isDisabled } = props
+  const { onChange, onChangeTodoStatus, onClick } = props
   const { inputTodo } = useContext(TodoContext)
   const { todoStatus } = useContext(TodoContext)
+  const { isDisabled } = useContext(TodoContext)
+  const { todos } = useContext(TodoContext)
 
   return (
     <>
@@ -26,13 +27,12 @@ export const AddForm: React.FC<Props> = memo((props) => {
               placeholder="Input what to do here"
               value={inputTodo}
               onChange={onChange}
-              disabled={isDisabled}
+              disabled={todos.length >= 20 || isDisabled}
             />
             <div className={styles.pull_down}>
             <AddTodoState
             todoStatus={todoStatus}
             onChangeTodoStatus={onChangeTodoStatus}
-            isDisabled={isDisabled}
             />
             </div>
             <button className={styles.add_button} onClick={onClick} disabled={isDisabled} >

@@ -27,6 +27,8 @@ export const TodoContext = createContext({} as {
   setInputTodo: Dispatch<SetStateAction<string>>,
   todoStatus: string,
   setTodoStatus: Dispatch<SetStateAction<string>>
+  isDisabled: boolean,
+  setIsDisabled: Dispatch<SetStateAction<boolean>>
 });
 
 export const TodoProvider:FC<Props> = (props) => {
@@ -36,6 +38,7 @@ export const TodoProvider:FC<Props> = (props) => {
   const [ todos, setTodos ] = useState<Array<TodoType>>([])
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
+  const [isDisabled, setIsDisabled] = useState<boolean>(false)
 
   const value = {
   currentTodo,
@@ -45,7 +48,9 @@ export const TodoProvider:FC<Props> = (props) => {
   inputTodo,
   setInputTodo,
   todoStatus,
-  setTodoStatus
+  setTodoStatus,
+  isDisabled,
+  setIsDisabled
   }
 
   return (
