@@ -6,7 +6,7 @@ import { TodoList } from 'components/todo/TodoList'
 import { AddForm } from 'components/form/AddForm'
 import { OrderSortButton } from 'components/select/OrderSort'
 import { StatusFilter } from 'components/filter/StatusFilter'
-import { InputTodoContext, TodoContext, TodosContext, TodoStatusContext } from 'providers/TodoProvider'
+import { InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'providers/TodoProvider'
 
 export default function Home() {
   console.log('Render Parents') //for verification
@@ -17,18 +17,8 @@ export default function Home() {
   const { setIsDisabled } = useContext(TodoContext)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
-  const [orderSort, setOrderSort] = useState<string>('Oldest')
+  const { orderSort } = useContext(SortContext)
 
-  /// ↓↓↓ CHANGE STATE ↓↓↓///
-  // Edit Form's Value of Todo /
-
-  // Edit Form's Value of Status //
-
-  // Order Sort Value //
-  const onChangeOrderSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault()
-    setOrderSort(e.target.value)
-  }
 
   // Filter Condition Switching //
   //Hover filter function //
@@ -179,7 +169,6 @@ export default function Home() {
         <AddForm
           onClick={onClickAdd}
         />
-
         {/* Todo List */}
         <div className={styles.todo_card}>
           <div className={styles.list_head}>
@@ -191,18 +180,11 @@ export default function Home() {
               handleHoverInFilter={handleHoverInFilter}
               handleHoverOutFilter={handleHoverOutFilter}
             />
-            {/* Status Filter */}
-
             {/* Order Sort Button*/}
             <div className={styles.pulldown_orderSort}>
-              <OrderSortButton
-                orderSort={orderSort}
-                onChangeOrderSort={onChangeOrderSort}
-              />
+              <OrderSortButton/>
             </div>
-            {/* id & name Sort Button*/}
           </div>
-
           {/* List */}
           <TodoList
             onClickDelete={onClickDelete}

@@ -55,6 +55,11 @@ export const TodoStatusContext = createContext(
   }
 )
 
+export const SortContext = createContext({} as {
+  orderSort: string
+  setOrderSort: Dispatch<SetStateAction<string>>
+})
+
 export const TodoProvider: FC<Props> = (props) => {
   const { children } = props
   const [currentTodo, setCurrentTodo] = useState<TodoType>({
@@ -66,6 +71,7 @@ export const TodoProvider: FC<Props> = (props) => {
   const [inputTodo, setInputTodo] = useState<string>('')
   const [todoStatus, setTodoStatus] = useState<string>('')
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
+  const [orderSort, setOrderSort] = useState<string>('Oldest')
 
   const value = {
     currentTodo,
@@ -89,12 +95,19 @@ export const TodoProvider: FC<Props> = (props) => {
     setTodoStatus,
   }
 
+  const sortValue = {
+    orderSort,
+    setOrderSort
+  }
+
   return (
     <TodoContext.Provider value={value}>
       <TodosContext.Provider value={todosValue}>
         <InputTodoContext.Provider value={inputValue}>
           <TodoStatusContext.Provider value={statusValue}>
-            {children}
+            <SortContext.Provider value={sortValue} >
+              {children}
+            </SortContext.Provider>
           </TodoStatusContext.Provider>
         </InputTodoContext.Provider>
       </TodosContext.Provider>
