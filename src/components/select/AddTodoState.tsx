@@ -1,12 +1,12 @@
 import styles from 'styles/Pulldown.module.css'
 import { memo, useContext } from 'react'
-import { TodoContext, TodoStatusContext } from 'providers/TodoProvider'
+import { DisableContext, TodoContext, TodoStatusContext } from 'src/providers/TodoProvider'
 
 export const AddTodoState: React.VFC = memo(() => {
   AddTodoState.displayName = 'AddTodoState'
   console.log('Render Add state')
   const { todoStatus, setTodoStatus } = useContext(TodoStatusContext)
-  const { isDisabled } = useContext(TodoContext)
+  const { isDisabled } = useContext(DisableContext)
 
   const onChangeTodoStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setTodoStatus(e.target.value)

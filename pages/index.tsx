@@ -2,19 +2,22 @@ import { useState, useEffect, useCallback, useMemo, useContext } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from 'styles/Home.module.css'
-import { TodoList } from 'components/todo/TodoList'
-import { AddForm } from 'components/form/AddForm'
-import { OrderSortButton } from 'components/select/OrderSort'
-import { StatusFilter } from 'components/filter/StatusFilter'
-import { InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'providers/TodoProvider'
+import { TodoList } from 'src/components/todo/TodoList'
+import { AddForm } from 'src/components/form/AddForm'
+import { OrderSortButton } from 'src/components/select/OrderSort'
+import { StatusFilter } from 'src/components/filter/StatusFilter'
+import { DisableContext, InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'src/providers/TodoProvider'
+import { useRecoilValue } from 'recoil'
+import { currentTodoRecoil } from 'src/store/todoGlobalState'
 
 export default function Home() {
   console.log('Render Parents') //for verification
-  const { currentTodo } = useContext(TodoContext)
+  const  currentTodo = useRecoilValue(currentTodoRecoil)
+  //const {currentTodo} = useContext(TodoContext)
   const { todos, setTodos } = useContext(TodosContext)
   const { inputTodo, setInputTodo } = useContext(InputTodoContext)
   const { todoStatus, setTodoStatus } = useContext(TodoStatusContext)
-  const { setIsDisabled } = useContext(TodoContext)
+  const { setIsDisabled } = useContext(DisableContext)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
   const { orderSort } = useContext(SortContext)

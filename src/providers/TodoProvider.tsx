@@ -17,6 +17,13 @@ interface Props {
   children: ReactNode
 }
 
+export const DisableContext = createContext(
+  {} as {
+    isDisabled: boolean
+    setIsDisabled: Dispatch<SetStateAction<boolean>>
+  }
+)
+
 export const TodoContext = createContext(
   {} as {
     currentTodo: {
@@ -25,8 +32,6 @@ export const TodoContext = createContext(
       isEditing: boolean
     }
     setCurrentTodo: Dispatch<SetStateAction<TodoType>>
-    isDisabled: boolean
-    setIsDisabled: Dispatch<SetStateAction<boolean>>
   }
 )
 
@@ -100,17 +105,24 @@ export const TodoProvider: FC<Props> = (props) => {
     setOrderSort
   }
 
+  const disableValue = {
+    isDisabled,
+    setIsDisabled
+  }
+
   return (
-    <TodoContext.Provider value={value}>
-      <TodosContext.Provider value={todosValue}>
-        <InputTodoContext.Provider value={inputValue}>
-          <TodoStatusContext.Provider value={statusValue}>
-            <SortContext.Provider value={sortValue} >
-              {children}
-            </SortContext.Provider>
-          </TodoStatusContext.Provider>
-        </InputTodoContext.Provider>
-      </TodosContext.Provider>
-    </TodoContext.Provider>
+    // <TodoContext.Provider value={value}>
+      <DisableContext.Provider value={disableValue} >
+        <TodosContext.Provider value={todosValue}>
+          <InputTodoContext.Provider value={inputValue}>
+            <TodoStatusContext.Provider value={statusValue}>
+              <SortContext.Provider value={sortValue} >
+                {children}
+              </SortContext.Provider>
+            </TodoStatusContext.Provider>
+          </InputTodoContext.Provider>
+        </TodosContext.Provider>
+      </DisableContext.Provider>
+    // </TodoContext.Provider>
   )
 }

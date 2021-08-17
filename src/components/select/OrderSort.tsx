@@ -1,13 +1,13 @@
 import styles from 'styles/Pulldown.module.css'
 import {memo, useContext} from "react"
-import { SortContext, TodoContext } from 'providers/TodoProvider';
+import { DisableContext, SortContext, TodoContext } from 'src/providers/TodoProvider';
 
 
 export const OrderSortButton:React.VFC = memo(() => {
   OrderSortButton.displayName = 'OrderSortButton';
   console.log('Render Order Sort')
 
-  const { isDisabled } = useContext(TodoContext)
+  const { isDisabled } = useContext(DisableContext)
   const {orderSort, setOrderSort} = useContext(SortContext)
 
   const onChangeOrderSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
