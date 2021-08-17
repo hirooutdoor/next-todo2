@@ -1,18 +1,9 @@
 import styles from 'styles/Home.module.css'
 import { EditForm } from 'components/form/EditForm'
-import { memo } from 'react'
+import { memo, useContext } from 'react'
+import { TodoContext } from 'providers/TodoProvider'
 
 type Props = {
-  todos: {
-    title: string
-    status: string
-    isEditing: boolean
-  }[]
-  currentTodo: {
-    title: string
-    status: string
-    isEditing: boolean
-  }
   filterTodos: {
     title: string
     status: string
@@ -27,25 +18,20 @@ type Props = {
   onClickEdit: (index: number) => void
   onClickCancel: (index: number) => void
   onClickSubmit: (index: number) => void
-  onChangeEditTitle: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onChangeEditStatus: React.ChangeEventHandler<HTMLSelectElement>
-  isDisabled: boolean
 }
 
 export const TodoList: React.FC<Props> = memo((props) => {
   TodoList.displayName = 'TodoList';
+  console.log('Render Todolist')
   const {
-    currentTodo,
     onClickDelete,
     onClickEdit,
     onClickCancel,
     onClickSubmit,
-    onChangeEditTitle,
-    onChangeEditStatus,
-    isDisabled,
-    filterTodos,
     orderSortTodos
   } = props
+
+  const { isDisabled } = useContext(TodoContext)
 
   return (
     <>
@@ -57,9 +43,6 @@ export const TodoList: React.FC<Props> = memo((props) => {
                 <EditForm
                   onClickCancel={() => onClickCancel(index)}
                   onClickSubmit={() => onClickSubmit(index)}
-                  onChangeEditTitle={onChangeEditTitle}
-                  onChangeEditStatus={onChangeEditStatus}
-                  currentTodo={currentTodo}
                 />
               ) : (
                 <>

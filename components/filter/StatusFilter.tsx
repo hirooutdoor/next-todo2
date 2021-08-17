@@ -1,6 +1,7 @@
 import styles from 'styles/Home.module.css'
 import classnames from 'classnames'
-import { memo, useCallback } from 'react'
+import { memo, useContext } from 'react'
+import { TodoContext } from 'providers/TodoProvider'
 
 type Props = {
   handleClickFilter: (clickFilter: string) => void
@@ -8,19 +9,20 @@ type Props = {
   handleHoverOutFilter: () => void
   clickFilter: string
   hoverInFilter: string
-  isDisabled: boolean
 }
 
 export const StatusFilter: React.FC<Props> = memo((props) => {
   StatusFilter.displayName = 'StatusFilter'
+  console.log('Render Status Filter')
   const {
     handleClickFilter,
     clickFilter,
     hoverInFilter,
     handleHoverInFilter,
     handleHoverOutFilter,
-    isDisabled,
   } = props
+
+  const { isDisabled } = useContext(TodoContext)
 
   return (
     <>
