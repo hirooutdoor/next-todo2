@@ -1,7 +1,9 @@
 import styles from 'styles/Home.module.css'
 import classnames from 'classnames'
 import { memo, useContext } from 'react'
-import { TodoContext } from 'providers/TodoProvider'
+import { DisableContext, TodoContext } from 'src/providers/TodoProvider'
+import { isDisabledState } from 'src/store/todoGlobalState'
+import { useRecoilValue } from 'recoil'
 
 type Props = {
   handleClickFilter: (clickFilter: string) => void
@@ -22,7 +24,8 @@ export const StatusFilter: React.FC<Props> = memo((props) => {
     handleHoverOutFilter,
   } = props
 
-  const { isDisabled } = useContext(TodoContext)
+  //const { isDisabled } = useContext(DisableContext)
+  const isDisabled = useRecoilValue(isDisabledState)
 
   return (
     <>

@@ -2,19 +2,23 @@ import { useState, useEffect, useCallback, useMemo, useContext } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from 'styles/Home.module.css'
-import { TodoList } from 'components/todo/TodoList'
-import { AddForm } from 'components/form/AddForm'
-import { OrderSortButton } from 'components/select/OrderSort'
-import { StatusFilter } from 'components/filter/StatusFilter'
-import { InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'providers/TodoProvider'
+import { TodoList } from 'src/components/todo/TodoList'
+import { AddForm } from 'src/components/form/AddForm'
+import { OrderSortButton } from 'src/components/select/OrderSort'
+import { StatusFilter } from 'src/components/filter/StatusFilter'
+import { DisableContext, InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'src/providers/TodoProvider'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { currentTodoRecoil, isDisabledState } from 'src/store/todoGlobalState'
 
 export default function Home() {
   console.log('Render Parents') //for verification
-  const { currentTodo } = useContext(TodoContext)
+  const  [ currentTodo, setCurrentTodo ] = useRecoilState(currentTodoRecoil)
+  const setIsDisabled = useSetRecoilState(isDisabledState)
+  //const {currentTodo} = useContext(TodoContext)
   const { todos, setTodos } = useContext(TodosContext)
   const { inputTodo, setInputTodo } = useContext(InputTodoContext)
   const { todoStatus, setTodoStatus } = useContext(TodoStatusContext)
-  const { setIsDisabled } = useContext(TodoContext)
+  //const { setIsDisabled } = useContext(DisableContext)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
   const { orderSort } = useContext(SortContext)
@@ -76,7 +80,6 @@ export default function Home() {
   // Delete Function //
   const onClickDelete = useCallback(
     (index: number) => {
-      //alert(index) //for verification
       const askDelete = confirm('Are you sure?')
       if (askDelete) {
         const newTodos = [...orderSortTodos]
@@ -92,21 +95,21 @@ export default function Home() {
   // Edit Function //
   const onClickEdit = useCallback(
     (index: number) => {
-      currentTodo.title = orderSortTodos[index].title //set todo.title in edit form
-      currentTodo.status = orderSortTodos[index].status //set todo.status in edit form
-      // alert(index) //for verification
+      // Object.assign(currentTodo, {title: currentTodo.title, status: currentTodo.status}) //to ignore readonly value
+      setCurrentTodo({...currentTodo, title:orderSortTodos[index].title, status:orderSortTodos[index].status})
+      //currentTodo.title = orderSortTodos[index].title //set todo.title in edit form
+      //currentTodo.status = orderSortTodos[index].status //set todo.status in edit form
       orderSortTodos[index].isEditing = true
       setIsDisabled(true)
       setTodos([...orderSortTodos])
       if (orderSort === 'Newest') return setTodos([...orderSortTodos].reverse())
     },
-    [currentTodo, orderSortTodos, orderSort, setTodos, setIsDisabled]
+    [currentTodo, orderSortTodos, orderSort, setTodos, setIsDisabled, setCurrentTodo]
   )
 
   // Cancel Function //
   const onClickCancel = useCallback(
     (index: number) => {
-      // alert(index) //for verification
       orderSortTodos[index].isEditing = false
       setTodos([...orderSortTodos])
       setIsDisabled(false)
@@ -118,7 +121,6 @@ export default function Home() {
   // Submit Function //
   const onClickSubmit = useCallback(
     (index: number) => {
-      // alert(index) //for verification
       if (!currentTodo.title || !currentTodo.status) return
       orderSortTodos[index].title = currentTodo.title
       orderSortTodos[index].status = currentTodo.status

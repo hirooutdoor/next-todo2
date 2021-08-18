@@ -1,11 +1,14 @@
 import styles from 'styles/Home.module.css'
-import { AddTodoState } from 'components/select/AddTodoState'
+import { AddTodoState } from 'src/components/select/AddTodoState'
 import { memo, useContext } from 'react'
 import {
+  DisableContext,
   InputTodoContext,
-  TodoContext,
   TodosContext,
-} from 'providers/TodoProvider'
+} from 'src/providers/TodoProvider'
+import { useRecoilValue } from 'recoil'
+import { isDisabledState } from 'src/store/todoGlobalState'
+
 
 type Props = {
   onClick: () => void
@@ -17,7 +20,8 @@ export const AddForm: React.FC<Props> = memo((props) => {
 
   const { onClick } = props
   const { inputTodo, setInputTodo } = useContext(InputTodoContext)
-  const { isDisabled } = useContext(TodoContext)
+  // const { isDisabled } = useContext(DisableContext)
+  const isDisabled = useRecoilValue(isDisabledState)
   const { todos } = useContext(TodosContext)
 
   // Add Form's Value of Todo and Status //

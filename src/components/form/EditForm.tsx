@@ -1,7 +1,9 @@
 import styles from 'styles/Home.module.css'
-import { EditTodoState } from 'components/select/EditTodoState'
+import { EditTodoState } from 'src/components/select/EditTodoState'
 import { useContext, memo } from 'react'
-import { TodoContext } from 'providers/TodoProvider'
+import { TodoContext } from 'src/providers/TodoProvider'
+import { currentTodoRecoil } from 'src/store/todoGlobalState'
+import { useRecoilState } from 'recoil'
 
 type Props = {
   onClickCancel: () => void
@@ -15,7 +17,8 @@ export const EditForm: React.FC<Props> = memo((props) => {
     onClickCancel,
     onClickSubmit,
   } = props
-  const { currentTodo, setCurrentTodo } = useContext(TodoContext)
+  // const { currentTodo, setCurrentTodo } = useContext(TodoContext)
+  const [ currentTodo, setCurrentTodo ] = useRecoilState(currentTodoRecoil)
   
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
