@@ -81,8 +81,6 @@ export const TodoProvider: FC<Props> = (props) => {
   const value = {
     currentTodo,
     setCurrentTodo,
-    isDisabled,
-    setIsDisabled,
   }
 
   const todosValue = {

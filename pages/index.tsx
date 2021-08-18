@@ -7,12 +7,12 @@ import { AddForm } from 'src/components/form/AddForm'
 import { OrderSortButton } from 'src/components/select/OrderSort'
 import { StatusFilter } from 'src/components/filter/StatusFilter'
 import { DisableContext, InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'src/providers/TodoProvider'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { currentTodoRecoil } from 'src/store/todoGlobalState'
 
 export default function Home() {
   console.log('Render Parents') //for verification
-  const  currentTodo = useRecoilValue(currentTodoRecoil)
+  const  [ currentTodo, setCurrentTodo ] = useRecoilState(currentTodoRecoil)
   //const {currentTodo} = useContext(TodoContext)
   const { todos, setTodos } = useContext(TodosContext)
   const { inputTodo, setInputTodo } = useContext(InputTodoContext)
@@ -79,7 +79,6 @@ export default function Home() {
   // Delete Function //
   const onClickDelete = useCallback(
     (index: number) => {
-      //alert(index) //for verification
       const askDelete = confirm('Are you sure?')
       if (askDelete) {
         const newTodos = [...orderSortTodos]
@@ -95,21 +94,21 @@ export default function Home() {
   // Edit Function //
   const onClickEdit = useCallback(
     (index: number) => {
-      currentTodo.title = orderSortTodos[index].title //set todo.title in edit form
-      currentTodo.status = orderSortTodos[index].status //set todo.status in edit form
-      // alert(index) //for verification
+      // Object.assign(currentTodo, {title: currentTodo.title, status: currentTodo.status}) //to ignore readonly value
+      setCurrentTodo({...currentTodo, title:orderSortTodos[index].title, status:orderSortTodos[index].status})
+      //currentTodo.title = orderSortTodos[index].title //set todo.title in edit form
+      //currentTodo.status = orderSortTodos[index].status //set todo.status in edit form
       orderSortTodos[index].isEditing = true
       setIsDisabled(true)
       setTodos([...orderSortTodos])
       if (orderSort === 'Newest') return setTodos([...orderSortTodos].reverse())
     },
-    [currentTodo, orderSortTodos, orderSort, setTodos, setIsDisabled]
+    [currentTodo, orderSortTodos, orderSort, setTodos, setIsDisabled, setCurrentTodo]
   )
 
   // Cancel Function //
   const onClickCancel = useCallback(
     (index: number) => {
-      // alert(index) //for verification
       orderSortTodos[index].isEditing = false
       setTodos([...orderSortTodos])
       setIsDisabled(false)
@@ -121,7 +120,6 @@ export default function Home() {
   // Submit Function //
   const onClickSubmit = useCallback(
     (index: number) => {
-      // alert(index) //for verification
       if (!currentTodo.title || !currentTodo.status) return
       orderSortTodos[index].title = currentTodo.title
       orderSortTodos[index].status = currentTodo.status

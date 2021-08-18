@@ -4,7 +4,6 @@ import { memo, useContext } from 'react'
 import {
   DisableContext,
   InputTodoContext,
-  TodoContext,
   TodosContext,
 } from 'src/providers/TodoProvider'
 

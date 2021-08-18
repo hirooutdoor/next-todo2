@@ -1,4 +1,4 @@
-import { atom } from 'recoil'
+import { atom, selector } from 'recoil'
 
 export const currentTodoRecoil = atom({
   key: "currentTodoRecoil",
@@ -8,3 +8,12 @@ export const currentTodoRecoil = atom({
     isEditing: false,
   }
 })
+
+export const currentTodoSelector = selector({
+  key: 'charCountState', // unique ID (with respect to other atoms/selectors)
+  get: ({get}) => {
+    const curTodo = get(currentTodoRecoil);
+    
+    return curTodo;
+  },
+});
