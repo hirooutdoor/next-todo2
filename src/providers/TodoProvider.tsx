@@ -110,7 +110,7 @@ export const TodoProvider: FC<Props> = (props) => {
 
   return (
     // <TodoContext.Provider value={value}>
-      <DisableContext.Provider value={disableValue} >
+      // <DisableContext.Provider value={disableValue} >
         <TodosContext.Provider value={todosValue}>
           <InputTodoContext.Provider value={inputValue}>
             <TodoStatusContext.Provider value={statusValue}>
@@ -120,7 +120,7 @@ export const TodoProvider: FC<Props> = (props) => {
             </TodoStatusContext.Provider>
           </InputTodoContext.Provider>
         </TodosContext.Provider>
-      </DisableContext.Provider>
+      // </DisableContext.Provider>
     // </TodoContext.Provider>
   )
 }

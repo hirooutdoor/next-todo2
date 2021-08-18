@@ -2,6 +2,8 @@ import styles from 'styles/Home.module.css'
 import { EditForm } from 'src/components/form/EditForm'
 import { memo, useContext } from 'react'
 import { DisableContext, TodoContext } from 'src/providers/TodoProvider'
+import { useRecoilValue } from 'recoil'
+import { isDisabledState } from 'src/store/todoGlobalState'
 
 type Props = {
   filterTodos: {
@@ -31,7 +33,8 @@ export const TodoList: React.FC<Props> = memo((props) => {
     orderSortTodos
   } = props
 
-  const { isDisabled } = useContext(DisableContext)
+  //const { isDisabled } = useContext(DisableContext)
+  const isDisabled = useRecoilValue(isDisabledState)
 
   return (
     <>

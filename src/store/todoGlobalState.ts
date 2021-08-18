@@ -9,6 +9,12 @@ export const currentTodoRecoil = atom({
   }
 })
 
+export const isDisabledState = atom({
+  key: "isDisabledState",
+  default: false
+})
+
+
 export const currentTodoSelector = selector({
   key: 'charCountState', // unique ID (with respect to other atoms/selectors)
   get: ({get}) => {

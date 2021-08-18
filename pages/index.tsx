@@ -7,17 +7,18 @@ import { AddForm } from 'src/components/form/AddForm'
 import { OrderSortButton } from 'src/components/select/OrderSort'
 import { StatusFilter } from 'src/components/filter/StatusFilter'
 import { DisableContext, InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'src/providers/TodoProvider'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { currentTodoRecoil } from 'src/store/todoGlobalState'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { currentTodoRecoil, isDisabledState } from 'src/store/todoGlobalState'
 
 export default function Home() {
   console.log('Render Parents') //for verification
   const  [ currentTodo, setCurrentTodo ] = useRecoilState(currentTodoRecoil)
+  const setIsDisabled = useSetRecoilState(isDisabledState)
   //const {currentTodo} = useContext(TodoContext)
   const { todos, setTodos } = useContext(TodosContext)
   const { inputTodo, setInputTodo } = useContext(InputTodoContext)
   const { todoStatus, setTodoStatus } = useContext(TodoStatusContext)
-  const { setIsDisabled } = useContext(DisableContext)
+  //const { setIsDisabled } = useContext(DisableContext)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
   const { orderSort } = useContext(SortContext)

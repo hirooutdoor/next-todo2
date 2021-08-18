@@ -6,6 +6,8 @@ import {
   InputTodoContext,
   TodosContext,
 } from 'src/providers/TodoProvider'
+import { useRecoilValue } from 'recoil'
+import { isDisabledState } from 'src/store/todoGlobalState'
 
 
 type Props = {
@@ -18,7 +20,8 @@ export const AddForm: React.FC<Props> = memo((props) => {
 
   const { onClick } = props
   const { inputTodo, setInputTodo } = useContext(InputTodoContext)
-  const { isDisabled } = useContext(DisableContext)
+  // const { isDisabled } = useContext(DisableContext)
+  const isDisabled = useRecoilValue(isDisabledState)
   const { todos } = useContext(TodosContext)
 
   // Add Form's Value of Todo and Status //
