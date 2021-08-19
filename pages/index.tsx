@@ -9,6 +9,8 @@ import { StatusFilter } from 'src/components/filter/StatusFilter'
 import { DisableContext, InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'src/providers/TodoProvider'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { currentTodoRecoil, isDisabledState } from 'src/store/todoGlobalState'
+import { Button, Heading, Text, useColorMode } from '@chakra-ui/react'
+
 
 export default function Home() {
   console.log('Render Parents') //for verification
@@ -23,6 +25,7 @@ export default function Home() {
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
   const { orderSort } = useContext(SortContext)
 
+  const { colorMode, toggleColorMode } = useColorMode()
 
   // Filter Condition Switching //
   //Hover filter function //
@@ -162,8 +165,8 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.appTitle}>NEXT TODO</h1>
-
+        <Heading mb={8} bgClip="text" bgGradient="linear(to-l, blue.500, #7928CA,#FF0080)" fontSize="6xl"  fontWeight="extrabold">NEXT TODO</Heading>
+        <Button onClick={toggleColorMode}>Toggle Theme {colorMode === "light" ? "Dark" : "Light"}</Button>
         {/* Add Form */}
         {todos.length >= 20 && (
           <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
