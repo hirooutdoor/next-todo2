@@ -9,7 +9,9 @@ import { StatusFilter } from 'src/components/filter/StatusFilter'
 import { DisableContext, InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'src/providers/TodoProvider'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { currentTodoRecoil, isDisabledState } from 'src/store/todoGlobalState'
-import { Button, Heading, Text, useColorMode } from '@chakra-ui/react'
+import { Button, Heading, Icon, IconButton, Text, useColorMode } from '@chakra-ui/react'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { FaMoon, FaSun } from 'react-icons/fa'
 
 
 export default function Home() {
@@ -166,7 +168,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <Heading mb={8} bgClip="text" bgGradient="linear(to-l, blue.500, #7928CA,#FF0080)" fontSize="6xl"  fontWeight="extrabold">NEXT TODO</Heading>
-        <Button onClick={toggleColorMode}>Toggle Theme {colorMode === "light" ? "Dark" : "Light"}</Button>
+        <IconButton aria-label="toggle dark and light mode"  icon={colorMode === "light"? <MoonIcon/>: <SunIcon/> } onClick={toggleColorMode}>Toggle Theme {colorMode === "light" ? "Dark" : "Light"}</IconButton>
         {/* Add Form */}
         {todos.length >= 20 && (
           <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
