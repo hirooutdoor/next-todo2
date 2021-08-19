@@ -39,6 +39,7 @@ export default function Home() {
     if (clickFilter === 'Done') return todo.status === 'Done'
   })
 
+  
   const filterTodos = hoverInFilterState || clickFilterState
   useEffect(() => {
     filterTodos
