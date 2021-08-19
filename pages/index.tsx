@@ -23,7 +23,6 @@ export default function Home() {
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
   const { orderSort } = useContext(SortContext)
 
-
   // Filter Condition Switching //
   //Hover filter function //
   const hoverInFilterState = todos.filter((todo) => {
