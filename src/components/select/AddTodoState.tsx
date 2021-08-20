@@ -3,6 +3,7 @@ import { memo, useContext } from 'react'
 import { DisableContext, TodoContext, TodoStatusContext } from 'src/providers/TodoProvider'
 import { useRecoilValue } from 'recoil'
 import { isDisabledState } from 'src/store/todoGlobalState'
+import { Select } from '@chakra-ui/react'
 
 export const AddTodoState: React.VFC = memo(() => {
   AddTodoState.displayName = 'AddTodoState'
@@ -16,8 +17,8 @@ export const AddTodoState: React.VFC = memo(() => {
 
   return (
     <>
-      <div className={`${styles.select} ${styles.menu}`}>
-        <select
+      <div className={styles.menu}>
+      <Select rounded={20}
           value={todoStatus}
           onChange={onChangeTodoStatus}
           required
@@ -29,7 +30,7 @@ export const AddTodoState: React.VFC = memo(() => {
           <option value="Not Yet">Not Yet</option>
           <option value="In Progress">In Progress</option>
           <option value="Done">Done</option>
-        </select>
+        </Select>
       </div>
     </>
   )

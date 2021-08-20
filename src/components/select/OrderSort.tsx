@@ -3,6 +3,7 @@ import {memo, useContext} from "react"
 import { DisableContext, SortContext, TodoContext } from 'src/providers/TodoProvider';
 import { isDisabledState } from 'src/store/todoGlobalState';
 import { useRecoilValue } from 'recoil';
+import { Select } from '@chakra-ui/react';
 
 
 export const OrderSortButton:React.VFC = memo(() => {
@@ -20,15 +21,15 @@ export const OrderSortButton:React.VFC = memo(() => {
 
   return (
     <>
-      <div className={`${styles.select} ${styles.menu}`}>
-        <select value={orderSort} onChange={onChangeOrderSort} required disabled={isDisabled}>
+      <div className={styles.menu}>
+        <Select rounded={20} value={orderSort} onChange={onChangeOrderSort} required disabled={isDisabled}>
           <option value="" hidden>
             Sort by
           </option>
           <option value="Oldest">Oldest</option>
           <option value="Newest">Newest</option>
           <option value="Name">Name</option>
-        </select>
+        </Select>
       </div>
     </>
   )

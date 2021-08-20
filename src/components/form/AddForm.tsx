@@ -8,6 +8,7 @@ import {
 } from 'src/providers/TodoProvider'
 import { useRecoilValue } from 'recoil'
 import { isDisabledState } from 'src/store/todoGlobalState'
+import { Input } from '@chakra-ui/react'
 
 
 type Props = {
@@ -34,8 +35,7 @@ export const AddForm: React.FC<Props> = memo((props) => {
     <>
       <div className={styles.card}>
         <div className={styles.input_area}>
-          <input
-            className={styles.input_add}
+        <Input rounded={10} mt={5} mb={5}
             type="text"
             placeholder="Input what to do here"
             value={inputTodo}
