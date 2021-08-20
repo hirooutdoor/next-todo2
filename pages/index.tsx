@@ -30,14 +30,14 @@ export default function Home() {
   console.log('Render Parents') //for verification
   const [currentTodo, setCurrentTodo] = useRecoilState(currentTodoRecoil)
   const setIsDisabled = useSetRecoilState(isDisabledState)
-  //const {currentTodo} = useContext(TodoContext)
   const { todos, setTodos } = useContext(TodosContext)
   const { inputTodo, setInputTodo } = useContext(InputTodoContext)
   const { todoStatus, setTodoStatus } = useContext(TodoStatusContext)
-  //const { setIsDisabled } = useContext(DisableContext)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
   const { orderSort } = useContext(SortContext)
+
+  const { colorMode, toggleColorMode } = useColorMode()
 
   const { colorMode, toggleColorMode } = useColorMode()
 
@@ -56,6 +56,7 @@ export default function Home() {
     if (clickFilter === 'In Progress') return todo.status === 'In Progress'
     if (clickFilter === 'Done') return todo.status === 'Done'
   })
+
 
   const filterTodos = hoverInFilterState || clickFilterState
   useEffect(() => {
@@ -203,7 +204,6 @@ export default function Home() {
           icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
         />
-
         {/* Add Form */}
         {todos.length >= 20 && (
           <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
