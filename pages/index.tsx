@@ -6,23 +6,40 @@ import { TodoList } from 'src/components/todo/TodoList'
 import { AddForm } from 'src/components/form/AddForm'
 import { OrderSortButton } from 'src/components/select/OrderSort'
 import { StatusFilter } from 'src/components/filter/StatusFilter'
-import { DisableContext, InputTodoContext, SortContext, TodoContext, TodosContext, TodoStatusContext } from 'src/providers/TodoProvider'
+import {
+  DisableContext,
+  InputTodoContext,
+  SortContext,
+  TodoContext,
+  TodosContext,
+  TodoStatusContext,
+} from 'src/providers/TodoProvider'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { currentTodoRecoil, isDisabledState } from 'src/store/todoGlobalState'
+import {
+  Button,
+  Heading,
+  Icon,
+  IconButton,
+  Text,
+  useColorMode,
+} from '@chakra-ui/react'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { FaMoon, FaSun } from 'react-icons/fa'
 
 export default function Home() {
   console.log('Render Parents') //for verification
-  const  [ currentTodo, setCurrentTodo ] = useRecoilState(currentTodoRecoil)
+  const [currentTodo, setCurrentTodo] = useRecoilState(currentTodoRecoil)
   const setIsDisabled = useSetRecoilState(isDisabledState)
-  //const {currentTodo} = useContext(TodoContext)
   const { todos, setTodos } = useContext(TodosContext)
   const { inputTodo, setInputTodo } = useContext(InputTodoContext)
   const { todoStatus, setTodoStatus } = useContext(TodoStatusContext)
-  //const { setIsDisabled } = useContext(DisableContext)
   const [clickFilter, setClickFilter] = useState<string>('All')
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
   const { orderSort } = useContext(SortContext)
 
+
+  const { colorMode, toggleColorMode } = useColorMode()
 
   // Filter Condition Switching //
   //Hover filter function //
@@ -39,6 +56,7 @@ export default function Home() {
     if (clickFilter === 'In Progress') return todo.status === 'In Progress'
     if (clickFilter === 'Done') return todo.status === 'Done'
   })
+
 
   const filterTodos = hoverInFilterState || clickFilterState
   useEffect(() => {
@@ -60,7 +78,6 @@ export default function Home() {
     }
     return 0
   })
-
 
   /// ↓↓↓ CLICK ACTION ↓↓↓///
   // Add Function //
@@ -96,7 +113,11 @@ export default function Home() {
   const onClickEdit = useCallback(
     (index: number) => {
       // Object.assign(currentTodo, {title: currentTodo.title, status: currentTodo.status}) //to ignore readonly value
-      setCurrentTodo({...currentTodo, title:orderSortTodos[index].title, status:orderSortTodos[index].status})
+      setCurrentTodo({
+        ...currentTodo,
+        title: orderSortTodos[index].title,
+        status: orderSortTodos[index].status,
+      })
       //currentTodo.title = orderSortTodos[index].title //set todo.title in edit form
       //currentTodo.status = orderSortTodos[index].status //set todo.status in edit form
       orderSortTodos[index].isEditing = true
@@ -104,7 +125,14 @@ export default function Home() {
       setTodos([...orderSortTodos])
       if (orderSort === 'Newest') return setTodos([...orderSortTodos].reverse())
     },
-    [currentTodo, orderSortTodos, orderSort, setTodos, setIsDisabled, setCurrentTodo]
+    [
+      currentTodo,
+      orderSortTodos,
+      orderSort,
+      setTodos,
+      setIsDisabled,
+      setCurrentTodo,
+    ]
   )
 
   // Cancel Function //
@@ -162,15 +190,27 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.appTitle}>NEXT TODO</h1>
-
+        <Heading
+          mb={8}
+          bgClip="text"
+          bgGradient="linear(to-l, blue.500, #7928CA,#FF0080)"
+          fontSize="6xl"
+          fontWeight="extrabold"
+        >
+          NEXT TODO
+        </Heading>
+        <IconButton
+          aria-label="DarkMode Switch"
+          icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+          onClick={toggleColorMode}
+        >
+          Toggle Theme {colorMode === 'light' ? 'Dark' : 'Light'}
+        </IconButton>
         {/* Add Form */}
         {todos.length >= 20 && (
           <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
         )}
-        <AddForm
-          onClick={onClickAdd}
-        />
+        <AddForm onClick={onClickAdd} />
         {/* Todo List */}
         <div className={styles.todo_card}>
           <div className={styles.list_head}>
@@ -184,7 +224,7 @@ export default function Home() {
             />
             {/* Order Sort Button*/}
             <div className={styles.pulldown_orderSort}>
-              <OrderSortButton/>
+              <OrderSortButton />
             </div>
           </div>
           {/* List */}
@@ -206,7 +246,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' Hiro Ver.2'}
+          Powered by{' '}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
