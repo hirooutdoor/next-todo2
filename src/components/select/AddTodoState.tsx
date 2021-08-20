@@ -18,7 +18,7 @@ export const AddTodoState: React.VFC = memo(() => {
   return (
     <>
       <div className={styles.menu}>
-      <Select rounded={20}
+        <Select rounded={20}
           value={todoStatus}
           onChange={onChangeTodoStatus}
           required
