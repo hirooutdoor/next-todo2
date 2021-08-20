@@ -4,6 +4,7 @@ import { useContext, memo } from 'react'
 import { TodoContext } from 'src/providers/TodoProvider'
 import { currentTodoRecoil } from 'src/store/todoGlobalState'
 import { useRecoilState } from 'recoil'
+import { Input } from '@chakra-ui/react'
 
 type Props = {
   onClickCancel: () => void
@@ -27,7 +28,7 @@ export const EditForm: React.FC<Props> = memo((props) => {
 
   return (
     <>
-      <input
+      <Input rounded={20}
         className={styles.input_edit}
         value={currentTodo.title}
         type="text"
