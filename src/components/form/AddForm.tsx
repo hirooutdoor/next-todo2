@@ -35,7 +35,7 @@ export const AddForm: React.FC<Props> = memo((props) => {
     <>
       <div className={styles.card}>
         <div className={styles.input_area}>
-          <Input rounded={10} mt={5} mb={5} 
+        <Input rounded={10} mt={5} mb={5}
             type="text"
             placeholder="Input what to do here"
             value={inputTodo}
