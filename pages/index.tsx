@@ -25,6 +25,8 @@ import {
   useColorMode,
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { useMessage } from 'hooks/useMessage'
+import { AddRounded } from '@material-ui/icons'
 
 export default function Home() {
   console.log('Render Parents') //for verification
@@ -37,6 +39,7 @@ export default function Home() {
   const [hoverInFilter, setHoverInFilter] = useState<string>('All')
   const { orderSort } = useContext(SortContext)
 
+  const { showMessage } = useMessage()
 
   const { colorMode, toggleColorMode } = useColorMode()
 
@@ -55,7 +58,6 @@ export default function Home() {
     if (clickFilter === 'In Progress') return todo.status === 'In Progress'
     if (clickFilter === 'Done') return todo.status === 'Done'
   })
-
 
   const filterTodos = hoverInFilterState || clickFilterState
   useEffect(() => {
@@ -81,7 +83,8 @@ export default function Home() {
   /// ↓↓↓ CLICK ACTION ↓↓↓///
   // Add Function //
   const onClickAdd = useCallback(() => {
-    if (!inputTodo || todoStatus === '') return
+    if (!inputTodo || todoStatus === '')
+      return showMessage({ title: 'Please fill out both.', status: 'warning' })
     const newTodo = {
       title: inputTodo,
       status: todoStatus,
@@ -91,7 +94,16 @@ export default function Home() {
     setTodos(newTodos)
     setInputTodo('') //clear input
     setTodoStatus('') //clear status
-  }, [todos, inputTodo, todoStatus, setTodos, setInputTodo, setTodoStatus])
+    showMessage({ title: 'Successfully added. Fired up!🔥', status: 'success' })
+  }, [
+    todos,
+    inputTodo,
+    todoStatus,
+    setTodos,
+    setInputTodo,
+    setTodoStatus,
+    showMessage,
+  ])
 
   // Delete Function //
   const onClickDelete = useCallback(
@@ -104,8 +116,12 @@ export default function Home() {
       } else {
         null
       }
+      showMessage({
+        title: "Successfully deleted. Well done! It's time for 🍻!!",
+        status: 'success',
+      })
     },
-    [orderSortTodos, setTodos]
+    [orderSortTodos, setTodos, showMessage]
   )
 
   // Edit Function //
@@ -148,7 +164,18 @@ export default function Home() {
   // Submit Function //
   const onClickSubmit = useCallback(
     (index: number) => {
-      if (!currentTodo.title || !currentTodo.status) return
+      if (!currentTodo.title || !currentTodo.status)
+        return showMessage({
+          title: 'Please fill out Todo.',
+          status: 'warning',
+        })
+      if (
+        currentTodo.title === orderSortTodos[index].title &&
+        currentTodo.status === orderSortTodos[index].status
+      ) {
+      } else {
+        showMessage({ title: '✨Successfully updated.✨', status: 'success' })
+      }
       orderSortTodos[index].title = currentTodo.title
       orderSortTodos[index].status = currentTodo.status
       orderSortTodos[index].isEditing = false
@@ -161,6 +188,7 @@ export default function Home() {
       currentTodo.status,
       setTodos,
       setIsDisabled,
+      showMessage,
     ]
   )
 
