@@ -46,5 +46,10 @@
     "moduleNameMapper": {
       "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
     }
+  },
+  "volta": {
+    "node": "16.6.1",
+    "npm": "7.20.3",
+    "yarn": "1.22.11"
   }
 }

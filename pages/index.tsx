@@ -25,7 +25,6 @@ import {
   useColorMode,
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { FaMoon, FaSun } from 'react-icons/fa'
 
 export default function Home() {
   console.log('Render Parents') //for verification
@@ -203,9 +202,7 @@ export default function Home() {
           aria-label="DarkMode Switch"
           icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
-        >
-          Toggle Theme {colorMode === 'light' ? 'Dark' : 'Light'}
-        </IconButton>
+        />
         {/* Add Form */}
         {todos.length >= 20 && (
           <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
