@@ -19,7 +19,7 @@ export const EditTodoState: React.VFC = memo(() => {
   return (
     <>
       <div>
-        <Select rounded={20}
+        <Select rounded={20} mr={20}
           value={currentTodo.status}
           onChange={onChangeEditStatus}
           required

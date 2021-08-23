@@ -7,26 +7,24 @@ import { AddForm } from 'src/components/form/AddForm'
 import { OrderSortButton } from 'src/components/select/OrderSort'
 import { StatusFilter } from 'src/components/filter/StatusFilter'
 import {
-  DisableContext,
   InputTodoContext,
   SortContext,
-  TodoContext,
   TodosContext,
   TodoStatusContext,
 } from 'src/providers/TodoProvider'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { currentTodoRecoil, isDisabledState } from 'src/store/todoGlobalState'
 import {
-  Button,
+  Box,
   Heading,
-  Icon,
+  HStack,
   IconButton,
-  Text,
   useColorMode,
+  VStack,
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { FaMoon, FaSun } from 'react-icons/fa'
 import { useMessage } from 'hooks/useMessage'
-import { AddRounded } from '@material-ui/icons'
 
 export default function Home() {
   console.log('Render Parents') //for verification
@@ -113,13 +111,13 @@ export default function Home() {
         const newTodos = [...orderSortTodos]
         newTodos.splice(index, 1)
         setTodos(newTodos)
+        showMessage({
+          title: "Successfully deleted. Well done! It's time for 🍻!!",
+          status: 'success',
+        })
       } else {
         null
       }
-      showMessage({
-        title: "Successfully deleted. Well done! It's time for 🍻!!",
-        status: 'success',
-      })
     },
     [orderSortTodos, setTodos, showMessage]
   )
@@ -173,6 +171,7 @@ export default function Home() {
         currentTodo.title === orderSortTodos[index].title &&
         currentTodo.status === orderSortTodos[index].status
       ) {
+        showMessage({ title: 'Not updated.', status: 'warning' })
       } else {
         showMessage({ title: '✨Successfully updated.✨', status: 'success' })
       }
@@ -227,42 +226,50 @@ export default function Home() {
           NEXT TODO
         </Heading>
         <IconButton
+          // _focus={{_focus: "none"}}
+          mb={10}
           aria-label="DarkMode Switch"
-          icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+          icon={colorMode === 'light' ? <MoonIcon /> : <FaSun />}
           onClick={toggleColorMode}
         />
         {/* Add Form */}
         {todos.length >= 20 && (
           <p style={{ color: 'red' }}>You can only keep 20 todos at a time.</p>
         )}
-        <AddForm onClick={onClickAdd} />
+          <AddForm onClick={onClickAdd} />
+
         {/* Todo List */}
-        <div className={styles.todo_card}>
-          <div className={styles.list_head}>
-            {/* Status Filter */}
-            <StatusFilter
-              clickFilter={clickFilter}
-              hoverInFilter={hoverInFilter}
-              handleClickFilter={handleClickFilter}
-              handleHoverInFilter={handleHoverInFilter}
-              handleHoverOutFilter={handleHoverOutFilter}
-            />
-            {/* Order Sort Button*/}
-            <div className={styles.pulldown_orderSort}>
-              <OrderSortButton />
-            </div>
-          </div>
-          {/* List */}
-          <TodoList
-            onClickDelete={onClickDelete}
-            onClickEdit={onClickEdit}
-            onClickCancel={onClickCancel}
-            onClickSubmit={onClickSubmit}
-            filterTodos={filterTodos}
-            orderSortTodos={orderSortTodos}
-          />
-          {/* List */}
-        </div>
+        <Box mt={10} minW="lg" minH="700px" rounded={20} borderWidth="2px">
+          <VStack>
+            <Box>
+              <HStack p={10} mr={7} spacing="20px">
+                <Box ml={10}>
+                  <StatusFilter
+                    clickFilter={clickFilter}
+                    hoverInFilter={hoverInFilter}
+                    handleClickFilter={handleClickFilter}
+                    handleHoverInFilter={handleHoverInFilter}
+                    handleHoverOutFilter={handleHoverOutFilter}
+                  />
+                </Box>
+                <Box mr={10}>
+                  <OrderSortButton />
+                </Box>
+              </HStack>
+            </Box>
+            {/* List */}
+            <Box maxW="md">
+              <TodoList
+                onClickDelete={onClickDelete}
+                onClickEdit={onClickEdit}
+                onClickCancel={onClickCancel}
+                onClickSubmit={onClickSubmit}
+                filterTodos={filterTodos}
+                orderSortTodos={orderSortTodos}
+              />
+            </Box>
+          </VStack>
+        </Box>
       </main>
 
       <footer className={styles.footer}>

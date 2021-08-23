@@ -8,8 +8,7 @@ import {
 } from 'src/providers/TodoProvider'
 import { useRecoilValue } from 'recoil'
 import { isDisabledState } from 'src/store/todoGlobalState'
-import { Input } from '@chakra-ui/react'
-
+import { Box, Button, HStack, Input } from '@chakra-ui/react'
 
 type Props = {
   onClick: () => void
@@ -33,27 +32,36 @@ export const AddForm: React.FC<Props> = memo((props) => {
 
   return (
     <>
-      <div className={styles.card}>
-        <div className={styles.input_area}>
-          <Input rounded={10} mt={5} mb={5} 
-            type="text"
-            placeholder="Input what to do here"
-            value={inputTodo}
-            onChange={onChangeInputTodo}
-            disabled={todos.length >= 20 || isDisabled}
-          />
-          <div className={styles.pull_down}>
-            <AddTodoState />
-          </div>
-          <button
-            className={styles.add_button}
-            onClick={onClick}
-            disabled={isDisabled}
-          >
-            Add
-          </button>
-        </div>
-      </div>
+      <Box minW="lg" maxH="sm" rounded={20} borderWidth="2px">
+        <HStack spacing="20px">
+          <Box>
+            <Input
+              rounded={10}
+              m={10}
+              pr={30}
+              pl={30}
+              type="text"
+              placeholder="Input what to do here"
+              value={inputTodo}
+              onChange={onChangeInputTodo}
+              disabled={todos.length >= 20 || isDisabled}
+            />
+          </Box>
+          <Box>
+              <AddTodoState />
+          </Box>
+          <Box>
+            <Button
+              mr={10}
+              rounded={20}
+              onClick={onClick}
+              disabled={isDisabled}
+            >
+              Add
+            </Button>
+          </Box>
+        </HStack>
+      </Box>
     </>
   )
 })
