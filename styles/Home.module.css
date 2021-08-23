@@ -142,7 +142,6 @@
 
 /* Edit Button */
 .edit_button {
-  margin-left: 10px;
   border-radius: 16px;
   padding: 6px 10px;
   border: none;
@@ -161,9 +160,8 @@
 /* Delete Button */
 
 .delete_button {
-  margin-left: 10px;
   border-radius: 16px;
-  padding: 6px 10px;
+  padding: 6px 6px;
   border: none;
 }
 

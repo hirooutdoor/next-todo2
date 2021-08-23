@@ -4,7 +4,7 @@ import { useContext, memo } from 'react'
 import { TodoContext } from 'src/providers/TodoProvider'
 import { currentTodoRecoil } from 'src/store/todoGlobalState'
 import { useRecoilState } from 'recoil'
-import { Input } from '@chakra-ui/react'
+import { Box, Button, HStack, Input } from '@chakra-ui/react'
 
 type Props = {
   onClickCancel: () => void
@@ -12,38 +12,53 @@ type Props = {
 }
 
 export const EditForm: React.FC<Props> = memo((props) => {
-  EditForm.displayName = 'EditForm';
+  EditForm.displayName = 'EditForm'
   console.log('Render EditForm')
-  const {
-    onClickCancel,
-    onClickSubmit,
-  } = props
+  const { onClickCancel, onClickSubmit } = props
   // const { currentTodo, setCurrentTodo } = useContext(TodoContext)
-  const [ currentTodo, setCurrentTodo ] = useRecoilState(currentTodoRecoil)
-  
+  const [currentTodo, setCurrentTodo] = useRecoilState(currentTodoRecoil)
+
   const onChangeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     setCurrentTodo({ ...currentTodo, title: e.currentTarget.value })
   }
 
   return (
-    <>
-      <Input rounded={20}
-        className={styles.input_edit}
-        value={currentTodo.title}
-        type="text"
-        onChange={onChangeEditTitle}
-      />
-      <div className={styles.pull_down}>
-        <EditTodoState
+    <HStack>
+      <Box>
+        <Input
+          rounded={10}
+          mr={10}
+          className={styles.input_edit}
+          value={currentTodo.title}
+          type="text"
+          onChange={onChangeEditTitle}
         />
-      </div>
-      <button className={styles.edit_button} onClick={onClickCancel}>
-        Cancel
-      </button>
-      <button className={styles.edit_button} onClick={onClickSubmit}>
-        Update
-      </button>
-    </>
+      </Box>
+      <Box>
+        <EditTodoState />
+      </Box>
+      <Box>
+        <Button
+          rounded={20}
+          size="sm"
+          fontWeight="400"
+          onClick={onClickCancel}
+        >
+          Cancel
+        </Button>
+      </Box>
+      <Box>
+        <Button
+          rounded={20}
+          size="sm"
+          fontWeight="400"
+          color="blue.500"
+          onClick={onClickSubmit}
+        >
+          Update
+        </Button>
+      </Box>
+    </HStack>
   )
 })

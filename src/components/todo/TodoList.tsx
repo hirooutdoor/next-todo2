@@ -4,6 +4,17 @@ import { memo, useContext } from 'react'
 import { DisableContext, TodoContext } from 'src/providers/TodoProvider'
 import { useRecoilValue } from 'recoil'
 import { isDisabledState } from 'src/store/todoGlobalState'
+import {
+  Box,
+  Button,
+  HStack,
+  List,
+  ListItem,
+  StackDivider,
+  Tag,
+  TagLabel,
+  VStack,
+} from '@chakra-ui/react'
 
 type Props = {
   filterTodos: {
@@ -23,14 +34,14 @@ type Props = {
 }
 
 export const TodoList: React.FC<Props> = memo((props) => {
-  TodoList.displayName = 'TodoList';
+  TodoList.displayName = 'TodoList'
   console.log('Render Todolist')
   const {
     onClickDelete,
     onClickEdit,
     onClickCancel,
     onClickSubmit,
-    orderSortTodos
+    orderSortTodos,
   } = props
 
   //const { isDisabled } = useContext(DisableContext)
@@ -38,40 +49,68 @@ export const TodoList: React.FC<Props> = memo((props) => {
 
   return (
     <>
-      <ul>
-        {orderSortTodos.map((todo, index) => {
-          return (
-            <li key={index} className={styles.list_row}>
-              {todo.isEditing ? (
-                <EditForm
-                  onClickCancel={() => onClickCancel(index)}
-                  onClickSubmit={() => onClickSubmit(index)}
-                />
-              ) : (
-                <>
-                  <p className={styles.todo_title}>{todo.title}</p>
-                  <p className={styles.todo_state}>{todo.status}</p>
-                  <button
-                    className={styles.edit_button}
-                    onClick={() => onClickEdit(index)}
-                    disabled={isDisabled}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className={styles.delete_button}
-                    onClick={() => onClickDelete(index)}
-                    disabled={isDisabled}
-                  >
-                    Delete
-                  </button>
-                </>
-              )}
-            </li>
-          )
-        })}
-      </ul>
+      <VStack divider={<StackDivider borderColor="gray.300" />} align="stretch">
+        <List>
+        <VStack divider={<StackDivider borderColor="gray.300" />} align="stretch">
+          {orderSortTodos.map((todo, index) => {
+            return (
+              <Box key={index} h="40px">
+                <ListItem listStyleType="none">
+                    {todo.isEditing ? (
+                    <HStack minW="md" maxW="lg">
+                      <Box>
+                        <EditForm
+                          onClickCancel={() => onClickCancel(index)}
+                          onClickSubmit={() => onClickSubmit(index)}
+                        />
+                      </Box>
+                    </HStack>
+                    ) : (
+                      <HStack minW="md">
+                        <Box>
+                          <p className={styles.todo_title}>{todo.title}</p>
+                        </Box>
+                        <Box>
+                          <Tag variant="outline" colorScheme="blue" borderRadius="full">
+                            <TagLabel>
+                              {todo.status}
+                            </TagLabel>
+                          </Tag>
+                        </Box>
+                        <Box>
+                          <Button
+                            rounded={20}
+                            size="sm"
+                            fontWeight="400"
+                            color="blue.500"
+                            onClick={() => onClickEdit(index)}
+                            disabled={isDisabled}
+                          >
+                            Edit
+                          </Button>
+                        </Box>
+                        <Box>
+                          <Button
+                            fontWeight="400"
+                            rounded={20}
+                            size="sm"
+                            color="tomato"
+                            className={styles.delete_button}
+                            onClick={() => onClickDelete(index)}
+                            disabled={isDisabled}
+                          >
+                            Delete
+                          </Button>
+                        </Box>
+                      </HStack>
+                    )}
+                </ListItem>
+              </Box>
+            )
+          })}
+          </VStack>
+        </List>
+      </VStack>
     </>
   )
 })
-
