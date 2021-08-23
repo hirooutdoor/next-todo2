@@ -5,7 +5,7 @@ export const currentTodoRecoil = atom({
   default: {
     title: '',
     status: '',
-    isEditing: false,
+    isEditing: false
   }
 })
 
