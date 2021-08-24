@@ -1,7 +1,13 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme, ThemeConfig } from '@chakra-ui/react'
 
 // NB: Chakra gives you access to `colorMode` and `theme` in `props`
+const config:ThemeConfig = {
+  initialColorMode: "light",
+  useSystemColorMode: false
+}
+
 export const bodyTheme = extendTheme({
+  config,
   styles: {
     global: (props) => ({
       'html, body': {
