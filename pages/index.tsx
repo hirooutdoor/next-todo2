@@ -20,11 +20,12 @@ import {
   HStack,
   IconButton,
   useColorMode,
+  useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { FaMoon, FaSun } from 'react-icons/fa'
-import { useMessage } from 'hooks/useMessage'
+import { useMessage } from 'src/hooks/useMessage'
 
 export default function Home() {
   console.log('Render Parents') //for verification
@@ -40,6 +41,7 @@ export default function Home() {
   const { showMessage } = useMessage()
 
   const { colorMode, toggleColorMode } = useColorMode()
+  const bgGradient = useColorModeValue("linear(to-l, blue.400, #7928CA,#FF0080)", "linear(to-r, blue.400, #7928CA,#FF0080)")
 
   // Filter Condition Switching //
   //Hover filter function //
@@ -219,7 +221,7 @@ export default function Home() {
         <Heading
           mb={8}
           bgClip="text"
-          bgGradient="linear(to-l, blue.500, #7928CA,#FF0080)"
+          bgGradient={bgGradient}
           fontSize="6xl"
           fontWeight="extrabold"
         >
